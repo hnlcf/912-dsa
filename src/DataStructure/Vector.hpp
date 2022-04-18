@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-typedef int Rank;
+using Rank = int;
 
 #define DEFAULT_CAPACITY 3
 
@@ -50,6 +50,20 @@ namespace dsa {
             delete[] m_elem;
         }
 
+        // Read-Only interface
+        bool isEmpty() const;
+        Rank size() const;
+        Rank find(T const &e) const;
+        Rank find(T const &e, Rank lo, Rank hi) const;
+
+        void insert(Rank r, T const &e);
+        T    remove(Rank r);
+        int  remove(Rank lo, Rank hi);
+        Rank deduplicate();
+
+        template<typename VST>
+        void traverse(VST &visit);
+
         T       &operator[](Rank r);
         const T &operator[](Rank r) const;
     };
@@ -94,11 +108,89 @@ namespace dsa {
         m_capacity >>= 1;
         m_elem = new T[m_capacity];
 
-        for (int i = 0; i < m_size; ++i) {
+        for (Rank i = 0; i < m_size; ++i) {
             m_elem[i] = oldElem[i];
         }
 
         delete[] oldElem;
+    }
+
+    template<typename T>
+    Rank Vector<T>::size() const {
+        return m_size;
+    }
+
+    template<typename T>
+    bool Vector<T>::isEmpty() const {
+        return m_size == 0;
+    }
+
+    template<typename T>
+    Rank Vector<T>::find(const T &e) const {
+        return find(e, 0, m_size);
+    }
+
+    template<typename T>
+    Rank Vector<T>::find(const T &e, Rank lo, Rank hi) const {
+        while ((lo < hi) && (e != m_elem[hi])) {
+            hi--;
+        }
+        return hi;
+    }
+
+    template<typename T>
+    void Vector<T>::insert(Rank r, const T &e) {
+        expand();
+        for (Rank i = m_size; r < i; i--) {
+            m_elem[i] = m_elem[i - 1];
+        }
+        m_elem[r] = e;
+        m_size++;
+    }
+
+    template<typename T>
+    T Vector<T>::remove(Rank r) {
+        T e = m_elem[r];
+        remove(r, r + 1);
+        return e;
+    }
+
+    template<typename T>
+    int Vector<T>::remove(Rank lo, Rank hi) {
+        if (lo == hi) {
+            return 0;
+        }
+        while (hi < m_size) {
+            m_elem[lo] = m_elem[hi];
+
+            lo++;
+            hi++;
+        }
+        m_size = lo;
+        shrink();
+        return hi - lo;
+    }
+
+    template<typename T>
+    Rank Vector<T>::deduplicate() {
+        Rank oldSize = m_size;
+        Rank i = 1;
+        while (i < m_size) {
+            if (find(m_elem[i], 0, i) != -1) {
+                remove(i);
+            } else {
+                i++;
+            }
+        }
+        return oldSize - m_size;
+    }
+
+    template<typename T>
+    template<typename VST>
+    void Vector<T>::traverse(VST &visit) {
+        for (Rank i = 0; i < m_size; i++) {
+            visit(m_elem[i]);
+        }
     }
 
     template<typename T>
