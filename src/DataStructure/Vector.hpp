@@ -1,5 +1,7 @@
 #pragma once
 
+#include <algorithm>
+
 typedef int Rank;
 
 #define DEFAULT_CAPACITY 3
@@ -13,6 +15,8 @@ namespace dsa {
         T   *m_elem;
 
         void copyFrom(T const *A, Rank lo, Rank hi);
+        void expand();
+        void shrink();
 
     public:
         Vector(Rank c = DEFAULT_CAPACITY, Rank s = 0, T v = 0) {
@@ -59,5 +63,38 @@ namespace dsa {
             m_size++;
             lo++;
         }
+    }
+
+    template<typename T>
+    void Vector<T>::expand() {
+        if (m_size < m_capacity) {
+            return;
+        }
+
+        T *oldElem = m_elem;
+        m_capacity = std::max(m_capacity, DEFAULT_CAPACITY) << 1;
+        m_elem = new T[m_capacity];
+
+        for (Rank i = 0; i < m_size; ++i) {
+            m_elem[i] = oldElem[i];
+        }
+
+        delete[] oldElem;
+    }
+
+    template<typename T>
+    void Vector<T>::shrink() {
+        if ((m_capacity < DEFAULT_CAPACITY << 1) || (m_capacity < m_size << 2)) {
+            return;
+        }
+        T *oldElem = m_elem;
+        m_capacity >>= 1;
+        m_elem = new T[m_capacity];
+
+        for (int i = 0; i < m_size; ++i) {
+            m_elem[i] = oldElem[i];
+        }
+
+        delete[] oldElem;
     }
 }  // namespace dsa
