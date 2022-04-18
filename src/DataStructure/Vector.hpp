@@ -49,6 +49,9 @@ namespace dsa {
         ~Vector() {
             delete[] m_elem;
         }
+
+        T       &operator[](Rank r);
+        const T &operator[](Rank r) const;
     };
 
     template<typename T>
@@ -97,4 +100,15 @@ namespace dsa {
 
         delete[] oldElem;
     }
+
+    template<typename T>
+    T &Vector<T>::operator[](Rank r) {
+        return m_elem[r];
+    }
+
+    template<typename T>
+    const T &Vector<T>::operator[](Rank r) const {
+        return m_elem[r];
+    }
+
 }  // namespace dsa
