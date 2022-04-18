@@ -132,8 +132,11 @@ namespace dsa {
 
     template<typename T>
     Rank Vector<T>::find(const T &e, Rank lo, Rank hi) const {
-        while ((lo < hi) && (e != m_elem[hi])) {
+        while (lo < hi) {
             hi--;
+            if (e == m_elem[hi]) {
+                break;
+            }
         }
         return hi;
     }
