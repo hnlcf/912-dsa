@@ -53,13 +53,17 @@ namespace dsa {
         // Read-Only interface
         bool isEmpty() const;
         Rank size() const;
-        Rank find(T const &e) const;
-        Rank find(T const &e, Rank lo, Rank hi) const;
-
         void insert(Rank r, T const &e);
         T    remove(Rank r);
         int  remove(Rank lo, Rank hi);
+
+        Rank find(T const &e) const;
+        Rank find(T const &e, Rank lo, Rank hi) const;
         Rank deduplicate();
+
+        // For sorted Vector
+        int  disordered() const;
+        Rank uniquify();
 
         template<typename VST>
         void traverse(VST &visit);
@@ -142,6 +146,31 @@ namespace dsa {
     }
 
     template<typename T>
+    int Vector<T>::disordered() const {
+        int n = 0;
+        for (Rank i = 1; i < m_size; ++i) {
+            if (m_elem[i] < m_elem[i - 1]) {
+                n++;
+            }
+        }
+        return n;
+    }
+
+    template<typename T>
+    Rank Vector<T>::uniquify() {
+        Rank i = 0;
+        Rank j = 1;
+        while (j < m_size) {
+            if (m_elem[i] != m_elem[j]) {
+                i++;
+                m_elem[i] = m_elem[j];
+            }
+            j++;
+        }
+        return j - i;
+    }
+
+    template<typename T>
     void Vector<T>::insert(Rank r, const T &e) {
         expand();
         for (Rank i = m_size; r < i; i--) {
@@ -206,4 +235,10 @@ namespace dsa {
         return m_elem[r];
     }
 
+    template<typename T>
+    struct Increase {
+        virtual void operator()(T &e) {
+            e++;
+        }
+    };
 }  // namespace dsa
