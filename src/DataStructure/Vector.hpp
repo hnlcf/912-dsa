@@ -1,12 +1,22 @@
 #pragma once
 
 #include <algorithm>
+#include <cstdlib>
+
+#include "Fib.hpp"
 
 using Rank = int;
 
 #define DEFAULT_CAPACITY 3
 
 namespace dsa {
+
+    template<typename T>
+    static Rank binarySearchA(T *A, T const &e, Rank lo, Rank hi);
+
+    template<typename T>
+    static Rank fibonacciSearch(T *A, T const &e, Rank lo, Rank hi);
+
     template<typename T>
     class Vector {
     protected:
@@ -64,6 +74,8 @@ namespace dsa {
         // For sorted Vector
         int  disordered() const;
         Rank uniquify();
+
+        Rank search(T const &e, Rank lo, Rank hi) const;
 
         template<typename VST>
         void traverse(VST &visit);
@@ -168,6 +180,48 @@ namespace dsa {
             j++;
         }
         return j - i;
+    }
+
+    // Search `e` in `A[lo, hi)`
+    template<typename T>
+    Rank Vector<T>::search(T const &e, Rank lo, Rank hi) const {
+        return (rand() % 2) == 1 ? binarySearchA(m_elem, e, lo, hi)
+                                 : fibonacciSearch(m_elem, e, lo, hi);
+    }
+
+    template<typename T>
+    static Rank binarySearchA(T *A, T const &e, Rank lo, Rank hi) {
+        while (lo < hi) {
+            Rank mi = (lo + hi) >> 1;
+            if (e < A[mi]) {
+                hi = mi;
+            } else if (A[mi] < e) {
+                lo = mi + 1;
+            } else {
+                return mi;
+            }
+        }
+        return -1;
+    }
+
+
+    template<typename T>
+    static Rank fibonacciSearch(T *A, T const &e, Rank lo, Rank hi) {
+        Fib fib(hi - lo);
+        while (lo < hi) {
+            while ((hi - lo) < fib.get()) {
+                fib.prev();
+            }
+            Rank mi = lo + fib.get() - 1;
+            if (e < A[mi]) {
+                hi = mi;
+            } else if (A[mi] < e) {
+                lo = mi + 1;
+            } else {
+                return mi;
+            }
+        }
+        return -1;
     }
 
     template<typename T>
