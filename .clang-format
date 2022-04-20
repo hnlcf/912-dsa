@@ -6,7 +6,7 @@ AlignConsecutiveAssignments: None
 AlignOperands: Align
 AlignConsecutiveDeclarations: Consecutive
 AlignEscapedNewlines: Right
-QualifierAlignment: Left
+# QualifierAlignment: Left
 AlignConsecutiveMacros: Consecutive
 AlignConsecutiveBitFields: Consecutive
 AlignArrayOfStructures: Right
