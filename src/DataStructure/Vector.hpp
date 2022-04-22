@@ -11,8 +11,16 @@ using Rank = int;
 
 namespace dsa {
 
+    /// Deprecated
     template<typename T>
     static Rank binarySearchA(T *A, T const &e, Rank lo, Rank hi);
+
+    /// Deprecated
+    template<typename T>
+    static Rank binarySearchB(T *A, T const &e, Rank lo, Rank hi);
+
+    template<typename T>
+    static Rank binarySearchC(T *A, T const &e, Rank lo, Rank hi);
 
     template<typename T>
     static Rank fibonacciSearch(T *A, T const &e, Rank lo, Rank hi);
@@ -185,7 +193,7 @@ namespace dsa {
     // Search `e` in `A[lo, hi)`
     template<typename T>
     Rank Vector<T>::search(T const &e, Rank lo, Rank hi) const {
-        return (rand() % 2) == 1 ? binarySearchA(m_elem, e, lo, hi)
+        return (rand() % 2) == 1 ? binarySearchC(m_elem, e, lo, hi)
                                  : fibonacciSearch(m_elem, e, lo, hi);
     }
 
@@ -204,24 +212,47 @@ namespace dsa {
         return -1;
     }
 
+    template<typename T>
+    static Rank binarySearchB(T *A, T const &e, Rank lo, Rank hi) {
+        while (lo + 1 < hi) {
+            Rank mi = (lo + hi) >> 1;
+            if (e < A[mi]) {
+                hi = mi;
+            } else if (A[mi] <= e) {
+                lo = mi;
+            }
+        }
+        return e < A[lo] ? lo - 1 : lo;
+    }
+
+    template<typename T>
+    static Rank binarySearchC(T *A, T const &e, Rank lo, Rank hi) {
+        while (lo < hi) {
+            Rank mi = (lo + hi) >> 1;
+            if (e < A[mi]) {
+                hi = mi;
+            } else if (A[mi] <= e) {
+                lo = mi + 1;
+            }
+        }
+        return lo - 1;
+    }
 
     template<typename T>
     static Rank fibonacciSearch(T *A, T const &e, Rank lo, Rank hi) {
         Fib fib(hi - lo);
-        while (lo < hi) {
+        while (lo + 1 < hi) {
             while ((hi - lo) < fib.get()) {
                 fib.prev();
             }
             Rank mi = lo + fib.get() - 1;
             if (e < A[mi]) {
                 hi = mi;
-            } else if (A[mi] < e) {
-                lo = mi + 1;
-            } else {
-                return mi;
+            } else if (A[mi] <= e) {
+                lo = mi;
             }
         }
-        return -1;
+        return e < A[lo] ? lo - 1 : lo;
     }
 
     template<typename T>
