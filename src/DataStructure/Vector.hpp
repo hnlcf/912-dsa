@@ -25,6 +25,10 @@ namespace dsa {
     template<typename T>
     static Rank fibonacciSearch(T *A, T const &e, Rank lo, Rank hi);
 
+    /// Search `e` in `A[lo, hi]`
+    template<typename T>
+    static Rank interpolation(T *A, T const &e, Rank lo, Rank hi);
+
     template<typename T>
     class Vector {
     protected:
@@ -84,6 +88,16 @@ namespace dsa {
         Rank uniquify();
 
         Rank search(T const &e, Rank lo, Rank hi) const;
+
+        void sort(Rank lo, Rank hi);
+
+        /// `O(n^2)`
+        void bubbleSort(Rank lo, Rank hi);
+        void selectionSort(Rank lo, Rank hi);
+
+        /// `O(nlgn)`
+        void mergeSort(Rank lo, Rank hi);
+        void merge(Rank lo, Rank mi, Rank hi);
 
         template<typename VST>
         void traverse(VST &visit);
@@ -198,61 +212,108 @@ namespace dsa {
     }
 
     template<typename T>
-    static Rank binarySearchA(T *A, T const &e, Rank lo, Rank hi) {
+    void Vector<T>::sort(Rank lo, Rank hi) {
+        switch (rand() % 3) {
+            case 1:
+                bubbleSort(lo, hi);
+                break;
+            case 2:
+                selectionSort(lo, hi);
+                break;
+            default:
+                mergeSort(lo, hi);
+                break;
+        }
+    }
+
+    template<typename T>
+    void Vector<T>::bubbleSort(Rank lo, Rank hi) {
+        hi -= 1;
+        Rank last = hi;
         while (lo < hi) {
-            Rank mi = (lo + hi) >> 1;
-            if (e < A[mi]) {
-                hi = mi;
-            } else if (A[mi] < e) {
-                lo = mi + 1;
+            last = lo;
+            for (Rank i = lo; i < hi; i++) {
+                if (m_elem[i] > m_elem[i + 1]) {
+                    swap(m_elem[i], m_elem[i + 1]);
+                    last = i;
+                }
+            }
+            hi = last;
+        }
+    }
+
+    template<typename T>
+    void Vector<T>::selectionSort(Rank lo, Rank hi) {
+        for (Rank i = lo; i < hi; ++i) {
+            T    min = m_elem[i];
+            Rank min_i = i;
+            for (Rank j = i + 1; j < hi; ++j) {
+                if (m_elem[j] < min) {
+                    min = m_elem[j];
+                    min_i = j;
+                }
+            }
+            swap(m_elem[i], m_elem[min_i]);
+        }
+    }
+
+    template<typename T>
+    void Vector<T>::mergeSort(Rank lo, Rank hi) {
+        if (hi - lo < 2) {
+            return;
+        }
+        Rank mi = (lo + hi) >> 1;
+        mergeSort(lo, mi);
+        mergeSort(mi, hi);
+        merge(lo, mi, hi);
+    }
+
+    template<typename T>
+    void Vector<T>::merge(Rank lo, Rank mi, Rank hi) {
+        Rank l1 = mi - lo;
+        Rank l2 = hi - mi;
+        T   *B = new T[l1];
+        T   *C = new T[l2];
+
+        T *A = m_elem + lo;
+        for (int i = 0; i < l1; ++i) {
+            B[i] = A[i];
+        }
+
+        A = m_elem + mi;
+        for (int i = 0; i < l2; ++i) {
+            C[i] = A[i];
+        }
+
+        A = m_elem + lo;
+        Rank i = 0;
+        Rank j = 0;
+        Rank k = 0;
+        while ((j < l1) && (k < l2)) {
+            if (B[j] < C[k]) {
+                A[i] = B[j];
+                j++;
             } else {
-                return mi;
+                A[i] = C[k];
+                k++;
             }
+            i++;
         }
-        return -1;
-    }
 
-    template<typename T>
-    static Rank binarySearchB(T *A, T const &e, Rank lo, Rank hi) {
-        while (lo + 1 < hi) {
-            Rank mi = (lo + hi) >> 1;
-            if (e < A[mi]) {
-                hi = mi;
-            } else if (A[mi] <= e) {
-                lo = mi;
-            }
+        while (j < l1) {
+            A[i] = B[j];
+            j++;
+            i++;
         }
-        return e < A[lo] ? lo - 1 : lo;
-    }
 
-    template<typename T>
-    static Rank binarySearchC(T *A, T const &e, Rank lo, Rank hi) {
-        while (lo < hi) {
-            Rank mi = (lo + hi) >> 1;
-            if (e < A[mi]) {
-                hi = mi;
-            } else if (A[mi] <= e) {
-                lo = mi + 1;
-            }
+        while (k < l2) {
+            A[i] = C[k];
+            k++;
+            i++;
         }
-        return lo - 1;
-    }
 
-    template<typename T>
-    static Rank fibonacciSearch(T *A, T const &e, Rank lo, Rank hi) {
-        Fib fib(hi - lo);
-        while (lo + 1 < hi) {
-            while ((hi - lo) < fib.get()) {
-                fib.prev();
-            }
-            Rank mi = lo + fib.get() - 1;
-            if (e < A[mi]) {
-                hi = mi;
-            } else if (A[mi] <= e) {
-                lo = mi;
-            }
-        }
-        return e < A[lo] ? lo - 1 : lo;
+        delete[] C;
+        delete[] B;
     }
 
     template<typename T>
@@ -326,4 +387,76 @@ namespace dsa {
             e++;
         }
     };
+
+    template<typename T>
+    static Rank binarySearchA(T *A, T const &e, Rank lo, Rank hi) {
+        while (lo < hi) {
+            Rank mi = (lo + hi) >> 1;
+            if (e < A[mi]) {
+                hi = mi;
+            } else if (A[mi] < e) {
+                lo = mi + 1;
+            } else {
+                return mi;
+            }
+        }
+        return -1;
+    }
+
+    template<typename T>
+    static Rank binarySearchB(T *A, T const &e, Rank lo, Rank hi) {
+        while (lo + 1 < hi) {
+            Rank mi = (lo + hi) >> 1;
+            if (e < A[mi]) {
+                hi = mi;
+            } else if (A[mi] <= e) {
+                lo = mi;
+            }
+        }
+        return e < A[lo] ? lo - 1 : lo;
+    }
+
+    template<typename T>
+    static Rank binarySearchC(T *A, T const &e, Rank lo, Rank hi) {
+        while (lo < hi) {
+            Rank mi = (lo + hi) >> 1;
+            if (e < A[mi]) {
+                hi = mi;
+            } else if (A[mi] <= e) {
+                lo = mi + 1;
+            }
+        }
+        return lo - 1;
+    }
+
+    template<typename T>
+    static Rank fibonacciSearch(T *A, T const &e, Rank lo, Rank hi) {
+        Fib fib(hi - lo);
+        while (lo + 1 < hi) {
+            while ((hi - lo) < fib.get()) {
+                fib.prev();
+            }
+            Rank mi = lo + fib.get() - 1;
+            if (e < A[mi]) {
+                hi = mi;
+            } else if (A[mi] <= e) {
+                lo = mi;
+            }
+        }
+        return e < A[lo] ? lo - 1 : lo;
+    }
+
+    template<typename T>
+    static Rank interpolation(T *A, T const &e, Rank lo, Rank hi) {
+        while (lo < hi) {
+            Rank mi = lo + (hi - lo) * (e - A[lo]) / (A[hi] - A[lo]);
+            if (e < A[mi]) {
+                hi = mi - 1;
+            } else if (A[mi] < e) {
+                lo = mi + 1;
+            }
+        }
+        return e == A[lo] ? lo : -1;
+    }
+
 }  // namespace dsa
