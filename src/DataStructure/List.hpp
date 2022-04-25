@@ -40,6 +40,9 @@ namespace dsa {
         Node<T> insertAsFirst(T const &e);
         Node<T> insertAsLast(T const &e);
         T       remove(Node<T> p);
+
+        Node<T> find(T const &e, int n, Node<T> p) const;
+        Rank    deduplicate();
     };
 
     template<typename T>
@@ -149,6 +152,7 @@ namespace dsa {
         m_size++;
         return m_trailer->insertAsPred(e);
     }
+
     template<typename T>
     T List<T>::remove(Node<T> p) {
         T e = p->m_data;
@@ -159,5 +163,32 @@ namespace dsa {
 
         m_size--;
         return e;
+    }
+
+    template<typename T>
+    Node<T> List<T>::find(const T &e, int n, Node<T> p) const {
+        while (n > 0) {
+            p = p->m_pred;
+            if (e == p->m_data) {
+                return p;
+            }
+            n--;
+        }
+        return nullptr;
+    }
+
+    template<typename T>
+    Rank List<T>::deduplicate() {
+        Rank    oldSize = m_size;
+        Node<T> p = first();
+        for (Rank r = 0; p != m_trailer; p = p->m_succ) {
+            auto q = find(p->m_data, r, p);
+            if (q != nullptr) {
+                remove(q);
+            } else {
+                r++;
+            }
+        }
+        return oldSize = m_size;
     }
 }
