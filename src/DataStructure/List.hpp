@@ -124,12 +124,12 @@ namespace dsa {
 
     template<typename T>
     T &List<T>::operator[](Rank r) const {
-        Node<T> temp = first();
+        Node<T> p = first();
         while (r > 0) {
-            temp = temp->m_succ;
+            p = p->m_succ;
             r--;
         }
-        return temp->m_data;
+        return p->m_data;
     }
 
     template<typename T>
