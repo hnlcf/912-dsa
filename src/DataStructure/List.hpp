@@ -46,6 +46,9 @@ namespace dsa {
 
         template<typename VST>
         void traverse(VST &visit);
+
+        int     uniquify();
+        Node<T> search(T const &e, int n, Node<T> p);
     };
 
     template<typename T>
