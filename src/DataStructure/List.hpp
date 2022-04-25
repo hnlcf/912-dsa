@@ -43,6 +43,9 @@ namespace dsa {
 
         Node<T> find(T const &e, int n, Node<T> p) const;
         Rank    deduplicate();
+
+        template<typename VST>
+        void traverse(VST &visit);
     };
 
     template<typename T>
@@ -190,5 +193,15 @@ namespace dsa {
             }
         }
         return oldSize = m_size;
+    }
+
+    template<class T>
+    template<typename VST>
+    void List<T>::traverse(VST &visit) {
+        Node<T> p = first();
+        while (p != m_trailer) {
+            visit(p->m_data);
+            p = p->m_succ;
+        }
     }
 }
