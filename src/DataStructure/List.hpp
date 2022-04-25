@@ -20,8 +20,16 @@ namespace dsa {
 
     protected:
         void init();
+        Rank clear();
+        void copyNodes(Node<T> p, int n);
 
     public:
+        List();
+        List(List<T> const &l);
+        List(List<T> const &l, Rank r, int n);
+        List(Node<T> p, int n);
+        ~List();
+
         int     size() const;
         Node<T> first() const;
         Node<T> last() const;
@@ -29,8 +37,37 @@ namespace dsa {
 
         Node<T> insertBefore(Node<T> p, T const &e);
         Node<T> insertAfter(Node<T> p, T const &e);
+        Node<T> insertAsFirst(T const &e);
+        Node<T> insertAsLast(T const &e);
         T       remove(Node<T> p);
     };
+
+    template<typename T>
+    List<T>::List() {
+        init();
+    }
+
+    template<typename T>
+    List<T>::List(const List<T> &l) {
+        copyNodes(l.first(), l.m_size);
+    }
+
+    template<typename T>
+    List<T>::List(const List<T> &l, Rank r, int n) {
+        copyNodes(l[r], n);
+    }
+
+    template<typename T>
+    List<T>::List(Node<T> p, int n) {
+        copyNodes(p, n);
+    }
+
+    template<typename T>
+    List<T>::~List() {
+        clear();
+        delete m_header;
+        delete m_trailer;
+    }
 
     template<typename T>
     void List<T>::init() {
@@ -43,6 +80,25 @@ namespace dsa {
 
         m_trailer->m_pred = m_header;
         m_trailer->m_succ = nullptr;
+    }
+
+    template<typename T>
+    Rank List<T>::clear() {
+        Rank oldSize = m_size;
+        while (m_size > 0) {
+            remove(m_header->m_succ);
+        }
+        return oldSize;
+    }
+
+    template<typename T>
+    void List<T>::copyNodes(Node<T> p, int n) {
+        init();
+        while (n > 0) {
+            insertAsLast(p->m_data);
+            p = p->m_succ;
+            n--;
+        }
     }
 
     template<typename T>
@@ -82,6 +138,17 @@ namespace dsa {
         return p->insertAsSucc(e);
     }
 
+    template<typename T>
+    Node<T> List<T>::insertAsFirst(const T &e) {
+        m_size++;
+        return m_header->insertAsSucc(e);
+    }
+
+    template<typename T>
+    Node<T> List<T>::insertAsLast(const T &e) {
+        m_size++;
+        return m_trailer->insertAsPred(e);
+    }
     template<typename T>
     T List<T>::remove(Node<T> p) {
         T e = p->m_data;
