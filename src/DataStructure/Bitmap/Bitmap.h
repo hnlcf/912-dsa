@@ -8,7 +8,7 @@ namespace dsa {
     class Bitmap {
     private:
         int            bytes_num;
-        unsigned char *map;
+        unsigned char *bitmap;
 
     protected:
         void init(int n);
@@ -21,13 +21,13 @@ namespace dsa {
         explicit Bitmap(char *file, int n = 8) {
             init(n);
             FILE *fp = fopen(file, "r");
-            fread(map, sizeof(unsigned char), bytes_num, fp);
+            fread(bitmap, sizeof(unsigned char), bytes_num, fp);
             fclose(fp);
         }
 
         ~Bitmap() {
-            delete[] map;
-            map = nullptr;
+            delete[] bitmap;
+            bitmap = nullptr;
         }
 
         bool test(int k);

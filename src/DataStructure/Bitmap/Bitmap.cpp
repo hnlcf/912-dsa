@@ -3,8 +3,8 @@
 void
 dsa::Bitmap::init(int n) {
     bytes_num = (n + 7) / 8;
-    map = new unsigned char[bytes_num];
-    memset(map, 0, bytes_num);
+    bitmap = new unsigned char[bytes_num];
+    memset(bitmap, 0, bytes_num);
 }
 
 bool
@@ -13,25 +13,25 @@ dsa::Bitmap::test(int k) {
     unsigned char offset = k & 0x07;      // k % 8
     unsigned char mask = 0x80 >> offset;  // the k-th bit
 
-    return map[q] & (mask);
+    return bitmap[q] & (mask);
 }
 
 void
 dsa::Bitmap::set(int k) {
     expand(k);
-    map[k >> 3] |= (0x80 >> (k & 0x07));
+    bitmap[k >> 3] |= (0x80 >> (k & 0x07));
 }
 
 void
 dsa::Bitmap::clear(int k) {
     expand(k);
-    map[k >> 3] &= ~(0x80 >> (k & 0x07));
+    bitmap[k >> 3] &= ~(0x80 >> (k & 0x07));
 }
 
 void
 dsa::Bitmap::dump(char *file) {
     FILE *fp = fopen(file, "w");
-    fwrite(map, sizeof(unsigned char), bytes_num, fp);
+    fwrite(bitmap, sizeof(unsigned char), bytes_num, fp);
     fclose(fp);
 }
 
@@ -54,10 +54,10 @@ dsa::Bitmap::expand(int k) {
         return;
     }
     int            oldN = bytes_num;
-    unsigned char *oldMap = map;
+    unsigned char *oldMap = bitmap;
 
     init(2 * k);
-    memcpy(map, oldMap, oldN);
+    memcpy(bitmap, oldMap, oldN);
 
     delete[] oldMap;
 }
