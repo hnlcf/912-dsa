@@ -207,4 +207,33 @@ namespace dsa {
             p = p->m_succ;
         }
     }
+
+    template<typename T>
+    int List<T>::uniquify() {
+        Rank    oldSize = m_size;
+        Node<T> p = first();
+        Node<T> q = p->m_succ;
+
+        while (p != m_trailer) {
+            if (p->m_data != q->m_data) {
+                p = q;
+            } else {
+                remove(q);
+            }
+            q = p->m_succ;
+        }
+        return oldSize - m_size;
+    }
+
+    template<typename T>
+    Node<T> List<T>::search(const T &e, int n, Node<T> p) {
+        while (n > 0) {
+            p = p->m_pred;
+            if (e < p->m_data) {
+                break;
+            }
+            n--;
+        }
+        return p;
+    }
 }
