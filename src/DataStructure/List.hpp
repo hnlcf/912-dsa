@@ -49,6 +49,11 @@ namespace dsa {
 
         int     uniquify();
         Node<T> search(T const &e, int n, Node<T> p);
+
+        void    selectionSort(Node<T> p, int n);
+        Node<T> selectMax(Node<T> p, int n);
+
+        void insertionSort(Node<T> p, int n);
     };
 
     template<typename T>
@@ -235,5 +240,49 @@ namespace dsa {
             n--;
         }
         return p;
+    }
+
+    template<typename T>
+    void List<T>::selectionSort(Node<T> p, int n) {
+        // Initialize head and tail
+        Node<T> head = p->m_pred;
+        Node<T> tail = p;
+        for (int i = 0; i < n; ++i) {
+            tail = tail->m_succ;
+        }
+
+        // Compare, select the max item and swap
+        while (n > 0) {
+            Node<T> max = selectMax(head->m_succ, n);
+            std::swap(max->m_data, tail->m_data);
+            tail = tail->m_pred;
+            n--;
+        }
+    }
+
+    template<typename T>
+    Node<T> List<T>::selectMax(Node<T> p, int n) {
+        Node<T> max = p;
+        Node<T> cur = p;
+        while (n > 1) {
+            cur = cur->m_succ;
+            if (cur->m_data >= max->m_data) {
+                cur = max;
+            }
+            n--;
+        }
+        return max;
+    }
+
+    template<typename T>
+    void List<T>::insertionSort(Node<T> p, int n) {
+        Node<T> cur = p->m_succ;
+        for (int i = 1; i < n; ++i) {
+            auto pos = search(cur->m_data, i, cur);
+            insertAfter(pos, cur->m_data);
+
+            cur = cur->m_succ;
+            remove(cur->m_pred);
+        }
     }
 }
