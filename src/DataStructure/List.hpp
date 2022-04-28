@@ -56,6 +56,8 @@ namespace dsa {
         void insertionSort(Node<T> p, int n);
 
         void mergeSort(Node<T> p, int n);
+
+        void sort(Node<T> p, int n);
     };
 
     template<typename T>
@@ -202,7 +204,7 @@ namespace dsa {
                 r++;
             }
         }
-        return oldSize = m_size;
+        return oldSize - m_size;
     }
 
     template<class T>
@@ -328,5 +330,20 @@ namespace dsa {
         mergeSort(q, n - mi);
 
         merge(this, p, mi, this, q, n - mi);
+    }
+
+    template<typename T>
+    void List<T>::sort(Node<T> p, int n) {
+        switch (random() % 3) {
+            case 1:
+                selectionSort(p, n);
+                break;
+            case 2:
+                insertionSort(p, n);
+                break;
+            default:
+                mergeSort(p, n);
+                break;
+        }
     }
 }
