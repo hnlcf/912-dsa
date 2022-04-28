@@ -46,6 +46,16 @@ namespace dsa {
 
         template<typename VST>
         void traverse(VST &visit);
+
+        int     uniquify();
+        Node<T> search(T const &e, int n, Node<T> p);
+
+        void    selectionSort(Node<T> p, int n);
+        Node<T> selectMax(Node<T> p, int n);
+
+        void insertionSort(Node<T> p, int n);
+
+        void mergeSort(Node<T> p, int n);
     };
 
     template<typename T>
@@ -203,5 +213,120 @@ namespace dsa {
             visit(p->m_data);
             p = p->m_succ;
         }
+    }
+
+    template<typename T>
+    int List<T>::uniquify() {
+        Rank    oldSize = m_size;
+        Node<T> p = first();
+        Node<T> q = p->m_succ;
+
+        while (p != m_trailer) {
+            if (p->m_data != q->m_data) {
+                p = q;
+            } else {
+                remove(q);
+            }
+            q = p->m_succ;
+        }
+        return oldSize - m_size;
+    }
+
+    template<typename T>
+    Node<T> List<T>::search(const T &e, int n, Node<T> p) {
+        while (n > 0) {
+            p = p->m_pred;
+            if (e < p->m_data) {
+                break;
+            }
+            n--;
+        }
+        return p;
+    }
+
+    template<typename T>
+    void List<T>::selectionSort(Node<T> p, int n) {
+        // Initialize head and tail
+        Node<T> head = p->m_pred;
+        Node<T> tail = p;
+        for (int i = 0; i < n; ++i) {
+            tail = tail->m_succ;
+        }
+
+        // Compare, select the max item and swap
+        while (n > 0) {
+            Node<T> max = selectMax(head->m_succ, n);
+            std::swap(max->m_data, tail->m_data);
+            tail = tail->m_pred;
+            n--;
+        }
+    }
+
+    template<typename T>
+    Node<T> List<T>::selectMax(Node<T> p, int n) {
+        Node<T> max = p;
+        Node<T> cur = p;
+        while (n > 1) {
+            cur = cur->m_succ;
+            if (cur->m_data >= max->m_data) {
+                cur = max;
+            }
+            n--;
+        }
+        return max;
+    }
+
+    template<typename T>
+    void List<T>::insertionSort(Node<T> p, int n) {
+        Node<T> cur = p->m_succ;
+        for (int i = 1; i < n; ++i) {
+            auto pos = search(cur->m_data, i, cur);
+            insertAfter(pos, cur->m_data);
+
+            cur = cur->m_succ;
+            remove(cur->m_pred);
+        }
+    }
+
+    template<typename T>
+    static void merge(List<T> &l1, Node<T> &p1, int n1, List<T> &l2, Node<T> p2, int n2) {
+        Node<T> head = p1->m_pred;
+        while (n2 > 0) {
+            if ((n1 > 0) && (p1->m_data < p2->m_data)) {
+                p1 = p1->m_succ;
+
+                if (p1 == p2) {
+                    break;
+                }
+
+                n1--;
+            } else {
+                p2 = p2->m_succ;
+
+                auto e = l2.remove(p2->m_pred);
+                l1.insertBefore(p1, e);
+
+                n2--;
+            }
+        }
+        p1 = head->m_succ;
+    }
+
+    template<typename T>
+    void List<T>::mergeSort(Node<T> p, int n) {
+        if (n < 2) {
+            return;
+        }
+
+        Node<T> q = p;
+        int     mi = n >> 1;
+        for (int i = 0; i < mi; ++i) {
+            q = q->m_succ;
+        }
+
+        mergeSort(p, mi);
+        mergeSort(q, n - mi);
+
+        merge(this, p, mi, this, q, n - mi);
     }
 }
