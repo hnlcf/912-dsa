@@ -54,6 +54,8 @@ namespace dsa {
         Node<T> selectMax(Node<T> p, int n);
 
         void insertionSort(Node<T> p, int n);
+
+        void mergeSort(Node<T> p, int n);
     };
 
     template<typename T>
@@ -284,5 +286,47 @@ namespace dsa {
             cur = cur->m_succ;
             remove(cur->m_pred);
         }
+    }
+
+    template<typename T>
+    static void merge(List<T> &l1, Node<T> &p1, int n1, List<T> &l2, Node<T> p2, int n2) {
+        Node<T> head = p1->m_pred;
+        while (n2 > 0) {
+            if ((n1 > 0) && (p1->m_data < p2->m_data)) {
+                p1 = p1->m_succ;
+
+                if (p1 == p2) {
+                    break;
+                }
+
+                n1--;
+            } else {
+                p2 = p2->m_succ;
+
+                auto e = l2.remove(p2->m_pred);
+                l1.insertBefore(p1, e);
+
+                n2--;
+            }
+        }
+        p1 = head->m_succ;
+    }
+
+    template<typename T>
+    void List<T>::mergeSort(Node<T> p, int n) {
+        if (n < 2) {
+            return;
+        }
+
+        Node<T> q = p;
+        int     mi = n >> 1;
+        for (int i = 0; i < mi; ++i) {
+            q = q->m_succ;
+        }
+
+        mergeSort(p, mi);
+        mergeSort(q, n - mi);
+
+        merge(this, p, mi, this, q, n - mi);
     }
 }
