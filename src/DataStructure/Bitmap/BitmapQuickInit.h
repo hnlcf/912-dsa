@@ -1,10 +1,10 @@
 #pragma once
 
-using Rank = int;
-
 namespace dsa {
     class BitmapQuickInit {
     private:
+        using Rank = int;
+
         Rank *m_rank;   // store the ranks of all elements in the stack
         Rank  m_size;   // size of Bitmap
         Rank *m_stack;  // store map
