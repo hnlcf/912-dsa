@@ -5,4 +5,9 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(
         ${CMAKE_SOURCE_DIR}/src/DataStructure
 )
+
+add_subdirectory(DataStructure/Bitmap)
+
 add_executable(dsa dsa.cpp)
+
+target_link_libraries(dsa bitmap)
