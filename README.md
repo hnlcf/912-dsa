@@ -6,8 +6,8 @@
 ## Feature
 
 - Data Structure
-    - [x] Vector
-    - [x] Fibonacci
-    - [ ] Bitmap
-    - [ ] List
-
+  - [x] Vector
+  - [x] Fibonacci
+  - [x] Bitmap
+  - [x] List
+  - [ ] Stack
