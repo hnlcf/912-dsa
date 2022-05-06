@@ -41,7 +41,20 @@ namespace dsa {
         void shrink();
 
     public:
-        Vector(Rank c = DEFAULT_CAPACITY, Rank s = 0, T v = 0) {
+        Vector() = default;
+
+        Vector(std::initializer_list<T> list) {
+            m_size = list.size();
+            m_capacity = m_size;
+            m_elem = new T[m_capacity];
+            T *p = m_elem;
+            for (const T &e: list) {
+                *p = e;
+                p++;
+            }
+        }
+
+        explicit Vector(Rank c = DEFAULT_CAPACITY, Rank s = 0, T v = 0) {
             m_size = 0;
             m_capacity = c;
             m_elem = new T[m_capacity];
@@ -207,13 +220,13 @@ namespace dsa {
     // Search `e` in `A[lo, hi)`
     template<typename T>
     Rank Vector<T>::search(T const &e, Rank lo, Rank hi) const {
-        return (rand() % 2) == 1 ? binarySearchC(m_elem, e, lo, hi)
+        return (random() % 2) == 1 ? binarySearchC(m_elem, e, lo, hi)
                                  : fibonacciSearch(m_elem, e, lo, hi);
     }
 
     template<typename T>
     void Vector<T>::sort(Rank lo, Rank hi) {
-        switch (rand() % 3) {
+        switch (random() % 3) {
             case 1:
                 bubbleSort(lo, hi);
                 break;
