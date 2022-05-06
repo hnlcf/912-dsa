@@ -41,7 +41,20 @@ namespace dsa {
         void shrink();
 
     public:
-        Vector(Rank c = DEFAULT_CAPACITY, Rank s = 0, T v = 0) {
+        Vector() = default;
+
+        Vector(std::initializer_list<T> list) {
+            m_size = list.size();
+            m_capacity = m_size;
+            m_elem = new T[m_capacity];
+            T *p = m_elem;
+            for (const T &e: list) {
+                *p = e;
+                p++;
+            }
+        }
+
+        explicit Vector(Rank c = DEFAULT_CAPACITY, Rank s = 0, T v = 0) {
             m_size = 0;
             m_capacity = c;
             m_elem = new T[m_capacity];
