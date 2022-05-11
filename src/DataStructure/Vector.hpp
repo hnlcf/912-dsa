@@ -83,6 +83,7 @@ namespace dsa {
 
         ~Vector() {
             delete[] m_elem;
+            m_elem = nullptr;
         }
 
         // Read-Only interface
@@ -148,6 +149,7 @@ namespace dsa {
         }
 
         delete[] oldElem;
+        oldElem = nullptr;
     }
 
     template<typename T>
@@ -164,6 +166,7 @@ namespace dsa {
         }
 
         delete[] oldElem;
+        oldElem = nullptr;
     }
 
     template<typename T>
@@ -221,7 +224,7 @@ namespace dsa {
     template<typename T>
     Rank Vector<T>::search(T const &e, Rank lo, Rank hi) const {
         return (random() % 2) == 1 ? binarySearchC(m_elem, e, lo, hi)
-                                 : fibonacciSearch(m_elem, e, lo, hi);
+                                   : fibonacciSearch(m_elem, e, lo, hi);
     }
 
     template<typename T>
@@ -327,6 +330,8 @@ namespace dsa {
 
         delete[] C;
         delete[] B;
+        B = nullptr;
+        C = nullptr;
     }
 
     template<typename T>
