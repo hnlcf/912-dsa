@@ -22,7 +22,6 @@ jobs:
                     version: 1.10.0
 
             -   name: Build with CMake
-                run: pwd
                 uses: ashutoshvarma/action-cmake-build@master
                 with:
                     build-dir: ${{ runner.workspace }}/build
