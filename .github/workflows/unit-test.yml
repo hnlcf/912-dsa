@@ -1,0 +1,38 @@
+name: Catch2 Test
+
+on: [ push ]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v3
+
+            -   name: Setup Conan
+                uses: turtlebrowser/get-conan@v1.0
+
+            -   name: Install package
+                run: conan install ${{ github.workspace }} -if=${{ github.workspace }}/build
+
+            -   name: Setup Ninja
+                uses: ashutoshvarma/setup-ninja@master
+                with:
+                    version: 1.10.0
+
+            -   name: Build with CMake
+                uses: ashutoshvarma/action-cmake-build@master
+                with:
+                    build-dir: ${{ runner.workspace }}/build
+                    cc: ${{ matrix.config.cc }}
+                    cxx: ${{ matrix.config.cxx }}
+                    configure-options: -G Ninja
+                    build-type: Release
+
+            -   name: Test
+            -   run: cd ${{ github.workspace }}/build/test && ./test
+
+
+
+
