@@ -21,10 +21,10 @@ namespace dsa {
             m_vector = nullptr;
         };
 
-        void push(T const &e);
-        T    pop();
-        T   &top();
-        bool isEmpty();
+        void push(T const &e) override;
+        T    pop() override;
+        T   &top() override;
+        bool isEmpty() override;
     };
 
     template<typename T>
