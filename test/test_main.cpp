@@ -1,10 +1,10 @@
-//
-// Created by changfeng on 2022/4/13.
-//
-#include <gtest/gtest.h>
+#define CATCH_CONFIG_MAIN
+#include "Vector.hpp"
+#include "catch2/catch.hpp"
 
-int
-main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+TEST_CASE("Vector can be initialized", "[Vector]") {
+    dsa::Vector<int> v1{ 0, 1, 2, 3 };
+    dsa::Vector<int> v2(v1);
+    // TODO: `==` operator is not implemented
+    REQUIRE(1 + 2 == 3);
 }
