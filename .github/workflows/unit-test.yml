@@ -37,7 +37,7 @@ jobs:
                     parallel: 12
 
             -   name: Run Test
-                run: ${{github.workspace}}build/test/test
+                run: ${{github.workspace}}/build/test/test
 
 
 
