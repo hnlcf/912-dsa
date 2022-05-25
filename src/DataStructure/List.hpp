@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ListNode.hpp"
-#include <iostream>
+#include <algorithm>
 
 using Rank = int;
 
