@@ -41,8 +41,6 @@ namespace dsa {
         void shrink();
 
     public:
-        Vector() = default;
-
         Vector(std::initializer_list<T> list) {
             m_size = list.size();
             m_capacity = m_size;
@@ -54,7 +52,7 @@ namespace dsa {
             }
         }
 
-        explicit Vector(Rank c = DEFAULT_CAPACITY, Rank s = 0, T v = 0) {
+        Vector(Rank c = DEFAULT_CAPACITY, Rank s = 0, T v = 0) {
             m_size = 0;
             m_capacity = c;
             m_elem = new T[m_capacity];
@@ -85,6 +83,9 @@ namespace dsa {
             delete[] m_elem;
             m_elem = nullptr;
         }
+
+        void push_back(T const &e);
+        T    pop_back();
 
         // Read-Only interface
         bool isEmpty() const;
@@ -167,6 +168,25 @@ namespace dsa {
 
         delete[] oldElem;
         oldElem = nullptr;
+    }
+
+    template<typename T>
+    void Vector<T>::push_back(T const &e) {
+        expand();
+        if (m_size == 0) {
+            m_elem[0] = e;
+            m_size++;
+        } else {
+            insert(m_size, e);
+        }
+    }
+
+    template<typename T>
+    T Vector<T>::pop_back() {
+        if (m_size == 0) {
+            return *(new T);
+        }
+        return remove(m_size - 1);
     }
 
     template<typename T>
