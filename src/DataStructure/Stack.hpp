@@ -2,6 +2,7 @@
 
 #include "IStack.hpp"
 #include "Vector.hpp"
+#include <cstdint>
 #include <string>
 
 namespace dsa {
@@ -46,6 +47,23 @@ namespace dsa {
         return m_vector->size() == 0;
     }
 
+    /// @brief Convert a decimal number to any `base` number, and return a stack reference `s`
+    /// collecting all characters in reverse order of the converted number.
+    /// @param s A stack collection contains characters in reverse order of number to be converted
+    /// @param n The decimal number to be converted
+    /// @param base The base to be converted
+    void decimalConvertion(Stack<char> &s, int64_t n, uint8_t base) {
+        const char digits[] = { '0', '1', '2', '3', '4', '5', '6', '7',
+                                '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+        bool       is_negative = n < 0;
+        while (n != 0) {
+            s.push(digits[n % base]);
+            n /= base;
+        }
+        if (is_negative) {
+            s.push('-');
+        }
+    }
 
     bool matchParents(std::string expr) {
         if (expr.size() == 0) {
