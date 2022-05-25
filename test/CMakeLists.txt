@@ -3,8 +3,9 @@ project(test CXX)
 
 set(
         TEST_SRC
-        test_main.cpp
-)
+        test_vector.cpp
+        test_list.cpp
+        test_stack.cpp)
 
 include_directories(
         ${CMAKE_SOURCE_DIR}/src/DataStructure
