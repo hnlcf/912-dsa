@@ -25,6 +25,7 @@ jobs:
                 uses: ashutoshvarma/action-cmake-build@master
                 with:
                     build-dir: ./build
+                    source-dir: ./
                     cc: gcc
                     cxx: g++
                     configure-options: -G Ninja
