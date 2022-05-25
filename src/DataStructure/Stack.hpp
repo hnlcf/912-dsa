@@ -21,10 +21,10 @@ namespace dsa {
             m_vector = nullptr;
         };
 
-        void push(T const &e);
-        T    pop();
-        T   &top();
-        bool isEmpty();
+        void push(T const &e) override;
+        T    pop() override;
+        T   &top() override;
+        bool isEmpty() override;
     };
 
     template<typename T>
@@ -65,8 +65,12 @@ namespace dsa {
         }
     }
 
-    bool matchParents(std::string expr) {
-        if (expr.size() == 0) {
+    /// @brief Match all pair brackets(include parentheses, square brackets and curly brackets)
+    /// of string expression.
+    /// @param expr The string expression to be matched
+    /// @return If all pairs matched return ture, otherwise false.
+    bool matchBrackets(const std::string &expr) {
+        if (expr.empty()) {
             return true;
         }
         Stack<char> s;

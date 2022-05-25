@@ -2,10 +2,10 @@
 #include "catch2/catch.hpp"
 
 
-TEST_CASE("Parents in string matched", "[matchParents]") {
+TEST_CASE("Parents in string matched", "[matchBrackets]") {
     SECTION("empty string") {
         std::string s1 = "";
-        REQUIRE(dsa::matchParents(s1) == true);
+        REQUIRE(dsa::matchBrackets(s1) == true);
     }
 
     SECTION("round brackets") {
@@ -13,9 +13,9 @@ TEST_CASE("Parents in string matched", "[matchParents]") {
         std::string s3 = ")";
         std::string s4 = "()";
 
-        REQUIRE(dsa::matchParents(s2) == false);
-        REQUIRE(dsa::matchParents(s3) == false);
-        REQUIRE(dsa::matchParents(s4) == true);
+        REQUIRE(dsa::matchBrackets(s2) == false);
+        REQUIRE(dsa::matchBrackets(s3) == false);
+        REQUIRE(dsa::matchBrackets(s4) == true);
     }
 
     SECTION("square brackets") {
@@ -23,9 +23,9 @@ TEST_CASE("Parents in string matched", "[matchParents]") {
         std::string s3 = "]";
         std::string s4 = "[]";
 
-        REQUIRE(dsa::matchParents(s2) == false);
-        REQUIRE(dsa::matchParents(s3) == false);
-        REQUIRE(dsa::matchParents(s4) == true);
+        REQUIRE(dsa::matchBrackets(s2) == false);
+        REQUIRE(dsa::matchBrackets(s3) == false);
+        REQUIRE(dsa::matchBrackets(s4) == true);
     }
 
     SECTION("braces") {
@@ -33,9 +33,9 @@ TEST_CASE("Parents in string matched", "[matchParents]") {
         std::string s3 = "}";
         std::string s4 = "{}";
 
-        REQUIRE(dsa::matchParents(s2) == false);
-        REQUIRE(dsa::matchParents(s3) == false);
-        REQUIRE(dsa::matchParents(s4) == true);
+        REQUIRE(dsa::matchBrackets(s2) == false);
+        REQUIRE(dsa::matchBrackets(s3) == false);
+        REQUIRE(dsa::matchBrackets(s4) == true);
     }
 
     SECTION("expressions") {
@@ -47,8 +47,8 @@ TEST_CASE("Parents in string matched", "[matchParents]") {
 
         std::string s3 = "{(()+())+([()-()])}";
         std::string s4 = "{(()+()+([()-()])}";
-        REQUIRE(dsa::matchParents(s2) == true);
-        REQUIRE(dsa::matchParents(s3) == true);
-        REQUIRE(dsa::matchParents(s4) == false);
+        REQUIRE(dsa::matchBrackets(s2) == true);
+        REQUIRE(dsa::matchBrackets(s3) == true);
+        REQUIRE(dsa::matchBrackets(s4) == false);
     }
 }
