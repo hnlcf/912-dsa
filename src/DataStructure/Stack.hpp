@@ -2,6 +2,7 @@
 
 #include "IStack.hpp"
 #include "Vector.hpp"
+#include <string>
 
 namespace dsa {
     template<typename T>
@@ -43,5 +44,44 @@ namespace dsa {
     template<typename T>
     bool Stack<T>::isEmpty() {
         return m_vector->size() == 0;
+    }
+
+
+    bool matchParents(std::string expr) {
+        if (expr.size() == 0) {
+            return true;
+        }
+        Stack<char> s;
+        for (const auto &ch: expr) {
+            switch (ch) {
+                case '(':
+                case '[':
+                case '{': {
+                    s.push(ch);
+                    break;
+                }
+                case ')': {
+                    if (s.isEmpty() || s.pop() != '(') {
+                        return false;
+                    }
+                    break;
+                }
+                case ']': {
+                    if (s.isEmpty() || s.pop() != '[') {
+                        return false;
+                    }
+                    break;
+                }
+                case '}': {
+                    if (s.isEmpty() || s.pop() != '{') {
+                        return false;
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+        return s.isEmpty();
     }
 }
