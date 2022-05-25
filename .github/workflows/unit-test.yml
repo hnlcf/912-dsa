@@ -14,7 +14,7 @@ jobs:
                 uses: turtlebrowser/get-conan@v1.0
 
             -   name: Install package
-                run: conan install ${{ github.workspace }} -if=${{ github.workspace }}/build
+                run: conan install . -if=./build
 
             -   name: Setup Ninja
                 uses: ashutoshvarma/setup-ninja@master
@@ -31,7 +31,7 @@ jobs:
                     build-type: Release
 
             -   name: Test
-            -   run: cd ${{ github.workspace }}/build/test && ./test
+            -   run: ./build/test/test
 
 
 
