@@ -27,12 +27,12 @@ namespace dsa {
 
     template<typename T>
     void Stack<T>::push(const T &e) {
-        m_vector->insert(m_vector->size() - 1, e);
+        m_vector->push_back(e);
     }
 
     template<typename T>
     T Stack<T>::pop() {
-        return m_vector->remove(m_vector->size() - 1);
+        return m_vector->pop_back();
     }
 
     template<typename T>
