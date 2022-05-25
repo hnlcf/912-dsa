@@ -84,6 +84,9 @@ namespace dsa {
             m_elem = nullptr;
         }
 
+        void push_back(T const &e);
+        T    pop_back();
+
         // Read-Only interface
         bool isEmpty() const;
         Rank size() const;
@@ -165,6 +168,25 @@ namespace dsa {
 
         delete[] oldElem;
         oldElem = nullptr;
+    }
+
+    template<typename T>
+    void Vector<T>::push_back(T const &e) {
+        expand();
+        if (m_size == 0) {
+            m_elem[0] = e;
+            m_size++;
+        } else {
+            insert(m_size, e);
+        }
+    }
+
+    template<typename T>
+    T Vector<T>::pop_back() {
+        if (m_size == 0) {
+            return *(new T);
+        }
+        return remove(m_size - 1);
     }
 
     template<typename T>
