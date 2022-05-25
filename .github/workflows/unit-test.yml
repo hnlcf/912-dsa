@@ -1,6 +1,10 @@
 name: Catch2 Test
 
-on: [ push ]
+on:
+    push:
+        branches: [ master ]
+    pull_request:
+        branches: [ master ]
 
 jobs:
     build:
@@ -14,26 +18,26 @@ jobs:
                 uses: turtlebrowser/get-conan@v1.0
 
             -   name: Install package
-                run: conan install . -if=./build
+                run: conan install ${{github.workspace}} -if=${{github.workspace}}/build
 
             -   name: Setup Ninja
                 uses: ashutoshvarma/setup-ninja@master
                 with:
                     version: 1.10.0
 
-            -   name: Build with CMake
+            -   name: CMake Build
                 uses: ashutoshvarma/action-cmake-build@master
                 with:
-                    build-dir: ./build
-                    source-dir: .
+                    build-dir: ${{github.workspace}}/build
+                    source-dir: ${{github.workspace}}
                     cc: gcc
                     cxx: g++
                     configure-options: -G Ninja
                     build-type: Release
                     parallel: 12
 
-            -   name: Test
-                run: ./build/test/test
+            -   name: Run Test
+                run: ${{github.workspace}}build/test/test
 
 
 
