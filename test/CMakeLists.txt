@@ -1,6 +1,5 @@
-project(test)
-
-enable_testing()
+cmake_minimum_required(VERSION 3.16)
+project(test CXX)
 
 set(
         TEST_SRC
@@ -10,8 +9,11 @@ set(
 include_directories(
         ${CMAKE_SOURCE_DIR}/src/DataStructure
 )
+
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup(NO_OUTPUT_DIRS)
+
 add_executable(test ${TEST_SRC})
 
-target_link_libraries(test gtest gtest_main)
-
-add_test(NAME test COMMAND test)
+target_link_libraries(test bitmap)
+target_link_libraries(test ${CONAN_LIBS})
