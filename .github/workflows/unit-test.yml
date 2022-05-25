@@ -14,7 +14,7 @@ jobs:
                 uses: turtlebrowser/get-conan@v1.0
 
             -   name: Install package
-                run: conan install . -if=./build
+                run: conan install ${{ runner.workspace }} -if=${{ runner.workspace }}/build
 
             -   name: Setup Ninja
                 uses: ashutoshvarma/setup-ninja@master
@@ -25,10 +25,11 @@ jobs:
                 uses: ashutoshvarma/action-cmake-build@master
                 with:
                     build-dir: ${{ runner.workspace }}/build
-                    cc: ${{ matrix.config.cc }}
-                    cxx: ${{ matrix.config.cxx }}
+                    cc: gcc
+                    cxx: g++
                     configure-options: -G Ninja
                     build-type: Release
+                    parallel: 12
 
             -   name: Test
                 run: ./build/test/test
