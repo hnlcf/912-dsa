@@ -12,7 +12,7 @@ jobs:
 
       - uses: DoozyX/clang-format-lint-action@v0.13
         with:
-            source: './test,./src,./src/DataStructure,./src/DataStructure/Bitmap'
+            source: 'test,src,src/DataStructure,src/DataStructure/Bitmap'
             exclude: ''
             extensions: 'h,hpp,cpp,c'
             clangFormatVersion: 13
