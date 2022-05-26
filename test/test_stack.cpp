@@ -2,7 +2,7 @@
 #include "catch2/catch.hpp"
 
 
-TEST_CASE("Parents in string matched", "[matchBrackets]") {
+TEST_CASE("Match brackets in string", "[stack][example]") {
     SECTION("empty string") {
         std::string s1 = "";
         REQUIRE(dsa::matchBrackets(s1) == true);

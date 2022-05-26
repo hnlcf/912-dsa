@@ -2,7 +2,7 @@
 #include "Vector.hpp"
 #include "catch2/catch.hpp"
 
-TEST_CASE("Vector can be initialized", "[Vector]") {
+TEST_CASE("Vector initialize", "[Vector]") {
     dsa::Vector<int> v1{ 0, 1, 2, 3 };
     dsa::Vector<int> v2(v1);
     // TODO: `==` operator is not implemented
