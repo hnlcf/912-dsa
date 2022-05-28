@@ -11,7 +11,7 @@ namespace dsa {
     /// @param s A stack collection contains characters in reverse order of number to be converted
     /// @param n The decimal number to be converted
     /// @param base The base to be converted
-    void decimalConvertion(Stack<char> &s, int64_t n, uint8_t base);
+    void decimalConversion(Stack<char> &s, int64_t n, uint8_t base);
 
     /// @brief Match all pair brackets(include parentheses, square brackets and curly brackets)
     /// of string expression.
