@@ -1,6 +1,100 @@
 #include "Example/StackExample.h"
 #include "catch2/catch.hpp"
 
+TEST_CASE("Convert decimal number to other base", "[stack][example]") {
+    SECTION("Convert 10 to 16") {
+        int64_t          n = 72;
+        uint8_t          base = 16;
+        dsa::Stack<char> s;
+        dsa::decimalConversion(s, n, base);
+        std::string actual = "";
+        std::string expect = "48";
+        while (!s.isEmpty()) {
+            actual += s.pop();
+        }
+        REQUIRE(expect == actual);
+
+        n = -72;
+        expect = "-48";
+        actual.clear();
+        dsa::decimalConversion(s, n, base);
+        while (!s.isEmpty()) {
+            actual += s.pop();
+        }
+        REQUIRE(expect == actual);
+
+        n = 0;
+        expect = "0";
+        actual.clear();
+        dsa::decimalConversion(s, n, base);
+        while (!s.isEmpty()) {
+            actual += s.pop();
+        }
+        REQUIRE(expect == actual);
+    }
+
+    SECTION("Convert 10 to 8") {
+        int64_t          n = 72;
+        uint8_t          base = 8;
+        dsa::Stack<char> s;
+        dsa::decimalConversion(s, n, base);
+        std::string actual = "";
+        std::string expect = "110";
+        while (!s.isEmpty()) {
+            actual += s.pop();
+        }
+        REQUIRE(expect == actual);
+
+        n = -72;
+        expect = "-110";
+        actual.clear();
+        dsa::decimalConversion(s, n, base);
+        while (!s.isEmpty()) {
+            actual += s.pop();
+        }
+        REQUIRE(expect == actual);
+
+        n = 0;
+        expect = "0";
+        actual.clear();
+        dsa::decimalConversion(s, n, base);
+        while (!s.isEmpty()) {
+            actual += s.pop();
+        }
+        REQUIRE(expect == actual);
+    }
+
+    SECTION("Convert 10 to 2") {
+        int64_t          n = 72;
+        uint8_t          base = 2;
+        dsa::Stack<char> s;
+        dsa::decimalConversion(s, n, base);
+        std::string actual = "";
+        std::string expect = "1001000";
+        while (!s.isEmpty()) {
+            actual += s.pop();
+        }
+        REQUIRE(expect == actual);
+
+        n = -72;
+        expect = "-1001000";
+        actual.clear();
+        dsa::decimalConversion(s, n, base);
+        while (!s.isEmpty()) {
+            actual += s.pop();
+        }
+        REQUIRE(expect == actual);
+
+        n = 0;
+        expect = "0";
+        actual.clear();
+        dsa::decimalConversion(s, n, base);
+        while (!s.isEmpty()) {
+            actual += s.pop();
+        }
+        REQUIRE(expect == actual);
+    }
+}
 
 TEST_CASE("Match brackets in string", "[stack][example]") {
     SECTION("empty string") {
@@ -68,16 +162,16 @@ TEST_CASE("Evaluate a math expression", "[stack][example]") {
     }
     SECTION("^ operators") {
         std::string str = "2^3";
-        REQUIRE(dsa::evaluate(str)  == 8.0);
+        REQUIRE(dsa::evaluate(str) == 8.0);
     }
 
     SECTION("! operators") {
         std::string str = "3!-0!";
-        REQUIRE(dsa::evaluate(str)  == 5.0);
+        REQUIRE(dsa::evaluate(str) == 5.0);
     }
 
     SECTION("() operators") {
         std::string str = "4*(3-5)";
-        REQUIRE(dsa::evaluate(str)  == -8.0);
+        REQUIRE(dsa::evaluate(str) == -8.0);
     }
 }
