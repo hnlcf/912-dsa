@@ -35,13 +35,18 @@ namespace dsa {
     void decimalConversion(Stack<char> &s, int64_t n, uint8_t base) {
         const char digits[] = { '0', '1', '2', '3', '4', '5', '6', '7',
                                 '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
-        bool       is_negative = n < 0;
-        while (n != 0) {
-            s.push(digits[n % base]);
-            n /= base;
-        }
-        if (is_negative) {
-            s.push('-');
+        if (n == 0) {
+            s.push(digits[n]);
+        } else {
+            bool is_negative = n < 0;
+            n = std::abs(n);
+            while (n != 0) {
+                s.push(digits[n % base]);
+                n /= base;
+            }
+            if (is_negative) {
+                s.push('-');
+            }
         }
     }
 
