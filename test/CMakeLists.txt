@@ -17,4 +17,5 @@ conan_basic_setup(NO_OUTPUT_DIRS)
 add_executable(test ${TEST_SRC})
 
 target_link_libraries(test bitmap)
+target_link_libraries(test example)
 target_link_libraries(test ${CONAN_LIBS})
