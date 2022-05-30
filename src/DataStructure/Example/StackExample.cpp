@@ -96,7 +96,6 @@ namespace dsa {
         operators.push('\0');
         while (!operators.isEmpty()) {
             if (isDigit(exp[i])) {
-                // TODO: read number
                 readNumber(operands, exp, i);
             } else {
                 switch (orderBetween(operators.top(), exp[i])) {
@@ -113,7 +112,6 @@ namespace dsa {
                     case MathOperator::Order::More: {
                         double tmp;
                         auto   opr = MathOperator::parseOperator(operators.pop());
-                        // TODO: compute subexpression
                         if (opr == MathOperator::Opr::Fac) {
                             double opd = operands.pop();
                             tmp = calculate(opr, opd);
