@@ -1,97 +1,60 @@
 #include "Example/StackExample.h"
 #include "catch2/catch.hpp"
 
+std::string
+test_decimalConversion(int64_t n, uint8_t base) {
+    dsa::Stack<char> s;
+    dsa::decimalConversion(s, n, base);
+    std::string ans = "";
+    while (!s.isEmpty()) {
+        ans += s.pop();
+    }
+    return ans;
+}
+
 TEST_CASE("Convert decimal number to other base", "[stack][example]") {
     SECTION("Convert 10 to 16") {
-        int64_t          n = 72;
-        uint8_t          base = 16;
-        dsa::Stack<char> s;
-        dsa::decimalConversion(s, n, base);
         std::string actual = "";
         std::string expect = "48";
-        while (!s.isEmpty()) {
-            actual += s.pop();
-        }
+        actual = test_decimalConversion(72, 16);
         REQUIRE(expect == actual);
 
-        n = -72;
+        actual = test_decimalConversion(-72, 16);
         expect = "-48";
-        actual.clear();
-        dsa::decimalConversion(s, n, base);
-        while (!s.isEmpty()) {
-            actual += s.pop();
-        }
         REQUIRE(expect == actual);
 
-        n = 0;
+        actual = test_decimalConversion(0, 16);
         expect = "0";
-        actual.clear();
-        dsa::decimalConversion(s, n, base);
-        while (!s.isEmpty()) {
-            actual += s.pop();
-        }
         REQUIRE(expect == actual);
     }
 
     SECTION("Convert 10 to 8") {
-        int64_t          n = 72;
-        uint8_t          base = 8;
-        dsa::Stack<char> s;
-        dsa::decimalConversion(s, n, base);
         std::string actual = "";
         std::string expect = "110";
-        while (!s.isEmpty()) {
-            actual += s.pop();
-        }
+        actual = test_decimalConversion(72, 8);
         REQUIRE(expect == actual);
 
-        n = -72;
+        actual = test_decimalConversion(-72, 8);
         expect = "-110";
-        actual.clear();
-        dsa::decimalConversion(s, n, base);
-        while (!s.isEmpty()) {
-            actual += s.pop();
-        }
         REQUIRE(expect == actual);
 
-        n = 0;
+        actual = test_decimalConversion(0, 8);
         expect = "0";
-        actual.clear();
-        dsa::decimalConversion(s, n, base);
-        while (!s.isEmpty()) {
-            actual += s.pop();
-        }
         REQUIRE(expect == actual);
     }
 
     SECTION("Convert 10 to 2") {
-        int64_t          n = 72;
-        uint8_t          base = 2;
-        dsa::Stack<char> s;
-        dsa::decimalConversion(s, n, base);
         std::string actual = "";
         std::string expect = "1001000";
-        while (!s.isEmpty()) {
-            actual += s.pop();
-        }
+        actual = test_decimalConversion(72, 2);
         REQUIRE(expect == actual);
 
-        n = -72;
+        actual = test_decimalConversion(-72, 2);
         expect = "-1001000";
-        actual.clear();
-        dsa::decimalConversion(s, n, base);
-        while (!s.isEmpty()) {
-            actual += s.pop();
-        }
         REQUIRE(expect == actual);
 
-        n = 0;
+        actual = test_decimalConversion(0, 2);
         expect = "0";
-        actual.clear();
-        dsa::decimalConversion(s, n, base);
-        while (!s.isEmpty()) {
-            actual += s.pop();
-        }
         REQUIRE(expect == actual);
     }
 }
