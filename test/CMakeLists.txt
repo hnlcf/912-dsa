@@ -5,7 +5,9 @@ set(
         TEST_SRC
         test_vector.cpp
         test_list.cpp
-        test_stack.cpp)
+        test_stack.cpp
+        test_queue.cpp
+)
 
 include_directories(
         ${CMAKE_SOURCE_DIR}/src/DataStructure
