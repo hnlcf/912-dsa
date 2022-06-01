@@ -7,6 +7,7 @@ set(
         test_list.cpp
         test_stack.cpp
         test_queue.cpp
+        test_tree.cpp
 )
 
 include_directories(
