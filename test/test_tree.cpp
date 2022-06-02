@@ -1,10 +1,15 @@
-#include "Tree.hpp"
+
+#include "BinTree.hpp"
 #include "catch2/catch.hpp"
 
-TEST_CASE("TreeNode: Initialize", "[tree]") {
-    TreeNode<int> t;
+TEST_CASE("TreeNode: Initialize", "[bin-tree]") {
+    dsa::BinTree<int> p;
 
-    REQUIRE(t.m_value == 0);
-    REQUIRE(t.m_left == nullptr);
-    REQUIRE(t.m_right == nullptr);
+    REQUIRE(p.root() != nullptr);
+    REQUIRE(p.size() == 1);
+    REQUIRE(!p.isEmpty());
+
+    p.insert(p.root(), 3);
+
+    REQUIRE(p.size() == 2);
 }
