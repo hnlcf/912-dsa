@@ -1,42 +1,42 @@
 #pragma once
 
 #include <algorithm>
+#include <cstddef>
 #include <cstdlib>
 
 #include "Fib.hpp"
 
-using Rank = int;
-
-#define DEFAULT_CAPACITY 3
+using size_type = std::size_t;
+const size_type DEFAULT_CAPACITY = 3;
 
 namespace dsa {
 
     /// Deprecated
     template<typename T>
-    static Rank binarySearchA(T *A, T const &e, Rank lo, Rank hi);
+    static size_type binarySearchA(T *A, T const &e, size_type lo, size_type hi);
 
     /// Deprecated
     template<typename T>
-    static Rank binarySearchB(T *A, T const &e, Rank lo, Rank hi);
+    static size_type binarySearchB(T *A, T const &e, size_type lo, size_type hi);
 
     template<typename T>
-    static Rank binarySearchC(T *A, T const &e, Rank lo, Rank hi);
+    static size_type binarySearchC(T *A, T const &e, size_type lo, size_type hi);
 
     template<typename T>
-    static Rank fibonacciSearch(T *A, T const &e, Rank lo, Rank hi);
+    static size_type fibonacciSearch(T *A, T const &e, size_type lo, size_type hi);
 
     /// Search `e` in `A[lo, hi]`
     template<typename T>
-    static Rank interpolation(T *A, T const &e, Rank lo, Rank hi);
+    static size_type interpolation(T *A, T const &e, size_type lo, size_type hi);
 
     template<typename T>
     class Vector {
     protected:
-        Rank m_size;
-        Rank m_capacity;
-        T   *m_elem;
+        size_type m_size;
+        size_type m_capacity;
+        T        *m_elem;
 
-        void copyFrom(T const *A, Rank lo, Rank hi);
+        void copyFrom(T const *A, size_type lo, size_type hi);
         void expand();
         void shrink();
 
@@ -52,7 +52,7 @@ namespace dsa {
             }
         }
 
-        Vector(Rank c = DEFAULT_CAPACITY, Rank s = 0, T v = 0) {
+        Vector(size_type c = DEFAULT_CAPACITY, size_type s = 0, T v = 0) {
             m_size = 0;
             m_capacity = c;
             m_elem = new T[m_capacity];
@@ -63,11 +63,11 @@ namespace dsa {
             }
         }
 
-        Vector(T const *A, Rank n) {
+        Vector(T const *A, size_type n) {
             copyFrom(A, 0, n);
         }
 
-        Vector(T const *A, Rank lo, Rank hi) {
+        Vector(T const *A, size_type lo, size_type hi) {
             copyFrom(A, lo, hi);
         }
 
@@ -75,7 +75,7 @@ namespace dsa {
             copyFrom(V.m_elem, 0, V.m_size);
         }
 
-        Vector(const Vector<T> &V, Rank lo, Rank hi) {
+        Vector(const Vector<T> &V, size_type lo, size_type hi) {
             copyFrom(V.m_elem, lo, hi);
         }
 
@@ -88,41 +88,41 @@ namespace dsa {
         T    pop_back();
 
         // Read-Only interface
-        bool isEmpty() const;
-        Rank size() const;
-        void insert(Rank r, T const &e);
-        T    remove(Rank r);
-        int  remove(Rank lo, Rank hi);
+        bool      isEmpty() const;
+        size_type size() const;
+        void      insert(size_type r, T const &e);
+        T         remove(size_type r);
+        int       remove(size_type lo, size_type hi);
 
-        Rank find(T const &e) const;
-        Rank find(T const &e, Rank lo, Rank hi) const;
-        Rank deduplicate();
+        size_type find(T const &e) const;
+        size_type find(T const &e, size_type lo, size_type hi) const;
+        size_type deduplicate();
 
         // For sorted Vector
-        int  disordered() const;
-        Rank uniquify();
+        int       disordered() const;
+        size_type uniquify();
 
-        Rank search(T const &e, Rank lo, Rank hi) const;
+        size_type search(T const &e, size_type lo, size_type hi) const;
 
-        void sort(Rank lo, Rank hi);
+        void sort(size_type lo, size_type hi);
 
         /// `O(n^2)`
-        void bubbleSort(Rank lo, Rank hi);
-        void selectionSort(Rank lo, Rank hi);
+        void bubbleSort(size_type lo, size_type hi);
+        void selectionSort(size_type lo, size_type hi);
 
         /// `O(nlgn)`
-        void mergeSort(Rank lo, Rank hi);
-        void merge(Rank lo, Rank mi, Rank hi);
+        void mergeSort(size_type lo, size_type hi);
+        void merge(size_type lo, size_type mi, size_type hi);
 
         template<typename VST>
         void traverse(VST &visit);
 
-        T       &operator[](Rank r);
-        const T &operator[](Rank r) const;
+        T       &operator[](size_type r);
+        const T &operator[](size_type r) const;
     };
 
     template<typename T>
-    void Vector<T>::copyFrom(const T *A, Rank lo, Rank hi) {
+    void Vector<T>::copyFrom(const T *A, size_type lo, size_type hi) {
         m_size = 0;
         m_capacity = (hi - lo) << 1;
         m_elem = new T[m_capacity];
@@ -145,7 +145,7 @@ namespace dsa {
         m_capacity = std::max(m_capacity, DEFAULT_CAPACITY) << 1;
         m_elem = new T[m_capacity];
 
-        for (Rank i = 0; i < m_size; ++i) {
+        for (size_type i = 0; i < m_size; ++i) {
             m_elem[i] = oldElem[i];
         }
 
@@ -162,7 +162,7 @@ namespace dsa {
         m_capacity >>= 1;
         m_elem = new T[m_capacity];
 
-        for (Rank i = 0; i < m_size; ++i) {
+        for (size_type i = 0; i < m_size; ++i) {
             m_elem[i] = oldElem[i];
         }
 
@@ -190,7 +190,7 @@ namespace dsa {
     }
 
     template<typename T>
-    Rank Vector<T>::size() const {
+    size_type Vector<T>::size() const {
         return m_size;
     }
 
@@ -200,12 +200,12 @@ namespace dsa {
     }
 
     template<typename T>
-    Rank Vector<T>::find(const T &e) const {
+    size_type Vector<T>::find(const T &e) const {
         return find(e, 0, m_size);
     }
 
     template<typename T>
-    Rank Vector<T>::find(const T &e, Rank lo, Rank hi) const {
+    size_type Vector<T>::find(const T &e, size_type lo, size_type hi) const {
         while (lo < hi) {
             hi--;
             if (e == m_elem[hi]) {
@@ -218,7 +218,7 @@ namespace dsa {
     template<typename T>
     int Vector<T>::disordered() const {
         int n = 0;
-        for (Rank i = 1; i < m_size; ++i) {
+        for (size_type i = 1; i < m_size; ++i) {
             if (m_elem[i] < m_elem[i - 1]) {
                 n++;
             }
@@ -227,9 +227,9 @@ namespace dsa {
     }
 
     template<typename T>
-    Rank Vector<T>::uniquify() {
-        Rank i = 0;
-        Rank j = 1;
+    size_type Vector<T>::uniquify() {
+        size_type i = 0;
+        size_type j = 1;
         while (j < m_size) {
             if (m_elem[i] != m_elem[j]) {
                 i++;
@@ -242,13 +242,13 @@ namespace dsa {
 
     // Search `e` in `A[lo, hi)`
     template<typename T>
-    Rank Vector<T>::search(T const &e, Rank lo, Rank hi) const {
+    size_type Vector<T>::search(T const &e, size_type lo, size_type hi) const {
         return (random() % 2) == 1 ? binarySearchC(m_elem, e, lo, hi)
                                    : fibonacciSearch(m_elem, e, lo, hi);
     }
 
     template<typename T>
-    void Vector<T>::sort(Rank lo, Rank hi) {
+    void Vector<T>::sort(size_type lo, size_type hi) {
         switch (random() % 3) {
             case 1:
                 bubbleSort(lo, hi);
@@ -263,12 +263,12 @@ namespace dsa {
     }
 
     template<typename T>
-    void Vector<T>::bubbleSort(Rank lo, Rank hi) {
+    void Vector<T>::bubbleSort(size_type lo, size_type hi) {
         hi -= 1;
-        Rank last = hi;
+        size_type last = hi;
         while (lo < hi) {
             last = lo;
-            for (Rank i = lo; i < hi; i++) {
+            for (size_type i = lo; i < hi; i++) {
                 if (m_elem[i] > m_elem[i + 1]) {
                     swap(m_elem[i], m_elem[i + 1]);
                     last = i;
@@ -279,11 +279,11 @@ namespace dsa {
     }
 
     template<typename T>
-    void Vector<T>::selectionSort(Rank lo, Rank hi) {
-        for (Rank i = lo; i < hi; ++i) {
-            T    min = m_elem[i];
-            Rank min_i = i;
-            for (Rank j = i + 1; j < hi; ++j) {
+    void Vector<T>::selectionSort(size_type lo, size_type hi) {
+        for (size_type i = lo; i < hi; ++i) {
+            T         min = m_elem[i];
+            size_type min_i = i;
+            for (size_type j = i + 1; j < hi; ++j) {
                 if (m_elem[j] < min) {
                     min = m_elem[j];
                     min_i = j;
@@ -294,22 +294,22 @@ namespace dsa {
     }
 
     template<typename T>
-    void Vector<T>::mergeSort(Rank lo, Rank hi) {
+    void Vector<T>::mergeSort(size_type lo, size_type hi) {
         if (hi - lo < 2) {
             return;
         }
-        Rank mi = (lo + hi) >> 1;
+        size_type mi = (lo + hi) >> 1;
         mergeSort(lo, mi);
         mergeSort(mi, hi);
         merge(lo, mi, hi);
     }
 
     template<typename T>
-    void Vector<T>::merge(Rank lo, Rank mi, Rank hi) {
-        Rank l1 = mi - lo;
-        Rank l2 = hi - mi;
-        T   *B = new T[l1];
-        T   *C = new T[l2];
+    void Vector<T>::merge(size_type lo, size_type mi, size_type hi) {
+        size_type l1 = mi - lo;
+        size_type l2 = hi - mi;
+        T        *B = new T[l1];
+        T        *C = new T[l2];
 
         T *A = m_elem + lo;
         for (int i = 0; i < l1; ++i) {
@@ -322,9 +322,9 @@ namespace dsa {
         }
 
         A = m_elem + lo;
-        Rank i = 0;
-        Rank j = 0;
-        Rank k = 0;
+        size_type i = 0;
+        size_type j = 0;
+        size_type k = 0;
         while ((j < l1) && (k < l2)) {
             if (B[j] < C[k]) {
                 A[i] = B[j];
@@ -355,9 +355,9 @@ namespace dsa {
     }
 
     template<typename T>
-    void Vector<T>::insert(Rank r, const T &e) {
+    void Vector<T>::insert(size_type r, const T &e) {
         expand();
-        for (Rank i = m_size; r < i; i--) {
+        for (size_type i = m_size; r < i; i--) {
             m_elem[i] = m_elem[i - 1];
         }
         m_elem[r] = e;
@@ -365,14 +365,14 @@ namespace dsa {
     }
 
     template<typename T>
-    T Vector<T>::remove(Rank r) {
+    T Vector<T>::remove(size_type r) {
         T e = m_elem[r];
         remove(r, r + 1);
         return e;
     }
 
     template<typename T>
-    int Vector<T>::remove(Rank lo, Rank hi) {
+    int Vector<T>::remove(size_type lo, size_type hi) {
         if (lo == hi) {
             return 0;
         }
@@ -388,9 +388,9 @@ namespace dsa {
     }
 
     template<typename T>
-    Rank Vector<T>::deduplicate() {
-        Rank oldSize = m_size;
-        Rank i = 1;
+    size_type Vector<T>::deduplicate() {
+        size_type oldSize = m_size;
+        size_type i = 1;
         while (i < m_size) {
             if (find(m_elem[i], 0, i) != -1) {
                 remove(i);
@@ -404,18 +404,18 @@ namespace dsa {
     template<typename T>
     template<typename VST>
     void Vector<T>::traverse(VST &visit) {
-        for (Rank i = 0; i < m_size; i++) {
+        for (size_type i = 0; i < m_size; i++) {
             visit(m_elem[i]);
         }
     }
 
     template<typename T>
-    T &Vector<T>::operator[](Rank r) {
+    T &Vector<T>::operator[](size_type r) {
         return m_elem[r];
     }
 
     template<typename T>
-    const T &Vector<T>::operator[](Rank r) const {
+    const T &Vector<T>::operator[](size_type r) const {
         return m_elem[r];
     }
 
@@ -427,9 +427,9 @@ namespace dsa {
     };
 
     template<typename T>
-    static Rank binarySearchA(T *A, T const &e, Rank lo, Rank hi) {
+    static size_type binarySearchA(T *A, T const &e, size_type lo, size_type hi) {
         while (lo < hi) {
-            Rank mi = (lo + hi) >> 1;
+            size_type mi = (lo + hi) >> 1;
             if (e < A[mi]) {
                 hi = mi;
             } else if (A[mi] < e) {
@@ -442,9 +442,9 @@ namespace dsa {
     }
 
     template<typename T>
-    static Rank binarySearchB(T *A, T const &e, Rank lo, Rank hi) {
+    static size_type binarySearchB(T *A, T const &e, size_type lo, size_type hi) {
         while (lo + 1 < hi) {
-            Rank mi = (lo + hi) >> 1;
+            size_type mi = (lo + hi) >> 1;
             if (e < A[mi]) {
                 hi = mi;
             } else if (A[mi] <= e) {
@@ -455,9 +455,9 @@ namespace dsa {
     }
 
     template<typename T>
-    static Rank binarySearchC(T *A, T const &e, Rank lo, Rank hi) {
+    static size_type binarySearchC(T *A, T const &e, size_type lo, size_type hi) {
         while (lo < hi) {
-            Rank mi = (lo + hi) >> 1;
+            size_type mi = (lo + hi) >> 1;
             if (e < A[mi]) {
                 hi = mi;
             } else if (A[mi] <= e) {
@@ -468,13 +468,13 @@ namespace dsa {
     }
 
     template<typename T>
-    static Rank fibonacciSearch(T *A, T const &e, Rank lo, Rank hi) {
+    static size_type fibonacciSearch(T *A, T const &e, size_type lo, size_type hi) {
         Fib fib(hi - lo);
         while (lo + 1 < hi) {
             while ((hi - lo) < fib.get()) {
                 fib.prev();
             }
-            Rank mi = lo + fib.get() - 1;
+            size_type mi = lo + fib.get() - 1;
             if (e < A[mi]) {
                 hi = mi;
             } else if (A[mi] <= e) {
@@ -485,9 +485,9 @@ namespace dsa {
     }
 
     template<typename T>
-    static Rank interpolation(T *A, T const &e, Rank lo, Rank hi) {
+    static size_type interpolation(T *A, T const &e, size_type lo, size_type hi) {
         while (lo < hi) {
-            Rank mi = lo + (hi - lo) * (e - A[lo]) / (A[hi] - A[lo]);
+            size_type mi = lo + (hi - lo) * (e - A[lo]) / (A[hi] - A[lo]);
             if (e < A[mi]) {
                 hi = mi - 1;
             } else if (A[mi] < e) {

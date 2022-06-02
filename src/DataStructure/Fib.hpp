@@ -3,17 +3,17 @@
 
 #include "Vector.hpp"
 
-using Rank = int;
+using size_type = std::size_t;
 
 namespace dsa {
     class Fib {
     private:
-        Rank f;
-        Rank g;
+        size_type f;
+        size_type g;
 
     public:
         /// Construct the first fibonacci number that is not less than `n`
-        Fib(Rank n) {
+        Fib(size_type n) {
             f = 1;
             g = 0;
             while (g < n) {
@@ -22,19 +22,19 @@ namespace dsa {
         }
 
         /// Return the current fibonacci number
-        Rank get() {
+        size_type get() {
             return g;
         }
 
         /// Move to the next fibonacci number
-        Rank next() {
+        size_type next() {
             g += f;
             f = g - f;
             return g;
         }
 
         /// Move to the previous fibonacci number
-        Rank prev() {
+        size_type prev() {
             f = g - f;
             g -= f;
             return g;

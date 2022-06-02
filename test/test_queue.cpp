@@ -16,6 +16,8 @@ TEST_CASE("Queue: basic methods", "[queue]") {
     REQUIRE(q.size() == 0);
     REQUIRE(q.isEmpty() == true);
 
-    auto p = q.first();
-    REQUIRE(p == -1);
+    auto f = q.first();
+    auto l = q.last();
+    REQUIRE_FALSE(f == -1);
+    REQUIRE_FALSE(l == -1);
 }

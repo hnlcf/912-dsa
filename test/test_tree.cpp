@@ -1,3 +1,4 @@
+
 #include "BinTree.hpp"
 #include "catch2/catch.hpp"
 
@@ -11,4 +12,5 @@ TEST_CASE("TreeNode: Initialize", "[bin-tree]") {
     p.insert(p.root(), 3);
 
     REQUIRE(p.size() == 2);
+
 }

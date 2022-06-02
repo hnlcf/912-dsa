@@ -3,38 +3,34 @@
 #include "ListNode.hpp"
 #include <algorithm>
 
-using Rank = int;
-
 template<typename T>
 using Node = dsa::ListNode<T> *;
+using size_type = std::size_t;
 
 namespace dsa {
-
     template<class T>
     class List {
-
     protected:
-    private:
         int     m_size;
         Node<T> m_header;
         Node<T> m_trailer;
 
     protected:
-        void init();
-        Rank clear();
-        void copyNodes(Node<T> p, int n);
+        void      init();
+        size_type clear();
+        void      copyNodes(Node<T> p, int n);
 
     public:
         List();
         List(List<T> const &l);
-        List(List<T> const &l, Rank r, int n);
+        List(List<T> const &l, size_type r, int n);
         List(Node<T> p, int n);
         ~List();
 
         int     size() const;
         Node<T> first() const;
         Node<T> last() const;
-        T      &operator[](Rank r) const;
+        T      &operator[](size_type r) const;
 
         Node<T> insertBefore(Node<T> p, T const &e);
         Node<T> insertAfter(Node<T> p, T const &e);
@@ -42,8 +38,8 @@ namespace dsa {
         Node<T> insertAsLast(T const &e);
         T       remove(Node<T> p);
 
-        Node<T> find(T const &e, int n, Node<T> p) const;
-        Rank    deduplicate();
+        Node<T>   find(T const &e, int n, Node<T> p) const;
+        size_type deduplicate();
 
         template<typename VST>
         void traverse(VST &visit);
@@ -72,7 +68,7 @@ namespace dsa {
     }
 
     template<typename T>
-    List<T>::List(const List<T> &l, Rank r, int n) {
+    List<T>::List(const List<T> &l, size_type r, int n) {
         copyNodes(l[r], n);
     }
 
@@ -102,8 +98,8 @@ namespace dsa {
     }
 
     template<typename T>
-    Rank List<T>::clear() {
-        Rank oldSize = m_size;
+    size_type List<T>::clear() {
+        size_type oldSize = m_size;
         while (m_size > 0) {
             remove(m_header->m_succ);
         }
@@ -136,7 +132,7 @@ namespace dsa {
     }
 
     template<typename T>
-    T &List<T>::operator[](Rank r) const {
+    T &List<T>::operator[](size_type r) const {
         Node<T> p = first();
         while (r > 0) {
             p = p->m_succ;
@@ -194,10 +190,10 @@ namespace dsa {
     }
 
     template<typename T>
-    Rank List<T>::deduplicate() {
-        Rank    oldSize = m_size;
-        Node<T> p = first();
-        for (Rank r = 0; p != m_trailer; p = p->m_succ) {
+    size_type List<T>::deduplicate() {
+        size_type oldSize = m_size;
+        Node<T>   p = first();
+        for (size_type r = 0; p != m_trailer; p = p->m_succ) {
             auto q = find(p->m_data, r, p);
             if (q != nullptr) {
                 remove(q);
@@ -220,9 +216,9 @@ namespace dsa {
 
     template<typename T>
     int List<T>::uniquify() {
-        Rank    oldSize = m_size;
-        Node<T> p = first();
-        Node<T> q = p->m_succ;
+        size_type oldSize = m_size;
+        Node<T>   p = first();
+        Node<T>   q = p->m_succ;
 
         while (p != m_trailer) {
             if (p->m_data != q->m_data) {

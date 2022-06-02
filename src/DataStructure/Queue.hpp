@@ -5,6 +5,8 @@
 
 #include "List.hpp"
 
+using size_type = std::size_t;
+
 namespace dsa {
     template<typename T>
     class Queue {
@@ -35,7 +37,7 @@ namespace dsa {
             return *(new T);
         }
 
-        Rank size() const {
+        size_type size() const {
             return m_elem.size();
         }
 
