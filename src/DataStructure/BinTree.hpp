@@ -10,8 +10,7 @@ using size_type = std::size_t;
 
 namespace dsa {
     template<class T>
-    static inline 
-    size_type stature(Node<T> p);
+    static inline size_type stature(Node<T> p);
 
     template<class T>
     class BinTree {
