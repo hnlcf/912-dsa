@@ -1,12 +1,9 @@
 #pragma once
 
-#include <algorithm>
-#include <cstddef>
-#include <cstdlib>
-
 #include "Fib.hpp"
+#include <algorithm>
 
-using size_type = std::size_t;
+using size_type = int64_t;
 const size_type DEFAULT_CAPACITY = 3;
 
 namespace dsa {
