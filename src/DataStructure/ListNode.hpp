@@ -1,7 +1,8 @@
 #pragma once
 
-namespace dsa {
+#include "AutoHeader.hpp"
 
+namespace dsa {
     template<typename T>
     struct ListNode {
         T            m_data;
@@ -16,23 +17,18 @@ namespace dsa {
         ListNode(T d, ListNode<T> *p, ListNode<T> *s) : m_data(d), m_pred(p), m_succ(s) {
         }
 
-        ListNode<T> *insertAsPred(T const &e);
-        ListNode<T> *insertAsSucc(T const &e);
+        ListNode<T> *insertAsPred(T const &e) {
+            auto *p = new ListNode(e, m_pred, this);
+            m_pred->m_succ = p;
+            m_pred = p;
+            return p;
+        }
+
+        ListNode<T> *insertAsSucc(T const &e) {
+            auto *p = new ListNode(e, this, m_succ);
+            m_succ->m_pred = p;
+            m_succ = p;
+            return p;
+        }
     };
-
-    template<typename T>
-    ListNode<T> *ListNode<T>::insertAsPred(const T &e) {
-        ListNode<T> *p = new ListNode(e, m_pred, this);
-        m_pred->m_succ = p;
-        m_pred = p;
-        return p;
-    }
-
-    template<typename T>
-    ListNode<T> *ListNode<T>::insertAsSucc(const T &e) {
-        ListNode<T> *p = new ListNode(e, this, m_succ);
-        m_succ->m_pred = p;
-        m_succ = p;
-        return p;
-    }
 }

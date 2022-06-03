@@ -1,29 +1,34 @@
 #pragma once
 
+#include "AutoHeader.hpp"
 #include "BinTreeNode.hpp"
 #include <algorithm>
 
-template<class T>
-using Node = struct dsa::BinTreeNode<T> *;
-
 namespace dsa {
     template<class T>
-    static inline size_type stature(Node<T> p);
-
-    template<class T>
     class BinTree {
-    public:
+        using Node = BinTreeNode<T> *;
+
     protected:
         size_type m_size;
-        Node<T>   m_root;
+        Node      m_root;
 
-        virtual size_type updateHeight(Node<T> x);
-        void              updateHeightAbove(Node<T> x);
+        virtual size_type updateHeight(Node x) {
+            x->m_height = 1 + std::max(stature(x->m_left), stature(x->m_right));
+            return x->m_height;
+        }
+
+        void updateHeightAbove(Node x) {
+            while ((x != nullptr)) {
+                updateHeight(x);
+                x = x->m_parent;
+            }
+        }
 
     public:
         BinTree() : BinTree(1ul, new BinTreeNode<T>()) {
         }
-        BinTree(size_type size, Node<T> root) : m_size(size), m_root(root) {
+        BinTree(size_type size, Node root) : m_size(size), m_root(root) {
         }
 
     public:
@@ -35,45 +40,28 @@ namespace dsa {
             return m_root == nullptr;
         }
 
-        Node<T> root() const {
+        Node root() const {
             return m_root;
         }
 
-        Node<T> parent();
-        Node<T> firstChild();
-        Node<T> nextSibling();
+        Node parent();
+        Node firstChild();
+        Node nextSibling();
 
-        Node<T> insert(Node<T> x, T const &data);
-        Node<T> remove(Node<T> x);
+        Node insert(Node x, T const &data) {
+            m_size++;
+            x->insertAsRightChild(data);
+            updateHeightAbove(x);
+            return x->m_right;
+        }
+
+        Node remove(Node x);
+
+        static size_type stature(Node p) {
+            if (p == nullptr) {
+                return -1;
+            }
+            return p->m_height;
+        }
     };
-
-    template<class T>
-    size_type BinTree<T>::updateHeight(Node<T> x) {
-        x->m_height = 1 + std::max(stature(x->m_left), stature(x->m_right));
-        return x->m_height;
-    }
-
-    template<class T>
-    void BinTree<T>::updateHeightAbove(Node<T> x) {
-        while ((x != nullptr)) {
-            updateHeight(x);
-            x = x->m_parent;
-        }
-    }
-
-    template<class T>
-    Node<T> BinTree<T>::insert(Node<T> x, T const &e) {
-        m_size++;
-        x->insertAsRightChild(e);
-        updateHeightAbove(x);
-        return x->m_right;
-    }
-
-    template<class T>
-    static inline size_type stature(Node<T> p) {
-        if (p == nullptr) {
-            return -1;
-        }
-        return p->m_height;
-    }
 }

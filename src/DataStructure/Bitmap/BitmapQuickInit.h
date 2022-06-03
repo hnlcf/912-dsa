@@ -1,12 +1,11 @@
 #pragma once
 
+#include "AutoHeader.hpp"
 #include <cstdint>
 
 namespace dsa {
     class BitmapQuickInit {
     private:
-        using size_type = int64_t;
-
         size_type *m_rank;   // store the ranks of all elements in the stack
         size_type  m_size;   // size of Bitmap
         size_type *m_stack;  // store map

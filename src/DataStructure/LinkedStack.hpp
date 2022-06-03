@@ -1,5 +1,6 @@
 #pragma once
 
+#include "AutoHeader.hpp"
 #include "IStack.hpp"
 #include "List.hpp"
 
@@ -13,29 +14,20 @@ namespace dsa {
         LinkedStack() = default;
         ~LinkedStack() = default;
 
-        void push(T const &e) override;
-        T    pop() override;
-        T   &top() override;
-        bool isEmpty() override;
+        void push(T const &e) override {
+            list.insertAsLast(e);
+        }
+
+        T pop() override {
+            return list.remove(list.last());
+        }
+
+        T &top() override {
+            return list[list.size() - 1];
+        }
+
+        bool isEmpty() const override {
+            return list.size() == 0;
+        }
     };
-
-    template<typename T>
-    void LinkedStack<T>::push(const T &e) {
-        list.insertAsLast(e);
-    }
-
-    template<typename T>
-    T LinkedStack<T>::pop() {
-        return list.remove(list.last());
-    }
-
-    template<typename T>
-    T &LinkedStack<T>::top() {
-        return list[list.size() - 1];
-    }
-
-    template<typename T>
-    bool LinkedStack<T>::isEmpty() {
-        return list.size() == 0;
-    }
 }
