@@ -1,5 +1,6 @@
 #pragma once
 
+#include "AutoHeader.hpp"
 #include "IStack.hpp"
 #include "Vector.hpp"
 
@@ -19,29 +20,20 @@ namespace dsa {
             m_vector = nullptr;
         };
 
-        void push(T const &e) override;
-        T    pop() override;
-        T   &top() override;
-        bool isEmpty() override;
+        void push(T const &e) override {
+            m_vector->push_back(e);
+        }
+
+        T pop() override {
+            return m_vector->pop_back();
+        }
+
+        T &top() override {
+            return (*m_vector)[m_vector->size() - 1];
+        }
+
+        bool isEmpty() const override {
+            return m_vector->size() == 0;
+        }
     };
-
-    template<typename T>
-    void Stack<T>::push(const T &e) {
-        m_vector->push_back(e);
-    }
-
-    template<typename T>
-    T Stack<T>::pop() {
-        return m_vector->pop_back();
-    }
-
-    template<typename T>
-    T &Stack<T>::top() {
-        return (*m_vector)[m_vector->size() - 1];
-    }
-
-    template<typename T>
-    bool Stack<T>::isEmpty() {
-        return m_vector->size() == 0;
-    }
 }

@@ -1,10 +1,8 @@
-
 #pragma once
 
+#include "AutoHeader.hpp"
 #include "Vector.hpp"
 #include <cstdint>
-
-using size_type = int64_t;
 
 namespace dsa {
     class Fib {
@@ -14,7 +12,7 @@ namespace dsa {
 
     public:
         /// Construct the first fibonacci number that is not less than `n`
-        Fib(size_type n) {
+        explicit Fib(size_type n) {
             f = 1;
             g = 0;
             while (g < n) {
@@ -23,7 +21,7 @@ namespace dsa {
         }
 
         /// Return the current fibonacci number
-        size_type get() {
+        size_type get() const {
             return g;
         }
 
