@@ -12,4 +12,5 @@ TEST_CASE("TreeNode: Initialize", "[bin-tree]") {
     p.insert(p.root(), 3);
 
     REQUIRE(p.size() == 2);
+    REQUIRE(p.root()->m_height == 1);
 }
