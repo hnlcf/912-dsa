@@ -21,6 +21,10 @@ namespace dsa {
     template<class T>
     static void goAlongLeftBranch(BinTreeNode<T> *x, Stack<BinTreeNode<T> *> &stack);
 
+    /// Assist function of postorder traverse
+    template<class T>
+    static void gotoLeftMostLeaf(Stack<BinTreeNode<T> *> &stack);
+
     ////////////////////////////////////////////////////////////////////////////
     ////////////////////// Declaration of Binary-Tree-Node /////////////////////
     ////////////////////////////////////////////////////////////////////////////
@@ -173,6 +177,23 @@ namespace dsa {
             traversePostorderRecur(x->m_right, visit);
             visit(x->m_data);
         }
+
+        template<class VST>
+        void traversePostorderIter(BinTreeNode<T> *x, VST &visit) {
+            Stack<BinTreeNode<T> *> stack;
+            if (x != nullptr) {
+                stack.push(x);
+            }
+            while (!stack.isEmpty()) {
+                if (stack.top() != x->m_parent) {
+                    // the `stack.top()` must be the right sibling of x
+                    // 
+                    gotoLeftMostLeaf(stack);
+                }
+                x = stack.pop();
+                visit(x->m_data);
+            }
+        }
     };
 
     ////////////////////////////////////////////////////////////////////////////
@@ -196,5 +217,22 @@ namespace dsa {
             stack.push(x);
             x = x->m_left;
         }
+    }
+
+    template<class T>
+    static void gotoLeftMostLeaf(Stack<BinTreeNode<T> *> &stack) {
+        BinTreeNode<T> *x = stack.top();
+        while (x != nullptr) {
+            if (x->m_left != nullptr) {
+                if (x->m_right != nullptr) {
+                    stack.push(x->m_right);
+                }
+                stack.push(x->m_left);
+            } else {
+                stack.push(x->m_right);
+            }
+            x = stack.top();
+        }
+        stack.pop();
     }
 }
