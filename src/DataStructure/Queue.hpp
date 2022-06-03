@@ -5,7 +5,7 @@
 
 #include "List.hpp"
 
-using size_type = std::size_t;
+using size_type = int64_t;
 
 namespace dsa {
     template<typename T>

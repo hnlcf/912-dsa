@@ -2,8 +2,9 @@
 #pragma once
 
 #include "Vector.hpp"
+#include <cstdint>
 
-using size_type = std::size_t;
+using size_type = int64_t;
 
 namespace dsa {
     class Fib {

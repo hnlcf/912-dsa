@@ -2,11 +2,9 @@
 
 #include "BinTreeNode.hpp"
 #include <algorithm>
-#include <cstddef>
 
 template<class T>
 using Node = struct dsa::BinTreeNode<T> *;
-using size_type = std::size_t;
 
 namespace dsa {
     template<class T>

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <cstddef>
+#include <cstdint>
 
-using size_type = std::size_t;
+using size_type = int64_t;
 
 namespace dsa {
     template<class T>
