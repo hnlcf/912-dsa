@@ -8,6 +8,8 @@ set(
         test_stack.cpp
         test_queue.cpp
         test_tree.cpp
+        test_graph.cpp
+        test_graph_martix.cpp
 )
 
 include_directories(
