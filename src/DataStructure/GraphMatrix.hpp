@@ -18,7 +18,7 @@ namespace dsa {
         size_type    m_parent;    // Parent vertex in traversal tree
         int64_t      m_priority;  // Priority in traversal tree of algorithms based priority
 
-        Vertex(V const &d)
+        explicit Vertex(V const &d)
           : m_data(d), m_inDegree(0), m_outDegree(0), m_status(VertexStatus::Undiscovered),
             m_dTime(-1), m_fTime(-1), m_parent(-1), m_priority(INT64_MAX) {
         }
