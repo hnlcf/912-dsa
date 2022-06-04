@@ -148,13 +148,14 @@ namespace dsa {
             return m_size;
         }
 
-        void insert(size_type r, T const &e) {
+        size_type insert(size_type r, T const &e) {
             expand();
             for (size_type i = m_size; r < i; i--) {
                 m_elem[i] = m_elem[i - 1];
             }
             m_elem[r] = e;
             m_size++;
+            return r;
         }
 
         T remove(size_type r) {
