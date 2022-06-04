@@ -187,7 +187,7 @@ namespace dsa {
             while (!stack.isEmpty()) {
                 if (stack.top() != x->m_parent) {
                     // the `stack.top()` must be the right sibling of x
-                    // 
+                    //
                     gotoLeftMostLeaf(stack);
                 }
                 x = stack.pop();
