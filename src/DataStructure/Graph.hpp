@@ -60,10 +60,10 @@ namespace dsa {
         /// 顶点的数据（该顶点的确存在）
         virtual V &vertex(size_type v) = 0;
 
-        /// Return vertex's `m_inDegree`(the in-degree of vertex) if existsEdge
+        /// Return vertex's `m_inDegree` (the in-degree of vertex) if existsEdge
         virtual int64_t inDegree(size_type v) = 0;
 
-        /// Return vertex's `m_outDegree`(the out-degree of vertex) if existsEdge
+        /// Return vertex's `m_outDegree` (the out-degree of vertex) if existsEdge
         virtual int64_t outDegree(size_type v) = 0;
 
         /// Return vertex's first adjacent vertex
@@ -72,19 +72,19 @@ namespace dsa {
         /// Return vertex's next adjacent vertex(relative to the current adjacent vertex `j`)
         virtual size_type nextNeighbor(size_type v, size_type i) = 0;
 
-        /// Return the reference vertex's `m_status`(the vertexStatus of vertex)
+        /// Return the reference vertex's `m_status` (the vertexStatus of vertex)
         virtual VertexStatus &vertexStatus(size_type v) = 0;
 
-        /// Return the reference vertex's `m_dTime`(the moment the vertex was found)
+        /// Return the reference vertex's `m_dTime` (the moment the vertex was found)
         virtual int64_t &dTime(size_type v) = 0;
 
-        /// Return the reference vertex's `m_fTime`(the moment the vertex has been visited)
+        /// Return the reference vertex's `m_fTime` (the moment the vertex has been visited)
         virtual int64_t &fTime(size_type v) = 0;
 
-        /// Return the reference vertex's `m_parent`(the parent vertex in traversal tree)
+        /// Return the reference vertex's `m_parent` (the parent vertex in traversal tree)
         virtual size_type &parent(size_type v) = 0;
 
-        /// Return the reference vertex's `m_priority`(the priority in traversal tree of algorithms based priority)
+        /// Return the reference vertex's `m_priority` (the priority in traversal tree of algorithms based priority)
         virtual int64_t &priority(size_type v) = 0;
 
         /**
