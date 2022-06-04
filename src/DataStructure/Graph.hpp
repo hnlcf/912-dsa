@@ -13,7 +13,7 @@ namespace dsa {
         /// Reset all fields both vertex and edge
         void reset() {
             // reset all vertices
-            for (size_type i = 0; i < m_n; i++) {
+            for (size_type i = 0; i < m_vertexNum; i++) {
                 vertexStatus(i) = VertexStatus::Undiscovered;
                 dTime(i) = -1;
                 fTime(i) = -1;
@@ -21,7 +21,7 @@ namespace dsa {
                 priority(i) = INT64_MAX;
 
                 // reset all edges
-                for (size_type j = 0; j < m_n; j++)
+                for (size_type j = 0; j < m_vertexNum; j++)
                     if (existsEdge(i, j))
                         edgeType(i, j) = EdgeStatus::Undetermined;  // 类型
             }
@@ -46,8 +46,8 @@ namespace dsa {
         void PFS(size_type, PU){};
 
     public:
-        size_type m_n;  // total number of vertices
-        size_type m_e;  // total number of edges
+        size_type m_vertexNum;  // total number of vertices
+        size_type m_edgeNum;    // total number of edges
 
         /**
          * Vertex's operation
