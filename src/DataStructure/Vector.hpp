@@ -28,8 +28,8 @@ namespace dsa {
     template<class T>
     class Vector {
     protected:
-        size_type m_size;
-        size_type m_capacity;
+        size_type m_size{};
+        size_type m_capacity{};
         T        *m_elem;
 
         void copyFrom(T const *A, size_type lo, size_type hi) {
@@ -90,7 +90,7 @@ namespace dsa {
             }
         }
 
-        Vector(size_type c = DEFAULT_CAPACITY, size_type s = 0, T v = 0) {
+        explicit Vector(size_type c = DEFAULT_CAPACITY, size_type s = 0, T v = 0) {
             m_size = 0;
             m_capacity = c;
             m_elem = new T[m_capacity];
@@ -164,7 +164,7 @@ namespace dsa {
             return e;
         }
 
-        int remove(size_type lo, size_type hi) {
+        size_type remove(size_type lo, size_type hi) {
             if (lo == hi) {
                 return 0;
             }
