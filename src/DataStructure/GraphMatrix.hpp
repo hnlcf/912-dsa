@@ -33,3 +33,4 @@ namespace dsa {
         Edge(E const &d, int64_t w) : m_data(d), m_weight(w), m_status(EdgeStatus::Undetermined) {
         }
     };
+}
