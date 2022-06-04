@@ -30,8 +30,8 @@ jobs:
                 with:
                     build-dir: ${{github.workspace}}/build
                     source-dir: ${{github.workspace}}
-                    cc: gcc
-                    cxx: g++
+                    cc: gcc-11
+                    cxx: g++-11
                     configure-options: -G Ninja
                     build-type: Release
                     parallel: 12
