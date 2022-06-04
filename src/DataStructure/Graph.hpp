@@ -37,7 +37,9 @@ namespace dsa {
         void BCC(size_type, int64_t &, Stack<size_type> &){};
 
         /// （连通域）基于DFS的拓扑排序算法
-        bool TSort(size_type, int64_t &, Stack<V> *){};
+        bool TSort(size_type, int64_t &, Stack<V> *) {
+            return true;
+        };
 
         /// （连通域）优先级搜索框架
         template<class PU>
@@ -122,7 +124,9 @@ namespace dsa {
         void bcc(size_type){};
 
         /// 基于DFS的拓扑排序算法
-        Stack<V> *tSort(size_type){};
+        Stack<V> *tSort(size_type) {
+            return nullptr;
+        };
 
         /// 最小支撑树Prim算法
         void prim(size_type){};
