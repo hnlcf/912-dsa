@@ -6,6 +6,12 @@
 #include <algorithm>
 #include <iostream>
 
+#define VECTOR_RANGE_CHECK(n, size)                                                                \
+    THROW_OUT_OF_RANGE(                                                                            \
+            "dsa::Vector::outOfRangeCheck:\nn (which is %lld) is out of range [0, %lld)\n",        \
+            n,                                                                                     \
+            size)
+
 namespace dsa {
     static const size_type DEFAULT_CAPACITY = 3;
 
@@ -174,6 +180,16 @@ namespace dsa {
             return *(end() - 1);
         }
 
+        reference at(size_type n) {
+            VECTOR_RANGE_CHECK(n, size());
+            return (*this)[n];
+        }
+
+        const_reference at(size_type n) const {
+            VECTOR_RANGE_CHECK(n, size());
+            return (*this)[n];
+        }
+
         // Read-Only interface
         bool isEmpty() const {
             return m_size == 0;
@@ -188,16 +204,20 @@ namespace dsa {
         }
 
         size_type insert(size_type r, const_reference e) {
+            VECTOR_RANGE_CHECK(r, size() + 1);
             expand();
-            for (size_type i = m_size; r < i; i--) {
-                m_elem[i] = m_elem[i - 1];
+
+            for (auto it = end(); it > begin() + r; --it) {
+                *it = *(it - 1);
             }
+
             m_elem[r] = e;
             m_size++;
             return r;
         }
 
         value_type remove(size_type r) {
+            VECTOR_RANGE_CHECK(r, size());
             value_type e = m_elem[r];
             remove(r, r + 1);
             return e;
@@ -386,10 +406,12 @@ namespace dsa {
         }
 
         reference operator[](size_type r) {
+            VECTOR_RANGE_CHECK(r, size());
             return *(m_elem + r);
         }
 
         const_reference operator[](size_type r) const {
+            VECTOR_RANGE_CHECK(r, size());
             return *(m_elem + r);
         }
 
