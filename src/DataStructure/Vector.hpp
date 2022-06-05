@@ -82,7 +82,7 @@ namespace dsa {
         }
 
         Vector(std::initializer_list<T> list) : m_capacity(list.size() << 1), m_size(list.size()) {
-            m_elem = new T[m_size];
+            m_elem = new T[m_capacity];
             auto it = begin();
             for (const_reference e: list) {
                 *it = e;
