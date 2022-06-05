@@ -5,6 +5,8 @@
 namespace dsa {
     template<class T>
     class Iterator : public std::iterator<std::input_iterator_tag, T> {
+    public:
+        /* An iterator class must declare(public) the following types */
         using difference_type = std::ptrdiff_t;
         using value_type = T;
         using pointer = T *;
@@ -12,6 +14,7 @@ namespace dsa {
         using iterator_category = std::output_iterator_tag;
 
     public:
+        /* An iterator class must implement(public) the following operator overloads */
         Iterator() : m_ptr(nullptr) {
         }
 
