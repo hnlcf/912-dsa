@@ -1,7 +1,7 @@
 #include "List.hpp"
 #include "catch2/catch.hpp"
 
-TEST_CASE("List initialize", "[List]") {
+TEST_CASE("List initialize", "[list]") {
     SECTION("empty list") {
         dsa::List<int> l;
         REQUIRE(l.size() == 0);
