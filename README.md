@@ -13,4 +13,6 @@
   - [x] `Stack`(with `Vector`)
   - [x] `LinkedStack`(with `List`)
   - [x] `Queue`(with `List`)
-  - [ ] `Binary Tree`
+  - [x] `Binary Tree`
+  - [ ] `Graph`
+  - [ ] `GraphMatrix`
