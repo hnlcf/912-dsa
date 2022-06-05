@@ -5,7 +5,7 @@ std::string
 test_decimalConversion(int64_t n, uint8_t base) {
     dsa::Stack<char> s;
     dsa::decimalConversion(s, n, base);
-    std::string ans = "";
+    std::string ans;
     while (!s.isEmpty()) {
         ans += s.pop();
     }
@@ -14,7 +14,7 @@ test_decimalConversion(int64_t n, uint8_t base) {
 
 TEST_CASE("Convert decimal number to other base", "[stack][example]") {
     SECTION("Convert 10 to 16") {
-        std::string actual = "";
+        std::string actual;
         std::string expect = "48";
         actual = test_decimalConversion(72, 16);
         REQUIRE(expect == actual);
@@ -29,7 +29,7 @@ TEST_CASE("Convert decimal number to other base", "[stack][example]") {
     }
 
     SECTION("Convert 10 to 8") {
-        std::string actual = "";
+        std::string actual;
         std::string expect = "110";
         actual = test_decimalConversion(72, 8);
         REQUIRE(expect == actual);
@@ -44,7 +44,7 @@ TEST_CASE("Convert decimal number to other base", "[stack][example]") {
     }
 
     SECTION("Convert 10 to 2") {
-        std::string actual = "";
+        std::string actual;
         std::string expect = "1001000";
         actual = test_decimalConversion(72, 2);
         REQUIRE(expect == actual);
@@ -61,7 +61,7 @@ TEST_CASE("Convert decimal number to other base", "[stack][example]") {
 
 TEST_CASE("Match brackets in string", "[stack][example]") {
     SECTION("empty string") {
-        std::string s1 = "";
+        std::string s1;
         REQUIRE(dsa::matchBrackets(s1) == true);
     }
 
