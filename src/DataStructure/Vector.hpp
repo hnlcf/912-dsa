@@ -21,8 +21,8 @@ namespace dsa {
         using const_iterator = Iterator<const value_type>;
 
     protected:
-        size_type m_size{};
         size_type m_capacity{};
+        size_type m_size{};
         pointer   m_elem;
 
         void copyFrom(const_pointer A, size_type lo, size_type hi) {
@@ -72,25 +72,27 @@ namespace dsa {
         }
 
     public:
-        Vector(std::initializer_list<T> list) {
-            m_size = list.size();
-            m_capacity = m_size;
-            m_elem = new T[m_capacity];
-            pointer p = m_elem;
+        Vector() : Vector(DEFAULT_CAPACITY, 0, 0) {
+        }
+
+        Vector(std::initializer_list<T> list) : m_capacity(list.size() << 1), m_size(list.size()) {
+            m_elem = new T[m_size];
+            auto it = begin();
             for (const_reference e: list) {
-                *p = e;
-                p++;
+                *it = e;
+                ++it;
             }
         }
 
-        explicit Vector(size_type c = DEFAULT_CAPACITY, size_type s = 0, T v = 0) {
-            m_size = 0;
-            m_capacity = c;
+        Vector(size_type size, T default_value) : Vector(size << 1, size, default_value) {
+        }
+
+        Vector(size_type capacity, size_type size, T default_value)
+          : m_capacity(capacity), m_size(size) {
             m_elem = new T[m_capacity];
 
-            while (m_size < s) {
-                m_elem[m_size] = v;
-                m_size++;
+            for (auto it = begin(); it != end(); ++it) {
+                *it = default_value;
             }
         }
 
@@ -482,7 +484,7 @@ namespace dsa {
     template<class T>
     inline std::istream &operator>>(std::istream &in_stream, Vector<T> &vec) {
         T ele;
-        while(in_stream >> ele){
+        while (in_stream >> ele) {
             vec.push_back(ele);
         }
         return in_stream;
