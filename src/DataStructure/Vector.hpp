@@ -27,6 +27,14 @@ namespace dsa {
 
     template<class T>
     class Vector {
+    private:
+        using value_type = T;
+        using pointer = T *;
+        using reference = value_type &;
+        using iterator = Iterator<value_type>;
+        using const_pointer = const T *;
+        using const_reference = const value_type &;
+        using const_iterator = Iterator<const value_type>;
     protected:
         size_type m_size{};
         size_type m_capacity{};
