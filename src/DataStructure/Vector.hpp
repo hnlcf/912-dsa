@@ -2,27 +2,11 @@
 
 #include "AutoHeader.hpp"
 #include "Fib.hpp"
+#include "Iterator.hpp"
 #include <algorithm>
+#include <iostream>
 
 namespace dsa {
-    /// Deprecated
-    template<class T>
-    static size_type binarySearchA(T *A, T const &e, size_type lo, size_type hi);
-
-    /// Deprecated
-    template<class T>
-    static size_type binarySearchB(T *A, T const &e, size_type lo, size_type hi);
-
-    template<class T>
-    static size_type binarySearchC(T *A, T const &e, size_type lo, size_type hi);
-
-    template<class T>
-    static size_type fibonacciSearch(T *A, T const &e, size_type lo, size_type hi);
-
-    /// Search `e` in `A[lo, hi]`
-    template<class T>
-    static size_type interpolation(T *A, T const &e, size_type lo, size_type hi);
-
     static const size_type DEFAULT_CAPACITY = 3;
 
     template<class T>
@@ -35,12 +19,13 @@ namespace dsa {
         using const_pointer = const T *;
         using const_reference = const value_type &;
         using const_iterator = Iterator<const value_type>;
+
     protected:
         size_type m_size{};
         size_type m_capacity{};
-        T        *m_elem;
+        pointer   m_elem;
 
-        void copyFrom(T const *A, size_type lo, size_type hi) {
+        void copyFrom(const_pointer A, size_type lo, size_type hi) {
             m_size = 0;
             m_capacity = (hi - lo) << 1;
             m_elem = new T[m_capacity];
@@ -58,7 +43,7 @@ namespace dsa {
                 return;
             }
 
-            T *oldElem = m_elem;
+            pointer oldElem = m_elem;
             m_capacity = std::max(m_capacity, DEFAULT_CAPACITY) << 1;
             m_elem = new T[m_capacity];
 
@@ -74,7 +59,7 @@ namespace dsa {
             if ((m_capacity < DEFAULT_CAPACITY << 1) || (m_capacity < m_size << 2)) {
                 return;
             }
-            T *oldElem = m_elem;
+            pointer oldElem = m_elem;
             m_capacity >>= 1;
             m_elem = new T[m_capacity];
 
@@ -91,8 +76,8 @@ namespace dsa {
             m_size = list.size();
             m_capacity = m_size;
             m_elem = new T[m_capacity];
-            T *p = m_elem;
-            for (const T &e: list) {
+            pointer p = m_elem;
+            for (const_reference e: list) {
                 *p = e;
                 p++;
             }
@@ -109,11 +94,11 @@ namespace dsa {
             }
         }
 
-        Vector(T const *A, size_type n) {
+        Vector(const_pointer A, size_type n) {
             copyFrom(A, 0, n);
         }
 
-        Vector(T const *A, size_type lo, size_type hi) {
+        Vector(const_pointer A, size_type lo, size_type hi) {
             copyFrom(A, lo, hi);
         }
 
@@ -130,7 +115,31 @@ namespace dsa {
             m_elem = nullptr;
         }
 
-        void push_back(T const &e) {
+        iterator begin() {
+            return iterator(m_elem);
+        }
+
+        iterator end() {
+            return iterator(m_elem + m_size);
+        }
+
+        const_iterator begin() const {
+            return const_iterator(m_elem);
+        }
+
+        const_iterator end() const {
+            return const_iterator(m_elem + m_size);
+        }
+
+        const_iterator cbegin() const {
+            return const_iterator(m_elem);
+        }
+
+        const_iterator cend() const {
+            return const_iterator(m_elem + m_size);
+        }
+
+        void push_back(const_reference e) {
             expand();
             if (m_size == 0) {
                 m_elem[0] = e;
@@ -140,11 +149,27 @@ namespace dsa {
             }
         }
 
-        T pop_back() {
+        value_type pop_back() {
             if (m_size == 0) {
                 return *(new T);
             }
             return remove(m_size - 1);
+        }
+
+        reference front() {
+            return *(begin());
+        }
+
+        const_reference front() const {
+            return *(begin());
+        }
+
+        reference back() {
+            return *(end() - 1);
+        }
+
+        const_reference back() const {
+            return *(end() - 1);
         }
 
         // Read-Only interface
@@ -156,7 +181,11 @@ namespace dsa {
             return m_size;
         }
 
-        size_type insert(size_type r, T const &e) {
+        size_type capacity() const {
+            return m_capacity;
+        }
+
+        size_type insert(size_type r, const_reference e) {
             expand();
             for (size_type i = m_size; r < i; i--) {
                 m_elem[i] = m_elem[i - 1];
@@ -166,8 +195,8 @@ namespace dsa {
             return r;
         }
 
-        T remove(size_type r) {
-            T e = m_elem[r];
+        value_type remove(size_type r) {
+            value_type e = m_elem[r];
             remove(r, r + 1);
             return e;
         }
@@ -187,11 +216,11 @@ namespace dsa {
             return hi - lo;
         }
 
-        size_type find(T const &e) const {
+        size_type find(const_reference e) const {
             return find(e, 0, m_size);
         }
 
-        size_type find(T const &e, size_type lo, size_type hi) const {
+        size_type find(const_reference e, size_type lo, size_type hi) const {
             while (lo < hi) {
                 hi--;
                 if (e == m_elem[hi]) {
@@ -215,8 +244,8 @@ namespace dsa {
         }
 
         // For sorted Vector
-        int disordered() const {
-            int n = 0;
+        size_type disordered() const {
+            size_type n = 0;
             for (size_type i = 1; i < m_size; ++i) {
                 if (m_elem[i] < m_elem[i - 1]) {
                     n++;
@@ -238,7 +267,7 @@ namespace dsa {
             return j - i;
         }
 
-        size_type search(T const &e, size_type lo, size_type hi) const {
+        size_type search(const_reference e, size_type lo, size_type hi) const {
             return (random() % 2) == 1 ? binarySearchC(m_elem, e, lo, hi)
                                        : fibonacciSearch(m_elem, e, lo, hi);
         }
@@ -275,8 +304,8 @@ namespace dsa {
 
         void selectionSort(size_type lo, size_type hi) {
             for (size_type i = lo; i < hi; ++i) {
-                T         min = m_elem[i];
-                size_type min_i = i;
+                value_type min = m_elem[i];
+                size_type  min_i = i;
                 for (size_type j = i + 1; j < hi; ++j) {
                     if (m_elem[j] < min) {
                         min = m_elem[j];
@@ -301,10 +330,10 @@ namespace dsa {
         void merge(size_type lo, size_type mi, size_type hi) {
             size_type l1 = mi - lo;
             size_type l2 = hi - mi;
-            T        *B = new T[l1];
-            T        *C = new T[l2];
+            auto      B = new T[l1];
+            auto      C = new T[l2];
 
-            T *A = m_elem + lo;
+            pointer A = m_elem + lo;
             for (int i = 0; i < l1; ++i) {
                 B[i] = A[i];
             }
@@ -349,19 +378,125 @@ namespace dsa {
 
         template<class VST>
         void traverse(VST &visit) {
-            for (size_type i = 0; i < m_size; i++) {
-                visit(m_elem[i]);
+            for (auto it = begin(); it != end(); ++it) {
+                visit(*it);
             }
         }
 
-        T &operator[](size_type r) {
-            return m_elem[r];
+        reference operator[](size_type r) {
+            return *(m_elem + r);
         }
 
-        const T &operator[](size_type r) const {
-            return m_elem[r];
+        const_reference operator[](size_type r) const {
+            return *(m_elem + r);
+        }
+
+        template<class U>
+        friend std::ostream &operator<<(std::ostream &out, Vector<U> &);
+
+        template<class U>
+        friend std::istream &operator>>(std::istream &in, Vector<U> &);
+
+        static size_type binarySearchA(pointer A, const_reference e, size_type lo, size_type hi) {
+            while (lo < hi) {
+                size_type mi = (lo + hi) >> 1;
+                if (e < A[mi]) {
+                    hi = mi;
+                } else if (A[mi] < e) {
+                    lo = mi + 1;
+                } else {
+                    return mi;
+                }
+            }
+            return -1;
+        }
+
+        static size_type binarySearchB(pointer A, const_reference e, size_type lo, size_type hi) {
+            while (lo + 1 < hi) {
+                size_type mi = (lo + hi) >> 1;
+                if (e < A[mi]) {
+                    hi = mi;
+                } else if (A[mi] <= e) {
+                    lo = mi;
+                }
+            }
+            return e < A[lo] ? lo - 1 : lo;
+        }
+
+        static size_type binarySearchC(pointer A, const_reference e, size_type lo, size_type hi) {
+            while (lo < hi) {
+                size_type mi = (lo + hi) >> 1;
+                if (e < A[mi]) {
+                    hi = mi;
+                } else if (A[mi] <= e) {
+                    lo = mi + 1;
+                }
+            }
+            return lo - 1;
+        }
+
+        static size_type fibonacciSearch(pointer A, const_reference e, size_type lo, size_type hi) {
+            Fib fib(hi - lo);
+            while (lo + 1 < hi) {
+                while ((hi - lo) < fib.get()) {
+                    fib.prev();
+                }
+                size_type mi = lo + fib.get() - 1;
+                if (e < A[mi]) {
+                    hi = mi;
+                } else if (A[mi] <= e) {
+                    lo = mi;
+                }
+            }
+            return e < A[lo] ? lo - 1 : lo;
+        }
+
+        static size_type interpolation(pointer A, const_reference e, size_type lo, size_type hi) {
+            while (lo < hi) {
+                size_type mi = lo + (hi - lo) * (e - A[lo]) / (A[hi] - A[lo]);
+                if (e < A[mi]) {
+                    hi = mi - 1;
+                } else if (A[mi] < e) {
+                    lo = mi + 1;
+                }
+            }
+            return e == A[lo] ? lo : -1;
         }
     };
+
+
+    template<class T>
+    inline std::ostream &operator<<(std::ostream &out_stream, Vector<T> &vec) {
+        T ele;
+        out_stream << "{ ";
+        for (size_type i = 0; i < vec.size(); ++i) {
+            out_stream << vec[i];
+            if (i < vec.size() - 1) {
+                out_stream << ", ";
+            }
+        }
+        out_stream << " }";
+        return out_stream;
+    }
+
+    template<class T>
+    inline std::istream &operator>>(std::istream &in_stream, Vector<T> &vec) {
+        T ele;
+        while(in_stream >> ele){
+            vec.push_back(ele);
+        }
+        return in_stream;
+    }
+
+    template<class T>
+    inline bool operator==(const Vector<T> &vec1, const Vector<T> &vec2) {
+        return vec1.size() == vec2.size() && std::equal(vec1.begin(), vec1.end(), vec2.begin());
+    }
+
+    template<class T>
+    inline bool operator!=(const Vector<T> &vec1, const Vector<T> &vec2) {
+        return !(vec1 == vec2);
+    }
 
     template<class T>
     struct Increase {
@@ -369,76 +504,4 @@ namespace dsa {
             e++;
         }
     };
-
-    template<class T>
-    static size_type binarySearchA(T *A, T const &e, size_type lo, size_type hi) {
-        while (lo < hi) {
-            size_type mi = (lo + hi) >> 1;
-            if (e < A[mi]) {
-                hi = mi;
-            } else if (A[mi] < e) {
-                lo = mi + 1;
-            } else {
-                return mi;
-            }
-        }
-        return -1;
-    }
-
-    template<class T>
-    static size_type binarySearchB(T *A, T const &e, size_type lo, size_type hi) {
-        while (lo + 1 < hi) {
-            size_type mi = (lo + hi) >> 1;
-            if (e < A[mi]) {
-                hi = mi;
-            } else if (A[mi] <= e) {
-                lo = mi;
-            }
-        }
-        return e < A[lo] ? lo - 1 : lo;
-    }
-
-    template<class T>
-    static size_type binarySearchC(T *A, T const &e, size_type lo, size_type hi) {
-        while (lo < hi) {
-            size_type mi = (lo + hi) >> 1;
-            if (e < A[mi]) {
-                hi = mi;
-            } else if (A[mi] <= e) {
-                lo = mi + 1;
-            }
-        }
-        return lo - 1;
-    }
-
-    template<class T>
-    static size_type fibonacciSearch(T *A, T const &e, size_type lo, size_type hi) {
-        Fib fib(hi - lo);
-        while (lo + 1 < hi) {
-            while ((hi - lo) < fib.get()) {
-                fib.prev();
-            }
-            size_type mi = lo + fib.get() - 1;
-            if (e < A[mi]) {
-                hi = mi;
-            } else if (A[mi] <= e) {
-                lo = mi;
-            }
-        }
-        return e < A[lo] ? lo - 1 : lo;
-    }
-
-    template<class T>
-    static size_type interpolation(T *A, T const &e, size_type lo, size_type hi) {
-        while (lo < hi) {
-            size_type mi = lo + (hi - lo) * (e - A[lo]) / (A[hi] - A[lo]);
-            if (e < A[mi]) {
-                hi = mi - 1;
-            } else if (A[mi] < e) {
-                lo = mi + 1;
-            }
-        }
-        return e == A[lo] ? lo : -1;
-    }
-
 }  // namespace dsa
