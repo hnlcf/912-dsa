@@ -74,7 +74,7 @@ namespace dsa {
         }
 
         Iterator &operator=(const Iterator &iter) {
-            if (this == *iter) {
+            if (this == &iter) {
                 return *this;
             }
             m_ptr = iter.m_ptr;
