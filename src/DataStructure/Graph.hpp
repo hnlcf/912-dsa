@@ -4,7 +4,7 @@
 #include "Stack.hpp"
 
 namespace dsa {
-    enum class VertexStatus { Undiscovered, Discovered, VisiEd };
+    enum class VertexStatus { Undiscovered, Discovered, Visited };
     enum class EdgeStatus { Undetermined, Tree, Cross, Forward, Backward };
 
     template<class V, class E>

@@ -5,13 +5,13 @@
 namespace dsa {
     template<typename T>
     struct ListNode {
-        T            m_data;
+        T            m_data{};
         ListNode<T> *m_pred;
         ListNode<T> *m_succ;
 
         ListNode() = default;
 
-        ListNode(T d) : m_data(d), m_pred(nullptr), m_succ(nullptr) {
+        explicit ListNode(T d) : m_data(d), m_pred(nullptr), m_succ(nullptr) {
         }
 
         ListNode(T d, ListNode<T> *p, ListNode<T> *s) : m_data(d), m_pred(p), m_succ(s) {
