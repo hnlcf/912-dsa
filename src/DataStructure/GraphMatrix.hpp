@@ -168,7 +168,7 @@ namespace dsa {
             return ans;
         }
 
-        EdgeStatus &edgeType(size_type u, size_type v) override {
+        EdgeStatus &edgeStatus(size_type u, size_type v) override {
             return m_edges[u][v]->m_status;
         }
 

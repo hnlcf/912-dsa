@@ -23,7 +23,7 @@ namespace dsa {
                 // reset all edges
                 for (size_type j = 0; j < m_vertexNum; j++)
                     if (existsEdge(i, j))
-                        edgeType(i, j) = EdgeStatus::Undetermined;  // 类型
+                        edgeStatus(i, j) = EdgeStatus::Undetermined;  // 类型
             }
         }
 
@@ -104,7 +104,7 @@ namespace dsa {
         virtual E removeEdge(size_type u, size_type v) = 0;
 
         /// Return the reference of status of the edge between `u` and `v`
-        virtual EdgeStatus &edgeType(size_type u, size_type v) = 0;
+        virtual EdgeStatus &edgeStatus(size_type u, size_type v) = 0;
 
         /// Return the reference of edge between `u` and `v` if exists
         virtual E &edge(size_type u, size_type v) = 0;
