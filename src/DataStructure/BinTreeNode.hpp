@@ -3,7 +3,6 @@
 #include "AutoHeader.hpp"
 #include "Queue.hpp"
 #include "Stack.hpp"
-#include <cstdint>
 
 namespace dsa {
     template<class T>
@@ -31,14 +30,14 @@ namespace dsa {
 
     template<class T>
     struct BinTreeNode {
-        T         m_data;
-        size_type m_height;
+        T         m_data{};
+        size_type m_height{};
 
         BinTreeNode<T> *m_parent;
         BinTreeNode<T> *m_left;
         BinTreeNode<T> *m_right;
 
-        BinTreeNode() : BinTreeNode(0ul, 0ul, nullptr, nullptr, nullptr) {
+        BinTreeNode() : m_height(0l), m_parent(nullptr), m_left(nullptr), m_right(nullptr) {
         }
 
         BinTreeNode(T const &data, BinTreeNode<T> *parent)
@@ -53,8 +52,7 @@ namespace dsa {
           : m_data(data), m_height(height), m_parent(parent), m_left(left), m_right(right) {
         }
 
-        ~BinTreeNode() {
-        }
+        ~BinTreeNode() = default;
 
         BinTreeNode<T> *insertAsLeftChild(T const &e) {
             m_left = new BinTreeNode(e, this);
@@ -67,7 +65,9 @@ namespace dsa {
         }
 
         /// Return direct successor of current node(inorder)
-        BinTreeNode<T> *successor();
+        BinTreeNode<T> *successor() {
+            return nullptr;
+        }
 
         /// The total size of the subtree rooted at this node
         size_type size() const {
