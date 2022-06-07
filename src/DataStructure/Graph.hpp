@@ -146,7 +146,18 @@ namespace dsa {
         /* Algorithms */
 
         /// 广度优先搜索算法
-        void bfs(size_type){};
+        void bfs(size_type s) {
+            reset();
+            size_type v = s;
+            int64_t   clock = 0;
+
+            do {
+                if (vertexStatus(v) == VertexStatus::Undiscovered) {
+                    BFS(v, clock);
+                }
+                v = ++v % m_vertexNum;
+            } while (s != v);
+        }
 
         /// 深度优先搜索算法
         void dfs(size_type){};
