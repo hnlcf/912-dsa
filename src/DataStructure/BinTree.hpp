@@ -10,8 +10,8 @@ namespace dsa {
         using Node = BinTreeNode<T> *;
 
     protected:
-        size_type m_size;
-        Node      m_root;
+        size_type m_size{};
+        Node      m_root{};
 
         virtual size_type updateHeight(Node x) {
             x->m_height = 1 + std::max(stature(x->m_left), stature(x->m_right));
@@ -26,8 +26,9 @@ namespace dsa {
         }
 
     public:
-        BinTree() : BinTree(1ul, new BinTreeNode<T>()) {
+        BinTree() : BinTree(1l, new BinTreeNode<T>()) {
         }
+
         BinTree(size_type size, Node root) : m_size(size), m_root(root) {
         }
 
@@ -44,9 +45,17 @@ namespace dsa {
             return m_root;
         }
 
-        Node parent();
-        Node firstChild();
-        Node nextSibling();
+        Node parent() {
+            return nullptr;
+        }
+
+        Node firstChild() {
+            return nullptr;
+        }
+
+        Node nextSibling() {
+            return nullptr;
+        }
 
         Node insert(Node x, T const &data) {
             m_size++;
@@ -55,9 +64,11 @@ namespace dsa {
             return x->m_right;
         }
 
-        Node remove(Node x);
+        Node remove(Node x) {
+            return nullptr;
+        }
 
-        static size_type stature(Node p) {
+        static inline size_type stature(Node p) {
             if (p == nullptr) {
                 return -1;
             }
