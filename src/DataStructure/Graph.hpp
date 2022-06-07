@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AutoHeader.hpp"
+#include "Queue.hpp"
 #include "Stack.hpp"
 
 namespace dsa {
@@ -27,8 +28,38 @@ namespace dsa {
             }
         }
 
-        /// （连通域）广度优先搜索算法
-        void BFS(size_type, int64_t &){};
+        /// 广度优先搜索算法（连通域）
+        void BFS(size_type v, int64_t &clock) {
+            Queue<size_type> q;
+            vertexStatus(v) = VertexStatus::Discovered;
+            q.enqueue(v);
+
+            while (!q.isEmpty()) {
+                // take out the head vertex of queue
+                auto tmp = q.dequeue();
+
+                // record time of starting to visit
+                clock += 1;
+                dTime(tmp) = clock;
+
+                // enumerate all neighbors of `tmp`
+                for (auto u = firstNeighbor(tmp); u > -1; u = nextNeighbor(tmp, u)) {
+                    if (vertexStatus(u) == VertexStatus::Undiscovered) {
+                        // modify status
+                        vertexStatus(u) == VertexStatus::Discovered;
+                        q.enqueue(u);
+
+                        // mark the status of edge in traversal tree
+                        edgeStatus(tmp, u) = EdgeStatus::Tree;
+                        parent(u) = tmp;
+                    } else {
+                        edgeStatus(tmp, u) = EdgeStatus::Cross;
+                    }
+                }
+
+                vertexStatus(tmp) = VertexStatus::Visited;
+            }
+        };
 
         /// （连通域）深度优先搜索算法
         void DFS(size_type, int64_t &){};
@@ -115,7 +146,18 @@ namespace dsa {
         /* Algorithms */
 
         /// 广度优先搜索算法
-        void bfs(size_type){};
+        void bfs(size_type s) {
+            reset();
+            size_type v = s;
+            int64_t   clock = 0;
+
+            do {
+                if (vertexStatus(v) == VertexStatus::Undiscovered) {
+                    BFS(v, clock);
+                }
+                v = ++v % m_vertexNum;
+            } while (s != v);
+        }
 
         /// 深度优先搜索算法
         void dfs(size_type){};
