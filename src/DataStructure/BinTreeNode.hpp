@@ -113,7 +113,7 @@ namespace dsa {
         void traversePreorderIter1(BinTreeNode<T> *x, VST &visit) {
             Stack<BinTreeNode<T> *> s;
             if (x != nullptr) {
-                s.push(s);
+                s.push(x);
             }
             while (!s.isEmpty()) {
                 x = s.pop();
@@ -153,7 +153,7 @@ namespace dsa {
         }
 
         template<class VST>
-        void traverseInorderIter1(BinTreeNode<T> *x, VST &visit) {
+        void traverseInorderIter(BinTreeNode<T> *x, VST &visit) {
             Stack<BinTreeNode<T> *> stack;
 
             while (true) {
