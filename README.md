@@ -96,7 +96,7 @@ conan install . -if=./build
 ```shell
 cmake -G Ninja -S . -DCMAKE_BUILD_TYPE=Debug -B ./build
 
-cmake --build ./build --config Debug --parallel 12 --target
+cmake --build ./build --config Debug --parallel 12 --target all
 ```
 
 3. Run test
