@@ -1,6 +1,10 @@
 <div align="center">
     <h1> 912 DSA </h1>
     <i> A C++ implementation of 912 DSA. </i>
+    <p></p>
+    <img src="https://img.shields.io/github/workflow/status/hnlcf/912-dsa/Catch2%20Test?label=Catch2%20Test" alt="Catch2 Test">
+    <img src="https://img.shields.io/github/issues/hnlcf/912-dsa" alt="Open issues">
+    <img src="https://img.shields.io/github/license/hnlcf/912-dsa?color=blue" alt="License">
 </div>
 
 ## Contents
