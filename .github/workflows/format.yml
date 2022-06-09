@@ -16,7 +16,7 @@ jobs:
                     source: 'test src src/DataStructure src/DataStructure/Bitmap src/DataStructure/Example'
                     exclude: ''
                     extensions: 'h,hpp,c,cc,cxx,cpp'
-                    clangFormatVersion: 14
+                    clangFormatVersion: 13
                     style: file
                     inplace: True
 
