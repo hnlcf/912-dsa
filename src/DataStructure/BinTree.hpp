@@ -106,6 +106,31 @@ namespace dsa {
 
             return x;
         }
+
+        /// Remove a node `x` and its all child nodes from a tree, return the number of nodes to be deleted
+        size_type remove(Node x) {
+            isRoot(x) ? m_root
+                      : (isLeftChild(x) ? x->m_parent->m_left : x->m_parent->m_right) = nullptr;
+            updateHeightAbove(x->m_parent);
+
+            auto  n = removeAt(x);
+            m_size -= n;
+            return n;
+        }
+
+        /// Remove the subtree `x` and return it as a independent tree
+        Tree secede(Node x) {
+            isRoot(x) ? m_root
+                      : (isLeftChild(x) ? x->m_parent->m_left : x->m_parent->m_right) = nullptr;
+            x->m_parent = nullptr;
+            updateHeightAbove(x->m_parent);
+            m_size -= x->size();
+
+            Treetree = new BinTree<T>;
+            tree->m_root = x;
+            tree->m_size = x->size();
+            return tree;
+        }
         }
 
         static inline size_type stature(Node p) {
@@ -113,6 +138,19 @@ namespace dsa {
                 return -1;
             }
             return p->m_height;
+        }
+
+        /// Delete node `x` and its all child nodes, and return number of nodes to be deleted
+        static inline size_type removeAt(Node x) {
+            // recurse base
+            if (x == nullptr) {
+                return 0;
+            }
+            size_type n = 1 + removeAt(x->m_left) + removeAt(x->m_right);
+            release(x->m_data);
+            release(x);
+
+            return n;
         }
     };
 }
