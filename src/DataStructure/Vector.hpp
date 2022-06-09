@@ -7,10 +7,10 @@
 #include <iostream>
 
 #define VECTOR_RANGE_CHECK(n, size)                                                                \
-    THROW_OUT_OF_RANGE(                                                                            \
-            "dsa::Vector::outOfRangeCheck:\nn (which is %lld) is out of range [0, %lld)\n",        \
-            n,                                                                                     \
-            size)
+    THROW_OUT_OF_RANGE("[ERROR]: dsa::Vector::outOfRangeCheck: n (which is %lld) is out of range " \
+                       "[0, %lld)\n\n",                                                            \
+                       n,                                                                          \
+                       size)
 
 namespace dsa {
     static const size_type DEFAULT_CAPACITY = 3;
