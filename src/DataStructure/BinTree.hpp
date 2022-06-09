@@ -126,7 +126,7 @@ namespace dsa {
             updateHeightAbove(x->m_parent);
             m_size -= x->size();
 
-            auto tree = new BinTree<T>;
+            autotree = new BinTree<T>;
             tree->m_root = x;
             tree->m_size = x->size();
             return tree;
