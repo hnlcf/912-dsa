@@ -131,26 +131,27 @@ namespace dsa {
             tree->m_size = x->size();
             return tree;
         }
-        }
+    }
 
-        static inline size_type stature(Node p) {
-            if (p == nullptr) {
-                return -1;
-            }
-            return p->m_height;
+    static inline size_type
+    stature(Node p) {
+        if (p == nullptr) {
+            return -1;
         }
+        return p->m_height;
+    }
 
-        /// Delete node `x` and its all child nodes, and return number of nodes to be deleted
-        static inline size_type removeAt(Node x) {
-            // recurse base
-            if (x == nullptr) {
-                return 0;
-            }
-            size_type n = 1 + removeAt(x->m_left) + removeAt(x->m_right);
-            release(x->m_data);
-            release(x);
-
-            return n;
+    /// Delete node `x` and its all child nodes, and return number of nodes to be deleted
+    static inline size_type removeAt(Node x) {
+        // recurse base
+        if (x == nullptr) {
+            return 0;
         }
-    };
+        size_type n = 1 + removeAt(x->m_left) + removeAt(x->m_right);
+        release(x->m_data);
+        release(x);
+
+        return n;
+    }
+};
 }
