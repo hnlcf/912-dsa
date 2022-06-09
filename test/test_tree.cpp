@@ -4,7 +4,7 @@
 using dsa::BinTree;
 using dsa::BinTreeNode;
 
-TEST_CASE("TreeNode: Initialize", "[bin-tree]") {
+TEST_CASE("BinTreeNode: Initialize", "[bin-tree]") {
     dsa::BinTree<int> p;
 
     REQUIRE(p.root() != nullptr);
@@ -31,7 +31,7 @@ struct GetTraverse {
 };
 
 
-TEST_CASE("TreeNode: Four Traverse", "[bin-tree]") {
+TEST_CASE("BinTreeNode: Four Traverse", "[bin-tree]") {
     BinTreeNode<char> root('1', nullptr);
     root.insertAsLeftChild('2');
     root.insertAsRightChild('3');
@@ -46,7 +46,7 @@ TEST_CASE("TreeNode: Four Traverse", "[bin-tree]") {
 
     GetTraverse<char> visit;
 
-    SECTION("TreeNode: preorder traverse") {
+    SECTION("BinTreeNode: preorder traverse") {
         visit.clear();
         root.traversePreorderRecur(&root, visit);
         REQUIRE(visit.m_data == "125784369");
@@ -60,7 +60,7 @@ TEST_CASE("TreeNode: Four Traverse", "[bin-tree]") {
         REQUIRE(visit.m_data == "125784369");
     }
 
-    SECTION("TreeNode: inorder traverse") {
+    SECTION("BinTreeNode: inorder traverse") {
         visit.clear();
         root.traverseInorderRecur(&root, visit);
         REQUIRE(visit.m_data == "758241396");
@@ -70,7 +70,7 @@ TEST_CASE("TreeNode: Four Traverse", "[bin-tree]") {
         REQUIRE(visit.m_data == "758241396");
     }
 
-    SECTION("TreeNode: postorder traverse") {
+    SECTION("BinTreeNode: postorder traverse") {
         visit.clear();
         root.traversePostorderRecur(&root, visit);
         REQUIRE(visit.m_data == "785429631");
@@ -80,9 +80,12 @@ TEST_CASE("TreeNode: Four Traverse", "[bin-tree]") {
         REQUIRE(visit.m_data == "785429631");
     }
 
-    SECTION("TreeNode: level traverse") {
+    SECTION("BinTreeNode: level traverse") {
         visit.clear();
         root.traverseLevel(&root, visit);
         REQUIRE(visit.m_data == "123546789");
     }
+}
+
+TEST_CASE("BinTree: Constructor", "[bin-tree]") {
 }
