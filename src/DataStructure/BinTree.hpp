@@ -131,27 +131,55 @@ namespace dsa {
             tree->m_size = x->size();
             return tree;
         }
-    }
 
-    static inline size_type
-    stature(Node p) {
-        if (p == nullptr) {
-            return -1;
+
+        template<class VST>
+        void traverseLevel(VST &visit) {
+            if (m_root) {
+                m_root->traverseLevel(visit);
+            }
         }
-        return p->m_height;
-    }
 
-    /// Delete node `x` and its all child nodes, and return number of nodes to be deleted
-    static inline size_type removeAt(Node x) {
-        // recurse base
-        if (x == nullptr) {
-            return 0;
+        template<class VST>
+        void traversePreorder(VST &visit) {
+            if (m_root) {
+                m_root->traversePreorderIter2(m_root, visit);
+            }
         }
-        size_type n = 1 + removeAt(x->m_left) + removeAt(x->m_right);
-        release(x->m_data);
-        release(x);
 
-        return n;
-    }
-};
+        template<class VST>
+        void traverseInorder(VST &visit) {
+            if (m_root) {
+                m_root->traverseInorderIter(m_root, visit);
+            }
+        }
+
+        template<class VST>
+        void traversePostorder(VST &visit) {
+            if (m_root) {
+                m_root->traversePostorderIter(m_root, visit);
+            }
+        }
+
+        /// Return height of `p`
+        static inline size_type stature(Node p) {
+            if (p == nullptr) {
+                return -1;
+            }
+            return p->m_height;
+        }
+
+        /// Delete node `x` and its all child nodes, and return number of nodes to be deleted
+        static inline size_type removeAt(Node x) {
+            // recurse base
+            if (x == nullptr) {
+                return 0;
+            }
+            size_type n = 1 + removeAt(x->m_left) + removeAt(x->m_right);
+            release(x->m_data);
+            release(x);
+
+            return n;
+        }
+    };
 }
