@@ -29,10 +29,9 @@ namespace dsa {
                                     size_type   n,
                                     size_type   size) {
             if ((n < 0) || (n >= size)) {
-                std::string msg = "%s: %d\n";
+                std::string msg = "[ERROR]: %s:%d\n";
                 msg += format;
                 ContainerException::throwOutOfRangeFmt(msg.c_str(), file, line, n, size);
-                exit(1);
             }
         }
     };
