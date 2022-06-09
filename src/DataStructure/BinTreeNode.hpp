@@ -82,7 +82,19 @@ namespace dsa {
 
         /// Return direct successor of current node(inorder)
         BinTreeNode<T> *successor() {
-            return nullptr;
+            auto succ = this;
+            if (m_right != nullptr) {
+                succ = m_right;
+                while (succ->m_left != nullptr) {
+                    succ = succ->m_left;
+                }
+            } else {
+                while (isRightChild(succ)) {
+                    succ = succ->m_parent;
+                }
+                succ = succ->m_parent;
+            }
+            return succ;
         }
 
         /// The total size of the subtree rooted at this node
