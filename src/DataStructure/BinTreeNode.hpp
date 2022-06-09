@@ -126,7 +126,7 @@ namespace dsa {
             }
         }
 
-        /// Preorder traverse
+        /// Preorder traverse of recursive version
         template<class VST>
         void traversePreorderRecur(BinTreeNode<T> *x, VST &visit) {
             if (x == nullptr) {
@@ -137,6 +137,7 @@ namespace dsa {
             traversePreorderRecur(x->m_right, visit);
         }
 
+        /// Preorder traverse of iterative version 1
         template<class VST>
         void traversePreorderIter1(BinTreeNode<T> *x, VST &visit) {
             Stack<BinTreeNode<T> *> s;
@@ -155,6 +156,7 @@ namespace dsa {
             }
         }
 
+        /// Preorder traverse of iterative version 2
         template<class VST>
         void traversePreorderIter2(BinTreeNode<T> *x, VST &visit) {
             Stack<BinTreeNode<T> *> stack;
@@ -169,7 +171,7 @@ namespace dsa {
             }
         }
 
-        /// Inorder traverse
+        /// Inorder traverse of recursive version
         template<class VST>
         void traverseInorderRecur(BinTreeNode<T> *x, VST &visit) {
             if (x == nullptr) {
@@ -180,6 +182,7 @@ namespace dsa {
             traverseInorderRecur(x->m_right, visit);
         }
 
+        /// Inorder traverse of iterative version
         template<class VST>
         void traverseInorderIter(BinTreeNode<T> *x, VST &visit) {
             Stack<BinTreeNode<T> *> stack;
@@ -195,7 +198,7 @@ namespace dsa {
             }
         }
 
-        /// Postorder traverse
+        /// Postorder traverse recursive version
         template<class VST>
         void traversePostorderRecur(BinTreeNode<T> *x, VST &visit) {
             if (x == nullptr) {
@@ -206,6 +209,7 @@ namespace dsa {
             visit(x->m_data);
         }
 
+        /// Postorder traverse iterative version
         template<class VST>
         void traversePostorderIter(BinTreeNode<T> *x, VST &visit) {
             Stack<BinTreeNode<T> *> stack;
@@ -215,7 +219,6 @@ namespace dsa {
             while (!stack.isEmpty()) {
                 if (stack.top() != x->m_parent) {
                     // the `stack.top()` must be the right sibling of x
-                    //
                     gotoLeftMostLeaf(stack);
                 }
                 x = stack.pop();
