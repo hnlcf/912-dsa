@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
+import shutil
 
 project_path = os.getcwd()
 binary_path = project_path + '/build'
@@ -14,10 +15,10 @@ format_p = 'clang-format'
 
 conan_install_cmd = f'{conan_p} install {project_path} -if={binary_path}'
 
-cmake_build_type = 'Debug'  # Or Release
+cmake_build_mode = 'release'  # Or debug
 cmake_generator_type = '-G Ninja'
-cmake_config_cmd = f'{cmake_p}  {cmake_generator_type} -S {project_path} -DCMAKE_BUILD_TYPE={cmake_build_type} -B {binary_path}'
-cmake_build_cmd = f'{cmake_p} --build {binary_path} --config {cmake_build_type} --parallel 12 --target '
+cmake_config_cmd = f'{cmake_p} {cmake_generator_type} -S {project_path} -DCMAKE_BUILD_TYPE={cmake_build_mode} -B {binary_path}'
+cmake_build_cmd = f'{cmake_p} --build {binary_path} --parallel 12 --target '
 
 catch2_test_cmd = f'{test_path}/test -d yes --order lex '
 
@@ -76,7 +77,7 @@ def count_lines():
 
 def format_file(file_path):
     print(file_path)
-    os.system(f"{format_p} -i {file_path} -style=File")
+    os.system(f"{format_p} -i {file_path} -style=file")
 
 
 def format_all():
@@ -96,62 +97,76 @@ def help_cmd():
         print_help_msg(msg[0], msg[1])
 
 
-def build_target(target='all'):
-    if not os.path.exists(binary_path):
-        cmake_refresh_project()
+def build_target(mode='release', target='all'):
+    if not os.path.exists(binary_path) or len(os.listdir(binary_path)) == 0:
+        cmake_refresh_project(mode=mode)
     os.system(cmake_build_cmd + target)
 
 
 def clean_build():
     if os.path.exists(binary_path):
-        build_target('clean')
-    else:
-        os.mkdir(binary_path)
+        shutil.rmtree(binary_path)
+    os.mkdir(binary_path)
 
 
-def cmake_refresh_project():
+def cmake_refresh_project(mode: str):
+    global cmake_config_cmd
     clean_build()
     os.system(conan_install_cmd)
+    if mode != cmake_build_mode:
+        os.system(cmake_config_cmd.replace('release', mode))
     os.system(cmake_config_cmd)
-    build_target()
 
 
 def run_test(test_name=''):
     if not os.path.exists(binary_path):
-        cmake_refresh_project()
-    build_target()
+        build_target(mode='release', target='all')
     os.system(catch2_test_cmd + f'{test_name}')
 
 
 def all_actions():
     format_all()
-    cmake_refresh_project()
+    cmake_refresh_project(mode='release')
+    build_target(mode='release', target='all')
     run_test()
 
 
 def main():
-    if len(sys.argv) < 2 or sys.argv[1] == '-h' or sys.argv[1] == '--help':
+    arg_len = len(sys.argv)
+    arg_list = list(sys.argv)
+    if arg_len < 2 or arg_list[1] == '-h' or arg_list[1] == '--help':
         help_cmd()
-    elif sys.argv[1] == '--all':
+    elif arg_list[1] == '--cmake':
+        mode = 'release'
+        if arg_len > 2 and arg_list[2] == '--mode':
+            mode = arg_list[3]
+        cmake_refresh_project(mode)
+    elif arg_list[1] == '--build':
+        mode = 'Release'
+        target = 'all'
+        if arg_len > 2 and arg_list[2] == '--mode':
+            mode = arg_list[3]
+            if arg_len > 4 and arg_list[4] == '--target':
+                target = arg_list[5]
+        elif arg_len > 2 and arg_list[2] == '--target':
+            target = arg_list[3]
+        build_target(mode, target)
+    elif arg_list[1] == '--all':
         all_actions()
-    elif sys.argv[1] == '--count':
+    elif arg_list[1] == '--count':
         count_lines()
-    elif sys.argv[1] == '--list':
+    elif arg_list[1] == '--list':
         list_files()
-    elif sys.argv[1] == '--cmake':
-        cmake_refresh_project()
-    elif sys.argv[1] == '--clean':
+    elif arg_list[1] == '--clean':
         clean_build()
-    elif sys.argv[1] == '--format':
+    elif arg_list[1] == '--rebuild':
+        clean_build()
+        build_target()
+    elif arg_list[1] == '--format':
         format_all()
-    elif sys.argv[1] == '--build':
-        if len(sys.argv) == 3:
-            build_target(sys.argv[2])
-        else:
-            build_target()
-    elif sys.argv[1] == '--test':
-        if len(sys.argv) == 3:
-            run_test(sys.argv[2])
+    elif arg_list[1] == '--test':
+        if arg_len > 2:
+            run_test(arg_list[2])
         else:
             run_test()
 
