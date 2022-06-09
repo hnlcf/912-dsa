@@ -68,9 +68,9 @@ Using `catch2` which is managed by `conan` to test project.
 ## Install
 
 ```shell
-git clone https://github.com/hnlcf/912-dsa.git
+$ git clone https://github.com/hnlcf/912-dsa.git
 
-cd 912-dsa
+$ cd 912-dsa
 ```
 
 ## QuickStart
@@ -78,7 +78,7 @@ cd 912-dsa
 ### Use scripts
 
 ```shell
-python3 tools.py --test
+$ python3 tools.py --test
 ```
 
 ### Manual
@@ -86,23 +86,23 @@ python3 tools.py --test
 1. Install dependency
 
 ```shell
-mkdir build
+$ mkdir build
 
-conan install . -if=./build
+$ conan install . -if=./build
 ```
 
 2. Build project
 
 ```shell
-cmake -G Ninja -S . -DCMAKE_BUILD_TYPE=Debug -B ./build
+$ cmake -G Ninja -S . -DCMAKE_BUILD_TYPE=Debug -B ./build
 
-cmake --build ./build --config Debug --parallel 12 --target all
+$ cmake --build ./build --config Debug --parallel 12 --target all
 ```
 
 3. Run test
 
 ```shell
-./build/test/test -d yes --order lex
+$ ./build/test/test -d yes --order lex
 ```
 
 ## License
