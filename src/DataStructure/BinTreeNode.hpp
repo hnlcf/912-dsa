@@ -4,6 +4,7 @@
 #include "Queue.hpp"
 #include "Stack.hpp"
 
+
 namespace dsa {
     template<class T>
     struct BinTreeNode;
@@ -11,6 +12,21 @@ namespace dsa {
     ////////////////////////////////////////////////////////////////////////////
     ///////////////////// Declaration of static functions //////////////////////
     ////////////////////////////////////////////////////////////////////////////
+
+    template<class T>
+    static inline bool isLeaf(BinTreeNode<T> *x);
+
+    template<class T>
+    static inline bool isRoot(BinTreeNode<T> *x);
+
+    template<class T>
+    static inline bool hasParent(BinTreeNode<T> *x);
+
+    template<class T>
+    static inline bool isLeftChild(BinTreeNode<T> *x);
+
+    template<class T>
+    static inline bool isRightChild(BinTreeNode<T> *x);
 
     /// Assist function of preorder traverse
     template<class T, class VST>
@@ -66,7 +82,19 @@ namespace dsa {
 
         /// Return direct successor of current node(inorder)
         BinTreeNode<T> *successor() {
-            return nullptr;
+            auto succ = this;
+            if (m_right != nullptr) {
+                succ = m_right;
+                while (succ->m_left != nullptr) {
+                    succ = succ->m_left;
+                }
+            } else {
+                while (isRightChild(succ)) {
+                    succ = succ->m_parent;
+                }
+                succ = succ->m_parent;
+            }
+            return succ;
         }
 
         /// The total size of the subtree rooted at this node
@@ -98,7 +126,7 @@ namespace dsa {
             }
         }
 
-        /// Preorder traverse
+        /// Preorder traverse of recursive version
         template<class VST>
         void traversePreorderRecur(BinTreeNode<T> *x, VST &visit) {
             if (x == nullptr) {
@@ -109,6 +137,7 @@ namespace dsa {
             traversePreorderRecur(x->m_right, visit);
         }
 
+        /// Preorder traverse of iterative version 1
         template<class VST>
         void traversePreorderIter1(BinTreeNode<T> *x, VST &visit) {
             Stack<BinTreeNode<T> *> s;
@@ -127,6 +156,7 @@ namespace dsa {
             }
         }
 
+        /// Preorder traverse of iterative version 2
         template<class VST>
         void traversePreorderIter2(BinTreeNode<T> *x, VST &visit) {
             Stack<BinTreeNode<T> *> stack;
@@ -141,7 +171,7 @@ namespace dsa {
             }
         }
 
-        /// Inorder traverse
+        /// Inorder traverse of recursive version
         template<class VST>
         void traverseInorderRecur(BinTreeNode<T> *x, VST &visit) {
             if (x == nullptr) {
@@ -152,6 +182,7 @@ namespace dsa {
             traverseInorderRecur(x->m_right, visit);
         }
 
+        /// Inorder traverse of iterative version
         template<class VST>
         void traverseInorderIter(BinTreeNode<T> *x, VST &visit) {
             Stack<BinTreeNode<T> *> stack;
@@ -167,7 +198,7 @@ namespace dsa {
             }
         }
 
-        /// Postorder traverse
+        /// Postorder traverse recursive version
         template<class VST>
         void traversePostorderRecur(BinTreeNode<T> *x, VST &visit) {
             if (x == nullptr) {
@@ -178,6 +209,7 @@ namespace dsa {
             visit(x->m_data);
         }
 
+        /// Postorder traverse iterative version
         template<class VST>
         void traversePostorderIter(BinTreeNode<T> *x, VST &visit) {
             Stack<BinTreeNode<T> *> stack;
@@ -187,18 +219,55 @@ namespace dsa {
             while (!stack.isEmpty()) {
                 if (stack.top() != x->m_parent) {
                     // the `stack.top()` must be the right sibling of x
-                    //
                     gotoLeftMostLeaf(stack);
                 }
                 x = stack.pop();
                 visit(x->m_data);
             }
         }
+
+        bool operator<(BinTreeNode const &other) {
+            return m_data < other.m_data;
+        }
+
+        bool operator==(BinTreeNode const &other) {
+            return m_data == other.m_data;
+        }
     };
 
     ////////////////////////////////////////////////////////////////////////////
     //////////////////// Implementation of static functions ////////////////////
     ////////////////////////////////////////////////////////////////////////////
+
+    /// Determine a node is a leaf node or not
+    template<class T>
+    static inline bool isLeaf(BinTreeNode<T> *x) {
+        return x->m_left == nullptr && x->m_right == nullptr;
+    }
+
+    /// Determine a node is a root node or not
+    template<class T>
+    static inline bool isRoot(BinTreeNode<T> *x) {
+        return x->m_parent == nullptr;
+    }
+
+    /// Determine a node has parent or not
+    template<class T>
+    static inline bool hasParent(BinTreeNode<T> *x) {
+        return !isRoot(x);
+    }
+
+    /// Determine a node is a left child node or not
+    template<class T>
+    static inline bool isLeftChild(BinTreeNode<T> *x) {
+        return !isRoot(x) && x == x->m_parent->m_left;
+    }
+
+    /// Determine a node is a right child node or not
+    template<class T>
+    static inline bool isRightChild(BinTreeNode<T> *x) {
+        return !isRoot(x) && x == x->m_parent->m_right;
+    }
 
     template<class T, class VST>
     static void visitAlongLeftBranch(BinTreeNode<T>          *x,
