@@ -4,6 +4,7 @@
 #include "Queue.hpp"
 #include "Stack.hpp"
 
+
 namespace dsa {
     template<class T>
     struct BinTreeNode;
@@ -11,6 +12,21 @@ namespace dsa {
     ////////////////////////////////////////////////////////////////////////////
     ///////////////////// Declaration of static functions //////////////////////
     ////////////////////////////////////////////////////////////////////////////
+
+    template<class T>
+    static inline bool isLeaf(BinTreeNode<T> *x);
+
+    template<class T>
+    static inline bool isRoot(BinTreeNode<T> *x);
+
+    template<class T>
+    static inline bool hasParent(BinTreeNode<T> *x);
+
+    template<class T>
+    static inline bool isLeftChild(BinTreeNode<T> *x);
+
+    template<class T>
+    static inline bool isRightChild(BinTreeNode<T> *x);
 
     /// Assist function of preorder traverse
     template<class T, class VST>
@@ -199,6 +215,36 @@ namespace dsa {
     ////////////////////////////////////////////////////////////////////////////
     //////////////////// Implementation of static functions ////////////////////
     ////////////////////////////////////////////////////////////////////////////
+
+    /// Determine a node is a leaf node or not
+    template<class T>
+    static inline bool isLeaf(BinTreeNode<T> *x) {
+        return x->m_left == nullptr && x->m_right == nullptr;
+    }
+
+    /// Determine a node is a root node or not
+    template<class T>
+    static inline bool isRoot(BinTreeNode<T> *x) {
+        return x->m_parent == nullptr;
+    }
+
+    /// Determine a node has parent or not
+    template<class T>
+    static inline bool hasParent(BinTreeNode<T> *x) {
+        return !isRoot(x);
+    }
+
+    /// Determine a node is a left child node or not
+    template<class T>
+    static inline bool isLeftChild(BinTreeNode<T> *x) {
+        return !isRoot(x) && x == x->m_parent->m_left;
+    }
+
+    /// Determine a node is a right child node or not
+    template<class T>
+    static inline bool isRightChild(BinTreeNode<T> *x) {
+        return !isRoot(x) && x == x->m_parent->m_right;
+    }
 
     template<class T, class VST>
     static void visitAlongLeftBranch(BinTreeNode<T>          *x,
