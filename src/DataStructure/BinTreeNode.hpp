@@ -71,12 +71,20 @@ namespace dsa {
         ~BinTreeNode() = default;
 
         BinTreeNode<T> *insertAsLeftChild(T const &e) {
-            m_left = new BinTreeNode(e, this);
+            if (m_left == nullptr) {
+                m_left = new BinTreeNode(e, this);
+            } else {
+                m_left->m_data = e;
+            }
             return m_left;
         }
 
         BinTreeNode<T> *insertAsRightChild(T const &e) {
-            m_right = new BinTreeNode(e, this);
+            if (m_right == nullptr) {
+                m_right = new BinTreeNode(e, this);
+            } else {
+                m_right->m_data = e;
+            };
             return m_right;
         }
 
