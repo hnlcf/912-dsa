@@ -222,6 +222,14 @@ namespace dsa {
                 visit(x->m_data);
             }
         }
+
+        bool operator<(BinTreeNode const &other) {
+            return m_data < other.m_data;
+        }
+
+        bool operator==(BinTreeNode const &other) {
+            return m_data == other.m_data;
+        }
     };
 
     ////////////////////////////////////////////////////////////////////////////
