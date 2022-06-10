@@ -2,8 +2,8 @@
     <h1> 912 DSA </h1>
     <i> A C++ implementation of 912 DSA. </i>
     <p></p>
-    <a href="https://github.com/hnlcf/912-dsa/actions/workflows/unit-test.yml">
-        <img src="https://img.shields.io/github/workflow/status/hnlcf/912-dsa/Catch2%20Test?label=Catch2%20Test" alt="Catch2 Test">
+    <a href="https://github.com/hnlcf/912-dsa/actions/workflows/build.yml">
+        <img src="https://img.shields.io/github/workflow/status/hnlcf/912-dsa/CI?label=CI" alt="CI">
     </a>
     <a href="https://github.com/hnlcf/912-dsa/issues">
         <img src="https://img.shields.io/github/issues/hnlcf/912-dsa" alt="Open issues">
