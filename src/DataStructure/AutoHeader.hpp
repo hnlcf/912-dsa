@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
+#include <iostream>
 #include <string>
 #include <typeinfo>
 
@@ -42,7 +43,7 @@ namespace dsa {
             static size_type n = 0;
             if (strlen(typeid(T).name()) < 7) {  // 复杂类型一概忽略，只输出基本类型
                 printf("\t<%s>[%ld]=", typeid(T).name(), ++n);
-                print(x);
+                std::cout << x;
                 printf(" purged\n");
             }
         }
@@ -51,7 +52,9 @@ namespace dsa {
     template<class T>
     struct Cleaner<T *> {
         static void clean(T *x) {
-            delete x;
+            if (x != nullptr) {
+                delete x;
+            }
             // if contains pointer, release recursively
             static size_type n = 0;
             printf("\t<%s>[%ld] released\n", typeid(T *).name(), ++n);
