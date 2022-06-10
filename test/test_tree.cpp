@@ -47,7 +47,7 @@ TEST_CASE("BinTreeNode: Insert Node", "[bin-tree]") {
         REQUIRE(p.m_left->m_data == 99);
         REQUIRE(tmp == p.m_left);
         REQUIRE(p.size() == 2);
-
+    }
 
     SECTION("BinTreeNode: Insert both left and right") {
         BinTreeNode<int> p;
@@ -144,5 +144,5 @@ TEST_CASE("BinTree: Constructor", "[bin-tree]") {
     // TODO: BUG when deconstruct a BinTree object that is constructed with root
     // TODO: ERROR: Signal: SIGSEGV (Segmentation fault)
     BinTreeNode<int> root(1, nullptr);
-//    BinTree<int>     b(1, &root);
+    //    BinTree<int>     b(1, &root);
 }
