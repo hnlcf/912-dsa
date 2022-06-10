@@ -16,49 +16,51 @@
 ## Contents
 
 - [Introduction](#introduction)
-- [Feature](#feature)
-    - [Chapter Code](#chapter-code)
-    - [Done](#done)
+- [Features](#features)
+- [Download](#download)
 - [Dependency](#dependency)
     - [Tools](#tools)
     - [Library](#library)
 - [QuickStart](#quickstart)
-    - [Download](#download)
-    - [Build](#build)
-    - [Test](#test)
+    - [Using script](#using-script)
+    - [Manual](#manual)
 - [License](#license)
 
 ## Introduction
 
+This is a code implementation of **912 DSA**, which is a data structure course offered by **Tsinghua
+University**.
+
 - video: [DSA](https://www.xuetangx.com/course/THU08091000384/10322765?channel=i.area.learn_title)
 - book: [Data Structures in C++](http://dsa.cs.tsinghua.edu.cn/~deng/ds/dsacpp/index.htm)
 
-## Feature
+## Features
 
-### Chapter Code
+|  ID  |       Chapter       |                      Implementation                       |
+|:----:|:-------------------:|:---------------------------------------------------------:|
+|  1   |    Introduction     |                        `Fibonacci`                        |
+|  2   |       Vector        |           `Vector`, `Bitmap`, `BitmapQuickInit`           |
+|  3   |        List         |                    `ListNode`, `List`                     |
+|  4   |   Stack and Queue   | `IStack`, `Stack`, `LinkedStack`,`StackExample`, `Queue`  |
+|  5   |     Binary Tree     |                 `BinTreeNode`, `BinTree`                  |
+|  6   | Binary Search Tree  |                             /                             |
+|  7   |  BST Applications   |                             /                             |
+|  8   |    Advanced BST     |                             /                             |
+|  9   |     Dictionary      |                             /                             |
+|  10  |        Graph        |             `Graph`,`GraphMatrix`,`GraphList`             |
+|  11  | Graph Applications  |                             /                             |
+|  12  |   Priority Queue    |                             /                             |
+|  13  |       String        |                             /                             |
+|  14  |       Sorting       |                             /                             |
+| NaN  |        Other        |                        `Iterator`                         |
 
-|  ID  |     Chapter      |                      Implementation                       |
-|:----:|:----------------:|:---------------------------------------------------------:|
-|  1   |   Introduction   |                        `Fibonacci`                        |
-|  2   |      Vector      |           `Vector`, `Bitmap`, `BitmapQuickInit`           |
-|  3   |       List       |                    `ListNode`, `List`                     |
-|  4   | Stack and Queue  | `IStack`, `Stack`, `LinkedStack`,`StackExample`, `Queue`  |
-|  5   |   Binary Tree    |                 `BinTreeNode`, `BinTree`                  |
-| NaN  |      Other       |                        `Iterator`                         |
+## Download
 
-### Done
+```shell
+$ git clone --recurse-submodules https://github.com/hnlcf/912-dsa.git
 
-- Data Structure
-    - [x] `Vector`
-    - [x] `Fibonacci`
-    - [x] `Bitmap`
-    - [x] `List`
-    - [x] `Stack`(with `Vector`)
-    - [x] `LinkedStack`(with `List`)
-    - [x] `Queue`(with `List`)
-    - [x] `Binary Tree`
-    - [ ] `Graph`
-    - [ ] `GraphMatrix`
+$ cd 912-dsa
+```
 
 ## Dependency
 
@@ -69,34 +71,44 @@
 
 ### Library
 
-Using `catch2` for testing.
+Using `catch2` for testing which managed by git submodules.
 
 - catch2
 
 ## QuickStart
 
-### Download
+### Using script
 
 ```shell
-$ git clone --recurse-submodules https://github.com/hnlcf/912-dsa.git
-
-$ cd 912-dsa
+python3 tools.py --all
 ```
 
-### Build
+### Manual
+
+1. Generate config
 
 ```shell
 $ mkdir -p build && cd build
 
 $ cmake -DCMAKE_BUILD_TYPE=Release ..
-
-$ cmake --build .
 ```
 
-### Test
+2. Build
+
+```shell
+$ cmake --build . --config Release --parallel 12
+```
+
+3. Run test
 
 ```shell
 $ ctest -C Release --verbose
+```
+
+4. Install
+
+```shell
+$ # undo
 ```
 
 ## License
