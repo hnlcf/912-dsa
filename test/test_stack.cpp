@@ -1,5 +1,5 @@
 #include "Example/StackExample.h"
-#include "catch2/catch.hpp"
+#include "catch2/catch_test_macros.hpp"
 
 std::string
 test_decimalConversion(int64_t n, uint8_t base) {

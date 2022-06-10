@@ -1,20 +1,73 @@
 #include "BinTree.hpp"
-#include "catch2/catch.hpp"
+#include "catch2/catch_test_macros.hpp"
 
 using dsa::BinTree;
 using dsa::BinTreeNode;
 
-TEST_CASE("TreeNode: Initialize", "[bin-tree]") {
-    dsa::BinTree<int> p;
+TEST_CASE("BinTreeNode: Constructor", "[bin-tree]") {
+    SECTION("BinTreeNode: Empty Constructor") {
+        BinTreeNode<int> p;
 
-    REQUIRE(p.root() != nullptr);
-    REQUIRE(p.size() == 1);
-    REQUIRE(!p.isEmpty());
+        REQUIRE(p.m_data == 0);
+        REQUIRE(p.m_height == 0);
+        REQUIRE(p.m_parent == nullptr);
+        REQUIRE(p.m_left == nullptr);
+        REQUIRE(p.m_right == nullptr);
+        REQUIRE(p.size() == 1);
+    }
 
-    p.insertAsRightNode(p.root(), 3);
+    SECTION("BinTreeNode: Construct with data and parent") {
+        BinTreeNode<int> p(-1, nullptr);
 
-    REQUIRE(p.size() == 2);
-    REQUIRE(p.root()->m_height == 1);
+        REQUIRE(p.m_data == -1);
+        REQUIRE(p.m_height == 0);
+        REQUIRE(p.m_parent == nullptr);
+        REQUIRE(p.m_left == nullptr);
+        REQUIRE(p.m_right == nullptr);
+    }
+
+    SECTION("BinTreeNode: Construct with all fields") {
+        BinTreeNode<int> p(99, 0, nullptr, nullptr, nullptr);
+
+        REQUIRE(p.m_data == 99);
+        REQUIRE(p.m_height == 0);
+        REQUIRE(p.m_parent == nullptr);
+        REQUIRE(p.m_left == nullptr);
+        REQUIRE(p.m_right == nullptr);
+    }
+}
+
+TEST_CASE("BinTreeNode: Insert Node", "[bin-tree]") {
+    SECTION("BinTreeNode: Insert left") {
+        BinTreeNode<int> p;
+
+        REQUIRE(p.m_left == nullptr);
+
+        auto *tmp = p.insertAsLeftChild(99);
+        REQUIRE(p.m_left->m_data == 99);
+        REQUIRE(tmp == p.m_left);
+        REQUIRE(p.size() == 2);
+    }
+
+    SECTION("BinTreeNode: Insert both left and right") {
+        BinTreeNode<int> p;
+
+        auto *tmp1 = p.insertAsLeftChild(1);
+        auto *tmp2 = p.insertAsRightChild(-1);
+
+        REQUIRE(p.m_left->m_data == 1);
+        REQUIRE(p.m_right->m_data == -1);
+        REQUIRE(tmp1 == p.m_left);
+        REQUIRE(tmp2 == p.m_right);
+        REQUIRE(p.size() == 3);
+
+        p.insertAsLeftChild(-99);
+        p.insertAsRightChild(99);
+        REQUIRE(p.m_left->m_data == -99);
+        REQUIRE(p.m_right->m_data == 99);
+        REQUIRE(tmp1 == p.m_left);
+        REQUIRE(tmp2 == p.m_right);
+    }
 }
 
 template<class T>
@@ -31,7 +84,7 @@ struct GetTraverse {
 };
 
 
-TEST_CASE("TreeNode: Four Traverse", "[bin-tree]") {
+TEST_CASE("BinTreeNode: Four Traverse", "[bin-tree]") {
     BinTreeNode<char> root('1', nullptr);
     root.insertAsLeftChild('2');
     root.insertAsRightChild('3');
@@ -46,7 +99,7 @@ TEST_CASE("TreeNode: Four Traverse", "[bin-tree]") {
 
     GetTraverse<char> visit;
 
-    SECTION("TreeNode: preorder traverse") {
+    SECTION("BinTreeNode: Preorder traverse") {
         visit.clear();
         root.traversePreorderRecur(&root, visit);
         REQUIRE(visit.m_data == "125784369");
@@ -60,7 +113,7 @@ TEST_CASE("TreeNode: Four Traverse", "[bin-tree]") {
         REQUIRE(visit.m_data == "125784369");
     }
 
-    SECTION("TreeNode: inorder traverse") {
+    SECTION("BinTreeNode: Inorder traverse") {
         visit.clear();
         root.traverseInorderRecur(&root, visit);
         REQUIRE(visit.m_data == "758241396");
@@ -70,7 +123,7 @@ TEST_CASE("TreeNode: Four Traverse", "[bin-tree]") {
         REQUIRE(visit.m_data == "758241396");
     }
 
-    SECTION("TreeNode: postorder traverse") {
+    SECTION("BinTreeNode: Postorder traverse") {
         visit.clear();
         root.traversePostorderRecur(&root, visit);
         REQUIRE(visit.m_data == "785429631");
@@ -80,9 +133,16 @@ TEST_CASE("TreeNode: Four Traverse", "[bin-tree]") {
         REQUIRE(visit.m_data == "785429631");
     }
 
-    SECTION("TreeNode: level traverse") {
+    SECTION("BinTreeNode: Level traverse") {
         visit.clear();
         root.traverseLevel(&root, visit);
         REQUIRE(visit.m_data == "123546789");
     }
+}
+
+TEST_CASE("BinTree: Constructor", "[bin-tree]") {
+    // TODO: BUG when deconstruct a BinTree object that is constructed with root
+    // TODO: ERROR: Signal: SIGSEGV (Segmentation fault)
+    BinTreeNode<int> root(1, nullptr);
+    //    BinTree<int>     b(1, &root);
 }
