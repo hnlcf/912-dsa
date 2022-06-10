@@ -47,11 +47,32 @@ TEST_CASE("BinTreeNode: Insert Node", "[bin-tree]") {
         REQUIRE(p.m_left->m_data == 99);
         REQUIRE(tmp == p.m_left);
         REQUIRE(p.size() == 2);
+
+        p.insertAsLeftChild(-99);
+        REQUIRE(p.m_left->m_data == -99);
+        REQUIRE(tmp == p.m_left);
+        REQUIRE(p.size() == 2);
+    }
+
+    SECTION("BinTreeNode: Insert right") {
+        BinTreeNode<int> p;
+
+        REQUIRE(p.m_right == nullptr);
+
+        auto *tmp = p.insertAsRightChild(99);
+        REQUIRE(p.m_right->m_data == 99);
+        REQUIRE(tmp == p.m_right);
+        REQUIRE(p.size() == 2);
+
+        p.insertAsRightChild(-99);
+        REQUIRE(p.m_right->m_data == -99);
+        REQUIRE(tmp == p.m_right);
+        REQUIRE(p.size() == 2);
     }
 
     SECTION("BinTreeNode: Insert both left and right") {
         BinTreeNode<int> p;
-
+ 
         auto *tmp1 = p.insertAsLeftChild(1);
         auto *tmp2 = p.insertAsRightChild(-1);
 
@@ -141,8 +162,4 @@ TEST_CASE("BinTreeNode: Four Traverse", "[bin-tree]") {
 }
 
 TEST_CASE("BinTree: Constructor", "[bin-tree]") {
-    // TODO: BUG when deconstruct a BinTree object that is constructed with root
-    // TODO: ERROR: Signal: SIGSEGV (Segmentation fault)
-    BinTreeNode<int> root(1, nullptr);
-    //    BinTree<int>     b(1, &root);
 }

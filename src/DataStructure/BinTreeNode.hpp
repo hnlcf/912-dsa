@@ -85,6 +85,7 @@ namespace dsa {
             } else {
                 m_right->m_data = e;
             }
+
             return m_right;
         }
 
