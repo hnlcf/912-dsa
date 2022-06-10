@@ -27,10 +27,16 @@ namespace dsa {
         }
 
     public:
-        BinTree() : BinTree(1l, new BinTreeNode<T>()) {
+        BinTree() : BinTree(1l, new BinTreeNode<T>) {
         }
 
         BinTree(size_type size, Node root) : m_size(size), m_root(root) {
+        }
+
+        ~BinTree() {
+            if (m_size > 0) {
+                remove(m_root);
+            }
         }
 
     public:
@@ -126,7 +132,7 @@ namespace dsa {
             updateHeightAbove(x->m_parent);
             m_size -= x->size();
 
-            auto*s = new BinTree<T>;
+            auto *s = new BinTree<T>;
             s->m_root = x;
             s->m_size = x->size();
             return s;
