@@ -72,7 +72,7 @@ TEST_CASE("BinTreeNode: Insert Node", "[bin-tree]") {
 
     SECTION("BinTreeNode: Insert both left and right") {
         BinTreeNode<int> p;
- 
+
         auto *tmp1 = p.insertAsLeftChild(1);
         auto *tmp2 = p.insertAsRightChild(-1);
 
