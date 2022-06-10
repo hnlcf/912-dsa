@@ -41,7 +41,7 @@ jobs:
         steps:
             -   uses: actions/checkout@v3
                 with:
-                    submodules: recursive
+                    submodules: true
 
             -   name: Generate build config
                 run: >-
