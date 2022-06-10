@@ -162,4 +162,8 @@ TEST_CASE("BinTreeNode: Four Traverse", "[bin-tree]") {
 }
 
 TEST_CASE("BinTree: Constructor", "[bin-tree]") {
+    SECTION("BinTree: Empty construct") {
+        BinTree<int> p;
+        REQUIRE(p.size() == 1);
+    }
 }
