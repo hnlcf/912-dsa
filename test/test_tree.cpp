@@ -1,5 +1,5 @@
 #include "BinTree.hpp"
-#include "catch2/catch.hpp"
+#include "catch2/catch_test_macros.hpp"
 
 using dsa::BinTree;
 using dsa::BinTreeNode;
@@ -72,7 +72,7 @@ TEST_CASE("BinTreeNode: Insert Node", "[bin-tree]") {
 
     SECTION("BinTreeNode: Insert both left and right") {
         BinTreeNode<int> p;
-
+ 
         auto *tmp1 = p.insertAsLeftChild(1);
         auto *tmp2 = p.insertAsRightChild(-1);
 

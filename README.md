@@ -1,21 +1,31 @@
 <div align="center">
     <h1> 912 DSA </h1>
     <i> A C++ implementation of 912 DSA. </i>
+    <p></p>
+    <a href="https://github.com/hnlcf/912-dsa/actions/workflows/build.yml">
+        <img src="https://img.shields.io/github/workflow/status/hnlcf/912-dsa/CI?label=CI" alt="CI">
+    </a>
+    <a href="https://github.com/hnlcf/912-dsa/issues">
+        <img src="https://img.shields.io/github/issues/hnlcf/912-dsa" alt="Open issues">
+    </a>
+    <a href="https://github.com/hnlcf/912-dsa/blob/master/LICENSE">
+        <img src="https://img.shields.io/github/license/hnlcf/912-dsa?color=blue" alt="License">
+    </a>
 </div>
 
 ## Contents
 
 - [Introduction](#introduction)
 - [Feature](#feature)
-    - [Classify](#classify)
-    - [Todo](#todo)
+    - [Chapter Code](#chapter-code)
+    - [Done](#done)
 - [Dependency](#dependency)
     - [Tools](#tools)
     - [Library](#library)
-- [Install](#install)
 - [QuickStart](#quickstart)
-    - [Use scripts](#use-scripts)
-    - [Manual](#manual)
+    - [Download](#download)
+    - [Build](#build)
+    - [Test](#test)
 - [License](#license)
 
 ## Introduction
@@ -25,7 +35,7 @@
 
 ## Feature
 
-### Classify
+### Chapter Code
 
 |  ID  |     Chapter      |                      Implementation                       |
 |:----:|:----------------:|:---------------------------------------------------------:|
@@ -36,7 +46,7 @@
 |  5   |   Binary Tree    |                 `BinTreeNode`, `BinTree`                  |
 | NaN  |      Other       |                        `Iterator`                         |
 
-### Todo
+### Done
 
 - Data Structure
     - [x] `Vector`
@@ -54,55 +64,39 @@
 
 ### Tools
 
-- conan
 - cmake
-- ninja
 - python3
 
 ### Library
 
-Using `catch2` which is managed by `conan` to test project.
+Using `catch2` for testing.
 
 - catch2
 
-## Install
+## QuickStart
+
+### Download
 
 ```shell
-$ git clone https://github.com/hnlcf/912-dsa.git
+$ git clone --recurse-submodules https://github.com/hnlcf/912-dsa.git
 
 $ cd 912-dsa
 ```
 
-## QuickStart
-
-### Use scripts
+### Build
 
 ```shell
-$ python3 tools.py --test
+$ mkdir -p build && cd build
+
+$ cmake -DCMAKE_BUILD_TYPE=Release ..
+
+$ cmake --build .
 ```
 
-### Manual
-
-1. Install dependency
+### Test
 
 ```shell
-$ mkdir build
-
-$ conan install . -if=./build
-```
-
-2. Build project
-
-```shell
-$ cmake -G Ninja -S . -DCMAKE_BUILD_TYPE=Debug -B ./build
-
-$ cmake --build ./build --config Debug --parallel 12 --target all
-```
-
-3. Run test
-
-```shell
-$ ./build/test/test -d yes --order lex
+$ ctest -C Release --verbose
 ```
 
 ## License

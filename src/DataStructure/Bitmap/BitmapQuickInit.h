@@ -6,7 +6,6 @@
 namespace dsa {
     class BitmapQuickInit {
     private:
-        size_type  m_size;   // size of Bitmap
         size_type *m_rank;   // store the ranks of all elements in the stack
         size_type *m_stack;  // store map
         size_type  m_top;    // point to the top of stack
@@ -24,7 +23,7 @@ namespace dsa {
 
     public:
         explicit BitmapQuickInit(size_type n = 8)
-          : m_size(n), m_rank(new size_type[n]), m_stack(new size_type[n]), m_top(0) {
+          : m_rank(new size_type[n]), m_stack(new size_type[n]), m_top(0) {
         }
 
         ~BitmapQuickInit() {

@@ -84,7 +84,8 @@ namespace dsa {
                 m_right = new BinTreeNode(e, this);
             } else {
                 m_right->m_data = e;
-            };
+            }
+
             return m_right;
         }
 
