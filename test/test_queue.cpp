@@ -1,5 +1,5 @@
 #include "Queue.hpp"
-#include "catch2/catch.hpp"
+#include "catch2/catch_test_macros.hpp"
 
 TEST_CASE("Queue: basic methods", "[queue]") {
     dsa::Queue<int> q;
