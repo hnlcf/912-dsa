@@ -1,0 +1,59 @@
+name: ci
+
+on: [ push, pull_request ]
+
+jobs:
+    build-and-test:
+        name: >-
+            CI
+            ${{ matrix.os }}
+            ${{ matrix.compiler }}
+            ${{ matrix.optimized && 'release' || 'debug' }}
+        runs-on: ${{ matrix.os }}
+        strategy:
+            fail-fast: false
+            matrix:
+                compiler: [ clang, gcc ]
+                os: [ ubuntu-latest, macos-latest ]
+                optimized: [ true, false ]
+                exclude:
+                    # Not testing with GCC on macOS.
+                    -   os: macos-latest
+                        compiler: gcc
+                include:
+                    -   compiler: clang
+                        CC: clang
+                        CXX: clang++
+                    -   compiler: gcc
+                        CC: gcc
+                        CXX: g++
+
+        env:
+            CMAKE_BUILD_DIR: ${{ github.workspace }}/build
+            CMAKE_BUILD_TYPE: ${{ matrix.optimized && 'RelWithDebInfo' || 'Debug' }}
+            CC: ${{ matrix.CC }}
+            CXX: ${{ matrix.CXX }}
+            BINARY_PATH: >-
+                ${{ format(
+                github.workspace,
+                matrix.optimized && 'RelWithDebInfo' || 'Debug') }}
+
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v3
+                with:
+                    submodules: true
+
+            -   name: Generate build config
+                run: >-
+                    cmake -S "${{ github.workspace }}" -B "${{ env.CMAKE_BUILD_DIR }}"
+                    -DCMAKE_BUILD_TYPE=${{ env.CMAKE_BUILD_TYPE }}
+
+            -   name: Build
+                run: >-
+                    cmake --build "${{ env.CMAKE_BUILD_DIR }}"
+                    --config "${{ env.CMAKE_BUILD_TYPE }}"
+
+            -   name: Run Tests
+                working-directory: ${{ github.workspace }}/build
+                run: ctest -C "${{ env.CMAKE_BUILD_TYPE }}" --verbose
