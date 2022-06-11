@@ -40,9 +40,9 @@ namespace dsa {
     template<class T>
     struct Cleaner {
         static void clean(T x) {  // 相当于递归基
-            static size_type n = 0;
+            static long long n = 0;
             if (strlen(typeid(T).name()) < 7) {  // 复杂类型一概忽略，只输出基本类型
-                printf("\t<%s>[%ld]=", typeid(T).name(), ++n);
+                printf("\t<%s>[%lld]=", typeid(T).name(), ++n);
                 std::cout << x;
                 printf(" purged\n");
             }
@@ -56,8 +56,8 @@ namespace dsa {
                 delete x;
             }
             // if contains pointer, release recursively
-            static size_type n = 0;
-            printf("\t<%s>[%ld] released\n", typeid(T *).name(), ++n);
+            static long long n = 0;
+            printf("\t<%s>[%lld] released\n", typeid(T *).name(), ++n);
         }
     };
 
