@@ -7,43 +7,43 @@
 #include <List.hpp>
 
 namespace dsa {
-    template<typename T>
-    class Queue {
-    private:
-        List<T> m_elem;
+  template<typename T>
+  class Queue {
+private:
+    List<T> m_elem;
 
-    public:
-        void enqueue(const T &e) {
-            m_elem.insertAsLast(e);
-        }
+public:
+    void enqueue(const T &e) {
+      m_elem.insertAsLast(e);
+    }
 
-        T dequeue() {
-            auto tmp = m_elem.first();
-            return m_elem.remove(tmp);
-        }
+    T dequeue() {
+      auto tmp = m_elem.first();
+      return m_elem.remove(tmp);
+    }
 
-        T first() {
-            if (size() > 0) {
-                return m_elem[0];
-            }
-            return *(new T);  // return a random value
-        }
+    T first() {
+      if (size() > 0) {
+        return m_elem[0];
+      }
+      return *(new T);  // return a random value
+    }
 
-        T last() {
-            if (size() > 0) {
-                return m_elem[size() - 1];
-            }
-            return *(new T);
-        }
+    T last() {
+      if (size() > 0) {
+        return m_elem[size() - 1];
+      }
+      return *(new T);
+    }
 
-        size_type size() const {
-            return m_elem.size();
-        }
+    size_type size() const {
+      return m_elem.size();
+    }
 
-        bool isEmpty() const {
-            return m_elem.size() == 0;
-        }
-    };
+    bool isEmpty() const {
+      return m_elem.size() == 0;
+    }
+  };
 }
 
 #endif  // INCLUDE_912_DSA_QUEUE_HPP
