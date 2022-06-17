@@ -5,35 +5,43 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS_DEBUG "-g -Wall -Wextra -Werror")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+###################################! Add Main Library !###################################
+
 add_subdirectory(src)
 
-set(
-        TEST_SRC
-        test/test_vector.cpp
-        test/test_list.cpp
-        test/test_stack.cpp
-        test/test_queue.cpp
-        test/test_tree.cpp
-        test/test_graph.cpp
-        test/test_graph_martix.cpp
-)
+###################################! Exec Test Target !###################################
 
 add_executable(dsa_all_test ${TEST_SRC})
 
-target_include_directories(dsa_all_test PUBLIC
-        src/DataStructure
-        lib/catch2
+target_sources(dsa_all_test PRIVATE
+        "test/test_vector.cpp"
+        "test/test_list.cpp"
+        "test/test_stack.cpp"
+        "test/test_queue.cpp"
+        "test/test_tree.cpp"
+        "test/test_graph.cpp"
+        "test/test_graph_martix.cpp"
+)
+
+target_include_directories(dsa_all_test PRIVATE
+        "src/DataStructure"
+        "lib/catch2"
         )
 
-target_link_libraries(dsa_all_test PRIVATE bitmap)
-target_link_libraries(dsa_all_test PRIVATE example)
+target_link_libraries(dsa_all_test PRIVATE bitmap example)
 
 add_subdirectory(lib/catch2)
-
 target_link_libraries(dsa_all_test PRIVATE Catch2::Catch2WithMain)
+
+
+###################################! Enable CMake Test !###################################
 
 enable_testing()
 
+## Global Test Case
+add_test(NAME dsa_all_test COMMAND dsa_all_test)
+
+## Custom Test Function
 function(dsa_test test_file)
     get_filename_component(test_target_name "${test_file}" NAME_WE)
 
@@ -52,5 +60,4 @@ function(dsa_test test_file)
     add_test(NAME "${test_target_name}" COMMAND "${test_target_name}")
 endfunction(dsa_test)
 
-add_test(NAME dsa_all_test COMMAND dsa_all_test)
 dsa_test("test/test_vector.cpp")
