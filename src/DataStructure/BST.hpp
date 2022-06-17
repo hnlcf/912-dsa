@@ -14,15 +14,6 @@ namespace dsa {
         Node m_hot;
 
     public:
-        BST();
-        BST(BST &&) = default;
-        BST(const BST &) = default;
-        ~BST();
-
-        BST &operator=(BST &&) = default;
-        BST &operator=(const BST &) = default;
-
-    public:
         virtual Node &search(T const &e) {
             m_hot = nullptr;
             return searchIn(this->m_root, e, m_hot);
