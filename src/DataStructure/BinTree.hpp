@@ -184,6 +184,7 @@ namespace dsa {
             size_type n = 1 + removeAt(x->m_left) + removeAt(x->m_right);
             release(x->m_data);
             release(x);
+            x = nullptr;
 
             return n;
         }
