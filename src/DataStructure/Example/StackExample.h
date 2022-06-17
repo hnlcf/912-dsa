@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Stack.hpp"
+#include <Stack.hpp>
 #include <cmath>
 #include <cstdint>
 #include <string>

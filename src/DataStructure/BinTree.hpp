@@ -1,7 +1,7 @@
 #pragma once
 
-#include "AutoHeader.hpp"
-#include "BinTreeNode.hpp"
+#include <AutoHeader.hpp>
+#include <BinTreeNode.hpp>
 #include <algorithm>
 
 namespace dsa {

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "AutoHeader.hpp"
-#include "IStack.hpp"
-#include "Vector.hpp"
+#include <AutoHeader.hpp>
+#include <IStack.hpp>
+#include <Vector.hpp>
 
 namespace dsa {
     template<typename T>

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "AutoHeader.hpp"
-#include "ListNode.hpp"
+#include <AutoHeader.hpp>
+#include <ListNode.hpp>
 #include <algorithm>
 
 namespace dsa {

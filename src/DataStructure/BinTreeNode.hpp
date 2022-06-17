@@ -1,8 +1,8 @@
 #pragma once
 
-#include "AutoHeader.hpp"
-#include "Queue.hpp"
-#include "Stack.hpp"
+#include <AutoHeader.hpp>
+#include <Queue.hpp>
+#include <Stack.hpp>
 
 
 namespace dsa {
