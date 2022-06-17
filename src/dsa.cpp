@@ -7,6 +7,6 @@ using namespace std;
 
 int
 main() {
-    std::cout << "912-dsa" << std::endl;
-    return 0;
+  std::cout << "912-dsa" << std::endl;
+  return 0;
 }
