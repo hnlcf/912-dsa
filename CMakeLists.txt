@@ -14,13 +14,15 @@ add_subdirectory(src)
 add_executable(dsa_all_test ${TEST_SRC})
 
 target_sources(dsa_all_test PRIVATE
-        "test/test_vector.cpp"
-        "test/test_list.cpp"
-        "test/test_stack.cpp"
-        "test/test_queue.cpp"
-        "test/test_tree.cpp"
-        "test/test_graph.cpp"
-        "test/test_graph_martix.cpp"
+        "test/test_main.cpp"
+        "test/basic/test_vector.cpp"
+        "test/basic/test_list.cpp"
+        "test/basic/test_stack.cpp"
+        "test/basic/test_queue.cpp"
+        "test/tree/test_bintree.cpp"
+        "test/tree/test_bst.cpp"
+        "test/graph/test_graph.cpp"
+        "test/graph/test_graph_martix.cpp"
 )
 
 target_include_directories(dsa_all_test PRIVATE
@@ -60,4 +62,4 @@ function(dsa_test test_file)
     add_test(NAME "${test_target_name}" COMMAND "${test_target_name}")
 endfunction(dsa_test)
 
-dsa_test("test/test_vector.cpp")
+dsa_test("test/test_main.cpp")
