@@ -27,10 +27,10 @@ namespace dsa {
         }
 
     public:
-        BinTree() : BinTree(1l, new BinTreeNode<T>) {
+        BinTree() : m_size(0), m_root(nullptr) {
         }
 
-        BinTree(size_type size, Node root) : m_size(size), m_root(root) {
+        BinTree(const BinTree<T> &other) : BinTree(other.size(), other.root()) {
         }
 
         ~BinTree() {
