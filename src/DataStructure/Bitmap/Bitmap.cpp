@@ -1,4 +1,4 @@
-#include "Bitmap.h"
+#include <Bitmap.h>
 
 void
 dsa::Bitmap::init(int n) {

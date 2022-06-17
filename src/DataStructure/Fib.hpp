@@ -1,7 +1,7 @@
 #pragma once
 
-#include "AutoHeader.hpp"
-#include "Vector.hpp"
+#include <AutoHeader.hpp>
+#include <Vector.hpp>
 #include <cstdint>
 
 namespace dsa {

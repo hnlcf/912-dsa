@@ -1,8 +1,8 @@
 #pragma once
 
-#include "AutoHeader.hpp"
-#include "IStack.hpp"
-#include "List.hpp"
+#include <AutoHeader.hpp>
+#include <IStack.hpp>
+#include <List.hpp>
 
 namespace dsa {
     template<typename T>

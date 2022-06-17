@@ -1,10 +1,10 @@
-#include "BinTree.hpp"
-#include "catch2/catch_test_macros.hpp"
+#include <BinTree.hpp>
+#include <catch2/catch_test_macros.hpp>
 
 using dsa::BinTree;
 using dsa::BinTreeNode;
 
-TEST_CASE("BinTreeNode: Constructor", "[bin-tree]") {
+TEST_CASE("BinTreeNode: [Constructor]", "[bin-tree]") {
     SECTION("BinTreeNode: Empty Constructor") {
         BinTreeNode<int> p;
 
@@ -37,7 +37,7 @@ TEST_CASE("BinTreeNode: Constructor", "[bin-tree]") {
     }
 }
 
-TEST_CASE("BinTreeNode: Insert Node", "[bin-tree]") {
+TEST_CASE("BinTreeNode: [Insert Node]", "[bin-tree]") {
     SECTION("BinTreeNode: Insert left") {
         BinTreeNode<int> p;
 
@@ -105,7 +105,7 @@ struct GetTraverse {
 };
 
 
-TEST_CASE("BinTreeNode: Four Traverse", "[bin-tree]") {
+TEST_CASE("BinTreeNode: [Four Traverse]", "[bin-tree]") {
     BinTreeNode<char> root('1', nullptr);
     root.insertAsLeftChild('2');
     root.insertAsRightChild('3');
@@ -161,9 +161,19 @@ TEST_CASE("BinTreeNode: Four Traverse", "[bin-tree]") {
     }
 }
 
-TEST_CASE("BinTree: Constructor", "[bin-tree]") {
+TEST_CASE("BinTree: [Constructor]", "[bin-tree]") {
     SECTION("BinTree: Empty construct") {
         BinTree<int> p;
+        REQUIRE(p.size() == 0);
+        REQUIRE(p.root() == nullptr);
+    }
+
+    SECTION("BinTree: Construct with root") {
+        BinTree<int> p;
+
+        p.insertRoot(99);
         REQUIRE(p.size() == 1);
+        REQUIRE(p.root() != nullptr);
+        REQUIRE(p.root()->m_data == 99);
     }
 }

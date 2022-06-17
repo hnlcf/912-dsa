@@ -1,8 +1,8 @@
 #pragma once
 
-#include "AutoHeader.hpp"
-#include "Queue.hpp"
-#include "Stack.hpp"
+#include <AutoHeader.hpp>
+#include <Queue.hpp>
+#include <Stack.hpp>
 
 
 namespace dsa {
@@ -44,16 +44,20 @@ namespace dsa {
     ////////////////////// Declaration of Binary-Tree-Node /////////////////////
     ////////////////////////////////////////////////////////////////////////////
 
+    /// @brief Binary Tree Node
     template<class T>
     struct BinTreeNode {
-        T         m_data{};
-        size_type m_height{};
+        T         m_data{};    // data field stored in node
+        size_type m_height{};  // height of subtree that rooted in this node
 
         BinTreeNode<T> *m_parent;
         BinTreeNode<T> *m_left;
         BinTreeNode<T> *m_right;
 
         BinTreeNode() : m_height(0l), m_parent(nullptr), m_left(nullptr), m_right(nullptr) {
+        }
+
+        BinTreeNode(T const &data) : BinTreeNode(data, 0ul, nullptr, nullptr, nullptr) {
         }
 
         BinTreeNode(T const &data, BinTreeNode<T> *parent)

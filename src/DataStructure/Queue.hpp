@@ -3,8 +3,8 @@
 #ifndef INCLUDE_912_DSA_QUEUE_HPP
 #define INCLUDE_912_DSA_QUEUE_HPP
 
-#include "AutoHeader.hpp"
-#include "List.hpp"
+#include <AutoHeader.hpp>
+#include <List.hpp>
 
 namespace dsa {
     template<typename T>

@@ -1,4 +1,4 @@
-#include "BitmapQuickInit.h"
+#include <BitmapQuickInit.h>
 
 inline bool
 dsa::BitmapQuickInit::isValid(size_type r) const {

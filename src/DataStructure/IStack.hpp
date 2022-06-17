@@ -1,6 +1,6 @@
 #pragma once
 
-#include "AutoHeader.hpp"
+#include <AutoHeader.hpp>
 
 namespace dsa {
     template<typename T>

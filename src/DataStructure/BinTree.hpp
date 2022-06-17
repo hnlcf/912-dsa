@@ -1,7 +1,7 @@
 #pragma once
 
-#include "AutoHeader.hpp"
-#include "BinTreeNode.hpp"
+#include <AutoHeader.hpp>
+#include <BinTreeNode.hpp>
 #include <algorithm>
 
 namespace dsa {
@@ -27,10 +27,10 @@ namespace dsa {
         }
 
     public:
-        BinTree() : BinTree(1l, new BinTreeNode<T>) {
+        BinTree() : m_size(0), m_root(nullptr) {
         }
 
-        BinTree(size_type size, Node root) : m_size(size), m_root(root) {
+        BinTree(const BinTree<T> &other) : BinTree(other.size(), other.root()) {
         }
 
         ~BinTree() {
@@ -184,6 +184,7 @@ namespace dsa {
             size_type n = 1 + removeAt(x->m_left) + removeAt(x->m_right);
             release(x->m_data);
             release(x);
+            x = nullptr;
 
             return n;
         }

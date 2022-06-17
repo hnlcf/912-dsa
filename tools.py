@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import os
-import subprocess
 import sys
 import shutil
 
@@ -12,10 +11,12 @@ test_path = binary_path + '/test'
 cmake_p = 'cmake'
 format_p = 'clang-format'
 
-cmake_build_mode = 'Release'  # Or debug
+cmake_build_mode = 'RelWithDebInfo'  # Or debug
 cmake_config_cmd = f'{cmake_p} -S {project_path} -B {binary_path} -DCMAKE_BUILD_TYPE={cmake_build_mode} '
 cmake_build_cmd = f'{cmake_p} --build {binary_path} --config {cmake_build_mode} --parallel 12'
 cmake_test_cmd = f'ctest -C {cmake_build_mode} --verbose'
+
+catch2_test_cmd=f'{binary_path}/dsa_all_test -d yes --order lex '
 
 file_type_list = [
     'c',
@@ -65,11 +66,11 @@ def count_file_line(file_path: str) -> int:
     count = 0
     with open(file_path, 'rb') as f:
         for line in f:
-            # 去除空格
+            # remove blank
             line = line.strip()
             if not line:
                 continue
-            # 去除注释
+            # remove comments
             if line.startswith(b'//') or line.startswith(b'/*')or line.startswith(b'*'):
                 continue
             count += 1
@@ -129,6 +130,8 @@ def run_test():
         build_target()
     os.system(f'cd build && {cmake_test_cmd}')
 
+def catch2_test(tag=''):
+    os.system(f'cd build && make && {catch2_test_cmd} {tag}')
 
 def all_actions():
     format_all()
@@ -156,6 +159,11 @@ def main():
         build_target()
     elif arg_list[1] == '--test':
         run_test()
+    elif arg_list[1] == '--catch2':
+        if arg_len > 2:
+            catch2_test(arg_list[2])
+        else:
+            catch2_test()
     elif arg_list[1] == '--all':
         all_actions()
 

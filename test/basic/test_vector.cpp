@@ -1,6 +1,5 @@
-#define CATCH_CONFIG_MAIN
-#include "Vector.hpp"
-#include "catch2/catch_test_macros.hpp"
+#include <Vector.hpp>
+#include <catch2/catch_test_macros.hpp>
 
 using dsa::Iterator;
 using dsa::Vector;
