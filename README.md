@@ -43,7 +43,7 @@ University**.
 |  3   |        List         |                    `ListNode`, `List`                     |
 |  4   |   Stack and Queue   | `IStack`, `Stack`, `LinkedStack`,`StackExample`, `Queue`  |
 |  5   |     Binary Tree     |                 `BinTreeNode`, `BinTree`                  |
-|  6   | Binary Search Tree  |                             /                             |
+|  6   | Binary Search Tree  |                `BST.hpp`, `AVL.hpp`                       |
 |  7   |  BST Applications   |                             /                             |
 |  8   |    Advanced BST     |                             /                             |
 |  9   |     Dictionary      |                             /                             |
