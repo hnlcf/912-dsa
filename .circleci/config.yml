@@ -10,8 +10,6 @@ jobs:
 
     steps:
       - checkout
-      - python/install-packages:
-          pkg-manager: pip
 
       - run:
           name: CMake Build
