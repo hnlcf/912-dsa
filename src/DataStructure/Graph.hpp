@@ -62,10 +62,12 @@ private:
     };
 
     /// （连通域）深度优先搜索算法
-    void DFS(size_type, int64_t &){};
+    void DFS(size_type, int64_t &) {
+    }
 
     /// （连通域）基于DFS的双连通分量分解算法
-    void BCC(size_type, int64_t &, Stack<size_type> &){};
+    void BCC(size_type, int64_t &, Stack<size_type> &) {
+    }
 
     /// （连通域）基于DFS的拓扑排序算法
     bool TSort(size_type, int64_t &, Stack<V> *) {
@@ -74,7 +76,8 @@ private:
 
     /// （连通域）优先级搜索框架
     template<class PU>
-    void PFS(size_type, PU){};
+    void PFS(size_type, PU) {
+    }
 
 public:
     size_type m_vertexNum;  // total number of vertices
@@ -160,24 +163,29 @@ public:
     }
 
     /// 深度优先搜索算法
-    void dfs(size_type){};
+    void dfs(size_type) {
+    }
 
     /// 基于DFS的双连通分量分解算法
-    void bcc(size_type){};
+    void bcc(size_type) {
+    }
 
     /// 基于DFS的拓扑排序算法
     Stack<V> *tSort(size_type) {
       return nullptr;
-    };
+    }
 
     /// 最小支撑树Prim算法
-    void prim(size_type){};
+    void prim(size_type) {
+    }
 
     /// 最短路径Dijkstra算法
-    void dijkstra(size_type){};
+    void dijkstra(size_type) {
+    }
 
     /// 优先级搜索框架
     template<class PU>
-    void pfs(size_type, PU){};
+    void pfs(size_type, PU) {
+    }
   };
 }
