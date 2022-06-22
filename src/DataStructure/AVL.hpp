@@ -8,9 +8,6 @@ namespace dsa {
     using Node = BinTreeNode<T> *;
 
 public:
-    Node &search(T const &e) override {
-      return nullptr;
-    }
 
     Node insert(T const &e) override {
       return nullptr;
