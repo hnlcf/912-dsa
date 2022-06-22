@@ -282,6 +282,17 @@ namespace dsa {
     return !isRoot(x) && x == x->m_parent->m_right;
   }
 
+  template<class T>
+  static inline BinTreeNode<T> *fromParentTo(BinTreeNode<T> *x) {
+    if (isRoot(x)) {
+      return x;
+    } else if (isLeftChild(x)) {
+      return x->m_parent->m_left;
+    } else {
+      return x->m_parent->m_right;
+    }
+  }
+
   template<class T, class VST>
   static void visitAlongLeftBranch(BinTreeNode<T> *x, VST &visit, Stack<BinTreeNode<T> *> &stack) {
     while (x != nullptr) {
