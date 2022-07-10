@@ -2,15 +2,9 @@ cmake_minimum_required(VERSION 3.16)
 project(912-dsa CXX)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS_DEBUG "-g -Wall -Wextra -Werror")
+set(CMAKE_CXX_FLAGS "-g -Wall -Wextra -Werror -Wpedantic")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-
-if(MSVC)
-        add_compile_options(/W4)
-else()
-        add_compile_options(-Wall -Wextra -Wpedantic)
-endif()
 
 ###################################! Add Main Library !###################################
 
@@ -18,7 +12,10 @@ add_subdirectory(src)
 
 ###################################! Exec Test Target !###################################
 
-add_executable(dsa_all_test ${TEST_SRC})
+add_executable(dsa_all_test)
+
+target_compile_options(dsa_all_test PUBLIC
+        "-Werror")
 
 target_sources(dsa_all_test PRIVATE
         "test/test_main.cpp"
