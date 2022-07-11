@@ -7,7 +7,3 @@ main(int argc, const char **argv) {
 
   return result;
 }
-
-TEST_CASE("912-DSA Catch2 Test", "[912]") {
-  REQUIRE(1 + 1 == 2);
-}
