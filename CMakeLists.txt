@@ -65,5 +65,3 @@ function(dsa_test test_file)
     target_link_libraries("${test_target_name}" PRIVATE bitmap example Catch2::Catch2WithMain)
     add_test(NAME "${test_target_name}" COMMAND "${test_target_name}")
 endfunction(dsa_test)
-
-dsa_test("test/test_main.cpp")
