@@ -130,7 +130,7 @@ public:
       updateHeightAbove(x->m_parent);
       m_size -= x->size();
 
-      auto*s = new BinTree<T>;
+      auto *s = new BinTree<T>;
       s->m_root = x;
       s->m_size = x->size();
       return s;

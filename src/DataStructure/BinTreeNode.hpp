@@ -95,7 +95,7 @@ namespace dsa {
 
     /// Return direct successor of current node(inorder)
     BinTreeNode<T> *successor() {
-      auto succ = this;
+      auto *succ = this;
       if (m_right != nullptr) {
         succ = m_right;
         while (succ->m_left != nullptr) {
