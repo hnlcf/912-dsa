@@ -21,7 +21,7 @@ public:
     explicit Iterator(pointer p) : m_ptr(p) {
     }
 
-    Iterator(const Iterator &other) : m_ptr(other.base()) {
+    explicit Iterator(const Iterator &other) : m_ptr(other.base()) {
     }
 
     pointer operator->() const {
