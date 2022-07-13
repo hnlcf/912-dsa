@@ -1,14 +1,20 @@
-#include <Example/StackExample.h>
-#include <catch2/catch_test_macros.hpp>
+#include <test_header.hpp>
+
+using dsa::decimalConversion;
+using dsa::evaluate;
+using dsa::matchBrackets;
+using dsa::Stack;
 
 std::string
 test_decimalConversion(int64_t n, uint8_t base) {
-  dsa::Stack<char> s;
-  dsa::decimalConversion(s, n, base);
+  Stack<char> s;
+  decimalConversion(s, n, base);
+
   std::string ans;
   while (!s.isEmpty()) {
     ans += s.pop();
   }
+
   return ans;
 }
 
@@ -62,7 +68,7 @@ TEST_CASE("Convert decimal number to other base", "[stack][example]") {
 TEST_CASE("Match brackets in string", "[stack][example]") {
   SECTION("empty string") {
     std::string s1;
-    REQUIRE(dsa::matchBrackets(s1) == true);
+    REQUIRE(matchBrackets(s1) == true);
   }
 
   SECTION("round brackets") {
@@ -70,9 +76,9 @@ TEST_CASE("Match brackets in string", "[stack][example]") {
     std::string s3 = ")";
     std::string s4 = "()";
 
-    REQUIRE(dsa::matchBrackets(s2) == false);
-    REQUIRE(dsa::matchBrackets(s3) == false);
-    REQUIRE(dsa::matchBrackets(s4) == true);
+    REQUIRE(matchBrackets(s2) == false);
+    REQUIRE(matchBrackets(s3) == false);
+    REQUIRE(matchBrackets(s4) == true);
   }
 
   SECTION("square brackets") {
@@ -80,9 +86,9 @@ TEST_CASE("Match brackets in string", "[stack][example]") {
     std::string s3 = "]";
     std::string s4 = "[]";
 
-    REQUIRE(dsa::matchBrackets(s2) == false);
-    REQUIRE(dsa::matchBrackets(s3) == false);
-    REQUIRE(dsa::matchBrackets(s4) == true);
+    REQUIRE(matchBrackets(s2) == false);
+    REQUIRE(matchBrackets(s3) == false);
+    REQUIRE(matchBrackets(s4) == true);
   }
 
   SECTION("braces") {
@@ -90,9 +96,9 @@ TEST_CASE("Match brackets in string", "[stack][example]") {
     std::string s3 = "}";
     std::string s4 = "{}";
 
-    REQUIRE(dsa::matchBrackets(s2) == false);
-    REQUIRE(dsa::matchBrackets(s3) == false);
-    REQUIRE(dsa::matchBrackets(s4) == true);
+    REQUIRE(matchBrackets(s2) == false);
+    REQUIRE(matchBrackets(s3) == false);
+    REQUIRE(matchBrackets(s4) == true);
   }
 
   SECTION("expressions") {
@@ -104,37 +110,40 @@ TEST_CASE("Match brackets in string", "[stack][example]") {
 
     std::string s3 = "{(()+())+([()-()])}";
     std::string s4 = "{(()+()+([()-()])}";
-    REQUIRE(dsa::matchBrackets(s2) == true);
-    REQUIRE(dsa::matchBrackets(s3) == true);
-    REQUIRE(dsa::matchBrackets(s4) == false);
+    REQUIRE(matchBrackets(s2) == true);
+    REQUIRE(matchBrackets(s3) == true);
+    REQUIRE(matchBrackets(s4) == false);
   }
 }
 
 TEST_CASE("Evaluate a math expression", "[stack][example]") {
   SECTION("All operators") {
     std::string str = "(1+2^3!-4)*(5!-(6-(7-(89-0!))))";
-    REQUIRE(dsa::evaluate(str) == 2013.0);
+    REQUIRE(evaluate(str) == 2013.0);
+
+    str = "((0!+1)*(2^(3!+4))+9-(5/((6!*7)/8!)))";
+    REQUIRE(evaluate(str) == 2017.0);
   }
   SECTION("+ - operators") {
     std::string str = "1+2-6";
-    REQUIRE(dsa::evaluate(str) == -3.0);
+    REQUIRE(evaluate(str) == -3.0);
   }
   SECTION("* / operators") {
     std::string str = "2*6/3";
-    REQUIRE(dsa::evaluate(str) == 4.0);
+    REQUIRE(evaluate(str) == 4.0);
   }
   SECTION("^ operators") {
     std::string str = "2^3";
-    REQUIRE(dsa::evaluate(str) == 8.0);
+    REQUIRE(evaluate(str) == 8.0);
   }
 
   SECTION("! operators") {
     std::string str = "3!-0!";
-    REQUIRE(dsa::evaluate(str) == 5.0);
+    REQUIRE(evaluate(str) == 5.0);
   }
 
   SECTION("() operators") {
     std::string str = "4*(3-5)";
-    REQUIRE(dsa::evaluate(str) == -8.0);
+    REQUIRE(evaluate(str) == -8.0);
   }
 }

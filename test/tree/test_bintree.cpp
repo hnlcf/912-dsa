@@ -1,8 +1,9 @@
-#include <BinTree.hpp>
-#include <catch2/catch_test_macros.hpp>
+#include <test_header.hpp>
 
 using dsa::BinTree;
 using dsa::BinTreeNode;
+using dsa::Vector;
+
 
 TEST_CASE("BinTreeNode: [Constructor]", "[bin-tree]") {
   SECTION("BinTreeNode: Empty Constructor") {
@@ -91,18 +92,6 @@ TEST_CASE("BinTreeNode: [Insert Node]", "[bin-tree]") {
   }
 }
 
-template<class T>
-struct GetTraverse {
-  std::string m_data{};
-
-  void clear() {
-    m_data.clear();
-  }
-
-  virtual void operator()(T &e) {
-    m_data += e;
-  }
-};
 
 
 TEST_CASE("BinTreeNode: [Four Traverse]", "[bin-tree]") {

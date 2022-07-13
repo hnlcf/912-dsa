@@ -1,5 +1,4 @@
-#include <catch2/catch_session.hpp>      // Catch2 with custom main
-#include <catch2/catch_test_macros.hpp>  // Catch2 test macros
+#include <test_header.hpp>
 
 int
 main(int argc, const char **argv) {

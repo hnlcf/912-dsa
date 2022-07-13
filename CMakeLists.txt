@@ -18,6 +18,7 @@ target_compile_options(dsa_all_test PUBLIC
         "-Werror")
 
 target_sources(dsa_all_test PRIVATE
+        "test/test_header.hpp"
         "test/test_main.cpp"
         "test/basic/test_vector.cpp"
         "test/basic/test_list.cpp"
@@ -30,6 +31,7 @@ target_sources(dsa_all_test PRIVATE
 )
 
 target_include_directories(dsa_all_test PRIVATE
+        "test"
         "src/DataStructure"
         "lib/catch2"
         )

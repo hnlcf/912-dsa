@@ -1,5 +1,4 @@
-#include <Vector.hpp>
-#include <catch2/catch_test_macros.hpp>
+#include <test_header.hpp>
 
 using dsa::Iterator;
 using dsa::Vector;
