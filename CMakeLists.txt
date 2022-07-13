@@ -26,6 +26,7 @@ target_sources(dsa_all_test PRIVATE
         "test/basic/test_queue.cpp"
         "test/tree/test_bintree.cpp"
         "test/tree/test_bst.cpp"
+        "test/tree/test_avl.cpp"
         "test/graph/test_graph.cpp"
         "test/graph/test_graph_martix.cpp"
 )
