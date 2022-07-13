@@ -127,9 +127,11 @@ namespace dsa {
     void traverseLevel(BinTreeNode<T> *x, VST &visit) {
       Queue<BinTreeNode<T> *> queue;
       queue.enqueue(this);
+
       while (!queue.isEmpty()) {
         x = queue.dequeue();
         visit(x->m_data);
+
         if (x->m_left != nullptr) {
           queue.enqueue(x->m_left);
         }
@@ -145,7 +147,9 @@ namespace dsa {
       if (x == nullptr) {
         return;
       }
+
       visit(x->m_data);
+
       traversePreorderRecur(x->m_left, visit);
       traversePreorderRecur(x->m_right, visit);
     }
@@ -157,9 +161,11 @@ namespace dsa {
       if (x != nullptr) {
         s.push(x);
       }
+
       while (!s.isEmpty()) {
         x = s.pop();
         visit(x->m_data);
+
         if (x->m_right != nullptr) {
           s.push(x->m_right);
         }
@@ -177,6 +183,7 @@ namespace dsa {
       while (true) {
         // access the left child chain of x, and push all right child trees to the stack one by one
         visitAlongLeftBranch(x, visit, stack);
+
         if (stack.isEmpty()) {
           break;
         }
@@ -190,6 +197,7 @@ namespace dsa {
       if (x == nullptr) {
         return;
       }
+
       traverseInorderRecur(x->m_left, visit);
       visit(x->m_data);
       traverseInorderRecur(x->m_right, visit);
@@ -202,10 +210,12 @@ namespace dsa {
 
       while (true) {
         goAlongLeftBranch(x, stack);
+
         if (stack.isEmpty()) {
           break;
         }
         x = stack.pop();
+
         visit(x->m_data);
         x = x->m_right;
       }
@@ -217,6 +227,7 @@ namespace dsa {
       if (x == nullptr) {
         return;
       }
+
       traversePostorderRecur(x->m_left, visit);
       traversePostorderRecur(x->m_right, visit);
       visit(x->m_data);
@@ -229,11 +240,13 @@ namespace dsa {
       if (x != nullptr) {
         stack.push(x);
       }
+
       while (!stack.isEmpty()) {
         if (stack.top() != x->m_parent) {
           // the `stack.top()` must be the right sibling of x
           gotoLeftMostLeaf(stack);
         }
+
         x = stack.pop();
         visit(x->m_data);
       }
@@ -297,6 +310,7 @@ namespace dsa {
   static void visitAlongLeftBranch(BinTreeNode<T> *x, VST &visit, Stack<BinTreeNode<T> *> &stack) {
     while (x != nullptr) {
       visit(x->m_data);
+
       stack.push(x->m_right);
       x = x->m_left;
     }
@@ -313,17 +327,21 @@ namespace dsa {
   template<class T>
   static void gotoLeftMostLeaf(Stack<BinTreeNode<T> *> &stack) {
     BinTreeNode<T> *x = stack.top();
+
     while (x != nullptr) {
       if (x->m_left != nullptr) {
         if (x->m_right != nullptr) {
           stack.push(x->m_right);
         }
+
         stack.push(x->m_left);
       } else {
         stack.push(x->m_right);
       }
+
       x = stack.top();
     }
+
     stack.pop();
   }
 }

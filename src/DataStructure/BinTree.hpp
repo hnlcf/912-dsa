@@ -52,38 +52,44 @@ public:
       return m_root;
     }
 
-    /// Insert `data` as root node to an empty tree
+    /// @breif Insert `data` as root node to an empty tree
     Node insertRoot(T const &data) {
       m_size++;
       m_root = new BinTreeNode<T>(data);
+
       return m_root;
     }
 
-    /// Insert `data` as the left child node of `x`
+    /// @breif Insert `data` as the left child node of `x`
     Node insertAsLeftNode(Node x, T const &data) {
-      m_size++;
       x->insertAsLeftChild(data);
+
       updateHeightAbove(x);
+      m_size++;
+
       return x->m_left;
     }
 
-    /// Insert `data` as the right child node of `x`
+    /// @breif Insert `data` as the right child node of `x`
     Node insertAsRightNode(Node x, T const &data) {
-      m_size++;
       x->insertAsRightChild(data);
+
       updateHeightAbove(x);
+      m_size++;
+
       return x->m_right;
     }
 
-    /// Insert `t` as the left subtree of `x`, and set `t` to null
+    /// @breif Insert `t` as the left subtree of `x`, and set `t` to null
     Node attachAsLeftTree(Tree &t, Node x) {
       // update fields
       x->m_left = t->m_root;
       if (x->m_left != nullptr) {
         x->m_left->m_parent = x;
       }
-      m_size += t->m_size;
+
       updateHeightAbove(x);
+      m_size += t->m_size;
 
       // free subtree
       t->m_root = nullptr;
@@ -94,15 +100,16 @@ public:
       return x;
     }
 
-    /// Insert `t` as the right subtree of `x`, and set `t` to null
+    /// @breif Insert `t` as the right subtree of `x`, and set `t` to null
     Node attachAsRightTree(Tree &t, Node x) {
       // update fields
       x->m_right = t->m_root;
       if (x->m_right != nullptr) {
         x->m_right->m_parent = x;
       }
-      m_size += t->m_size;
+
       updateHeightAbove(x);
+      m_size += t->m_size;
 
       // free subtree
       t->m_root = nullptr;
@@ -113,26 +120,32 @@ public:
       return x;
     }
 
-    /// Remove a node `x` and its all child nodes from a tree, return the number of nodes to be deleted
+    /// @breif Remove a node `x` and its all child nodes from a tree, return the number of nodes to be deleted
     size_type remove(Node x) {
       isRoot(x) ? m_root : (isLeftChild(x) ? x->m_parent->m_left : x->m_parent->m_right) = nullptr;
       updateHeightAbove(x->m_parent);
 
       auto    n = removeAt(x);
       m_size -= n;
+
       return n;
     }
 
-    /// Remove the subtree `x` and return it as a independent tree
+    /// @brief Remove the subtree `x` and return it as a independent tree
     Tree secede(Node x) {
+      // Cut the connect of `x` and its parent.
       isRoot(x) ? m_root : (isLeftChild(x) ? x->m_parent->m_left : x->m_parent->m_right) = nullptr;
       x->m_parent = nullptr;
+
+      // Update tree height and size.
       updateHeightAbove(x->m_parent);
       m_size -= x->size();
 
+      // Create a subtree rooted in `x` and return it.
       auto *s = new BinTree<T>;
       s->m_root = x;
       s->m_size = x->size();
+
       return s;
     }
 
@@ -170,16 +183,19 @@ public:
       if (p == nullptr) {
         return -1;
       }
+
       return p->m_height;
     }
 
-    /// Delete node `x` and its all child nodes, and return number of nodes to be deleted
+    /// @breif Delete node `x` and its all child nodes, and return number of nodes to be deleted
     static inline size_type removeAt(Node x) {
       // recurse base
       if (x == nullptr) {
         return 0;
       }
+
       size_type n = 1 + removeAt(x->m_left) + removeAt(x->m_right);
+
       release(x->m_data);
       release(x);
       x = nullptr;
