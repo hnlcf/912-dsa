@@ -164,6 +164,10 @@ public:
       return remove(m_size - 1);
     }
 
+    void clear() {
+      m_size = 0;
+    }
+
     reference front() {
       return *(begin());
     }
@@ -405,6 +409,12 @@ public:
       }
     }
 
+    std::string toString() const {
+      std::ostringstream os;
+      os << *this;
+      return os.str();
+    }
+
     reference operator[](size_type r) {
       VECTOR_RANGE_CHECK(r, size());
       return *(m_elem + r);
@@ -416,10 +426,10 @@ public:
     }
 
     template<class U>
-    friend std::ostream &operator<<(std::ostream &out, Vector<U> &);
+    friend std::ostream &operator<<(std::ostream &os, const Vector<U> &);
 
     template<class U>
-    friend std::istream &operator>>(std::istream &in, Vector<U> &);
+    friend std::istream &operator>>(std::istream &is, Vector<U> &);
 
     static size_type binarySearchA(pointer A, const_reference e, size_type lo, size_type hi) {
       while (lo < hi) {
@@ -488,28 +498,27 @@ public:
     }
   };
 
-
   template<class T>
-  inline std::ostream &operator<<(std::ostream &out_stream, Vector<T> &vec) {
-    T ele;
-    out_stream << "{ ";
+  std::ostream &operator<<(std::ostream &os, const Vector<T> &vec) {
+    os << "{ ";
     for (size_type i = 0; i < vec.size(); ++i) {
-      out_stream << vec[i];
+      os << vec[i];
       if (i < vec.size() - 1) {
-        out_stream << ", ";
+        os << ", ";
       }
     }
-    out_stream << " }";
-    return out_stream;
+    os << " }";
+
+    return os;
   }
 
   template<class T>
-  inline std::istream &operator>>(std::istream &in_stream, Vector<T> &vec) {
+  std::istream &operator>>(std::istream &is, Vector<T> &vec) {
     T ele;
-    while (in_stream >> ele) {
+    while (is >> ele) {
       vec.push_back(ele);
     }
-    return in_stream;
+    return is;
   }
 
   template<class T>
