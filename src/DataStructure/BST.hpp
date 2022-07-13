@@ -69,7 +69,7 @@ public:
       if (e < v->m_data) {
         return searchIn(v->m_left, e, hot);
       } else {
-        return searchIn(v->m_height, e, hot);
+        return searchIn(v->m_right, e, hot);
       }
     }
 
