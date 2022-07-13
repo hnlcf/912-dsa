@@ -92,61 +92,89 @@ TEST_CASE("BinTreeNode: [Insert Node]", "[bin-tree]") {
   }
 }
 
-
-
 TEST_CASE("BinTreeNode: [Four Traverse]", "[bin-tree]") {
-  BinTreeNode<char> root('1', nullptr);
-  root.insertAsLeftChild('2');
-  root.insertAsRightChild('3');
+  BinTreeNode<int> root(1, nullptr);
+  root.insertAsLeftChild(2);
+  root.insertAsRightChild(3);
 
-  root.m_left->insertAsLeftChild('5');
-  root.m_left->insertAsRightChild('4');
-  root.m_right->insertAsRightChild('6');
+  root.m_left->insertAsLeftChild(5);
+  root.m_left->insertAsRightChild(4);
+  root.m_right->insertAsRightChild(6);
 
-  root.m_left->m_left->insertAsLeftChild('7');
-  root.m_left->m_left->insertAsRightChild('8');
-  root.m_right->m_right->insertAsLeftChild('9');
+  root.m_left->m_left->insertAsLeftChild(7);
+  root.m_left->m_left->insertAsRightChild(8);
+  root.m_right->m_right->insertAsLeftChild(9);
 
-  GetTraverse<char> visit;
+  GetTraverse<int> visit;
 
   SECTION("BinTreeNode: Preorder traverse") {
-    visit.clear();
-    root.traversePreorderRecur(&root, visit);
-    REQUIRE(visit.m_data == "125784369");
+    SECTION("Recursive") {
+      visit.clear();
+      root.traversePreorderRecur(&root, visit);
 
-    visit.clear();
-    root.traversePreorderIter1(&root, visit);
-    REQUIRE(visit.m_data == "125784369");
+      Vector<int> actual = visit.m_data;
+      Vector<int> expect = { 1, 2, 5, 7, 8, 4, 3, 6, 9 };
+      REQUIRE(actual == expect);
+    }
 
-    visit.clear();
-    root.traversePreorderIter2(&root, visit);
-    REQUIRE(visit.m_data == "125784369");
+    SECTION("Iterative1") {
+      visit.clear();
+      root.traversePreorderIter1(&root, visit);
+      Vector<int> actual = visit.m_data;
+      Vector<int> expect = { 1, 2, 5, 7, 8, 4, 3, 6, 9 };
+      REQUIRE(actual == expect);
+    }
+
+    SECTION("Iterative2") {
+      visit.clear();
+      root.traversePreorderIter2(&root, visit);
+      Vector<int> actual = visit.m_data;
+      Vector<int> expect = { 1, 2, 5, 7, 8, 4, 3, 6, 9 };
+      REQUIRE(actual == expect);
+    }
   }
 
   SECTION("BinTreeNode: Inorder traverse") {
-    visit.clear();
-    root.traverseInorderRecur(&root, visit);
-    REQUIRE(visit.m_data == "758241396");
+    SECTION("Recursive") {
+      visit.clear();
+      root.traverseInorderRecur(&root, visit);
+      Vector<int> actual = visit.m_data;
+      Vector<int> expect = { 7, 5, 8, 2, 4, 1, 3, 9, 6 };
+      REQUIRE(actual == expect);
+    }
 
-    visit.clear();
-    root.traverseInorderIter(&root, visit);
-    REQUIRE(visit.m_data == "758241396");
+    SECTION("Iterative") {
+      visit.clear();
+      root.traverseInorderIter(&root, visit);
+      Vector<int> actual = visit.m_data;
+      Vector<int> expect = { 7, 5, 8, 2, 4, 1, 3, 9, 6 };
+      REQUIRE(actual == expect);
+    }
   }
 
   SECTION("BinTreeNode: Postorder traverse") {
-    visit.clear();
-    root.traversePostorderRecur(&root, visit);
-    REQUIRE(visit.m_data == "785429631");
-
-    visit.clear();
-    root.traversePostorderIter(&root, visit);
-    REQUIRE(visit.m_data == "785429631");
+    SECTION("Recursive") {
+      visit.clear();
+      root.traversePostorderRecur(&root, visit);
+      Vector<int> actual = visit.m_data;
+      Vector<int> expect = { 7, 8, 5, 4, 2, 9, 6, 3, 1 };
+      REQUIRE(actual == expect);
+    }
+    SECTION("Iterative") {
+      visit.clear();
+      root.traversePostorderIter(&root, visit);
+      Vector<int> actual = visit.m_data;
+      Vector<int> expect = { 7, 8, 5, 4, 2, 9, 6, 3, 1 };
+      REQUIRE(actual == expect);
+    }
   }
 
   SECTION("BinTreeNode: Level traverse") {
     visit.clear();
     root.traverseLevel(&root, visit);
-    REQUIRE(visit.m_data == "123546789");
+    Vector<int> actual = visit.m_data;
+    Vector<int> expect = { 1, 2, 3, 5, 4, 6, 7, 8, 9 };
+    REQUIRE(actual == expect);
   }
 }
 
