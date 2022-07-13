@@ -71,7 +71,7 @@ def count_file_line(file_path: str) -> int:
             if not line:
                 continue
             # remove comments
-            if line.startswith(b'//') or line.startswith(b'/*')or line.startswith(b'*'):
+            if line.startswith(b'//') or line.startswith(b'/*') or line.startswith(b'*'):
                 continue
             count += 1
     return count
@@ -107,12 +107,6 @@ def help_cmd():
         print_help_msg(msg[0], msg[1])
 
 
-def build_target():
-    if not os.path.exists(binary_path) == 0:
-        cmake_refresh_project()
-    os.system(cmake_build_cmd)
-
-
 def clean_build():
     if os.path.exists(binary_path):
         shutil.rmtree(binary_path)
@@ -120,18 +114,25 @@ def clean_build():
 
 
 def cmake_refresh_project():
-    global cmake_config_cmd
     clean_build()
     os.system(cmake_config_cmd)
 
 
-def run_test():
+def build_target():
     if not os.path.exists(binary_path):
-        build_target()
+        cmake_refresh_project()
+    os.system(cmake_build_cmd)
+
+
+def run_test():
+    build_target()
     os.system(f'cd build && {cmake_test_cmd}')
 
+
 def catch2_test(tag=''):
+    build_target()
     os.system(f'cd build && make && {catch2_test_cmd} {tag}')
+
 
 def all_actions():
     format_all()
