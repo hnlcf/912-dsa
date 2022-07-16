@@ -1,8 +1,8 @@
 #ifndef INC_912_DSA_DS_AVL_H_
 #define INC_912_DSA_DS_AVL_H_
 
-#include <autoheader.h>
-#include <bst.h>
+#include "autoheader.h"
+#include "bst.h"
 
 namespace dsa {
 template <class T>

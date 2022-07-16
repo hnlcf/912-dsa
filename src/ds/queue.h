@@ -1,8 +1,8 @@
 #ifndef INC_912_DSA_DS_QUEUE_H_
 #define INC_912_DSA_DS_QUEUE_H_
 
-#include <autoheader.h>
-#include <list.h>
+#include "autoheader.h"
+#include "list.h"
 
 namespace dsa {
 template <typename T>

@@ -1,9 +1,8 @@
 #ifndef INC_912_DSA_DS_LIST_H_
 #define INC_912_DSA_DS_LIST_H_
 
-#include <autoheader.h>
-#include <list_node.h>
-#include <algorithm>
+#include "autoheader.h"
+#include "list_node.h"
 
 namespace dsa {
 template <class T>

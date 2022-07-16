@@ -1,9 +1,9 @@
 #ifndef INC_912_DSA_DS_LINKEDSTACK_H_
 #define INC_912_DSA_DS_LINKEDSTACK_H_
 
-#include <autoheader.h>
-#include <list.h>
-#include <stack_interface.h>
+#include "autoheader.h"
+#include "list.h"
+#include "stack_interface.h"
 
 namespace dsa {
 template <typename T>

@@ -1,7 +1,7 @@
 #ifndef INC_912_DSA_DS_ENTRY_H_
 #define INC_912_DSA_DS_ENTRY_H_
 
-#include <autoheader.h>
+#include "autoheader.h"
 
 namespace dsa {
 template <class Key, class Value>

@@ -19,11 +19,8 @@ cmake_test_cmd = f'ctest -C {cmake_build_mode} --verbose'
 catch2_test_cmd=f'{binary_path}/dsa_all_test -d yes --order lex '
 
 file_type_list = [
-    'c',
     'cc',
-    'cpp',
     'h',
-    'hpp'
 ]
 
 include_path_list = [

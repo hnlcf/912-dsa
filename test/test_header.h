@@ -1,21 +1,21 @@
 #pragma once
 
 // Core headers
-#include <avl.h>
-#include <bintree.h>
-#include <bintree_node.h>
-#include <bst.h>
-#include <entry.h>
-#include <fib.h>
-#include <graph.h>
-#include <graph_matrix.h>
-#include <iterator.h>
-#include <linkedstack.h>
-#include <list.h>
-#include <list_node.h>
-#include <queue.h>
-#include <stack.h>
-#include <vector.h>
+#include <ds/avl.h>
+#include <ds/bintree.h>
+#include <ds/bintree_node.h>
+#include <ds/bst.h>
+#include <ds/entry.h>
+#include <ds/fib.h>
+#include <ds/graph.h>
+#include <ds/graph_matrix.h>
+#include <ds/iterator.h>
+#include <ds/linkedstack.h>
+#include <ds/list.h>
+#include <ds/list_node.h>
+#include <ds/queue.h>
+#include <ds/stack.h>
+#include <ds/vector.h>
 
 // Submodule headers
 #include <bitmap/bitmap.h>

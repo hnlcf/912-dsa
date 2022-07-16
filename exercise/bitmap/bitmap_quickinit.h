@@ -1,8 +1,7 @@
 #ifndef INC_912_DSA_EXERCISE_BITMAP_BITMAP_QUICKINIT_H_
 #define INC_912_DSA_EXERCISE_BITMAP_BITMAP_QUICKINIT_H_
 
-#include <autoheader.h>
-#include <cstdint>
+#include <ds/autoheader.h>
 
 namespace dsa {
 class BitmapQuickInit {

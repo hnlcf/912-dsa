@@ -9,6 +9,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 ###################################! Add Main Library !###################################
 
 add_subdirectory(exercise)
+add_subdirectory(src)
 
 ###################################! Exec Test Target !###################################
 
@@ -33,7 +34,7 @@ target_sources(dsa_all_test PRIVATE
 
 target_include_directories(dsa_all_test PRIVATE
         "test"
-        "src/ds"
+        "src"
         "exercise"
         "lib/catch2"
         )
