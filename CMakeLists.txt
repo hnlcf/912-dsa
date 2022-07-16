@@ -8,7 +8,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 ###################################! Add Main Library !###################################
 
-add_subdirectory(src)
+add_subdirectory(exercise)
 
 ###################################! Exec Test Target !###################################
 
@@ -18,22 +18,23 @@ target_compile_options(dsa_all_test PUBLIC
         "-Werror")
 
 target_sources(dsa_all_test PRIVATE
-        "test/test_header.hpp"
-        "test/test_main.cpp"
-        "test/basic/test_vector.cpp"
-        "test/basic/test_list.cpp"
-        "test/basic/test_stack.cpp"
-        "test/basic/test_queue.cpp"
-        "test/tree/test_bintree.cpp"
-        "test/tree/test_bst.cpp"
-        "test/tree/test_avl.cpp"
-        "test/graph/test_graph.cpp"
-        "test/graph/test_graph_martix.cpp"
-)
+        "test/test_header.h"
+        "test/test_main.cc"
+        "test/basic/test_vector.cc"
+        "test/basic/test_list.cc"
+        "test/basic/test_stack.cc"
+        "test/basic/test_queue.cc"
+        "test/tree/test_bintree.cc"
+        "test/tree/test_bst.cc"
+        "test/tree/test_avl.cc"
+        "test/graph/test_graph.cc"
+        "test/graph/test_graph_martix.cc"
+        )
 
 target_include_directories(dsa_all_test PRIVATE
         "test"
-        "src/DataStructure"
+        "src/ds"
+        "exercise"
         "lib/catch2"
         )
 
