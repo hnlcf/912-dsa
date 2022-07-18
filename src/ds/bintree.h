@@ -22,8 +22,16 @@ class Bintree {
 
   /// @brief
   void updateHeightAbove(Node x) {
+    size_type old_height = 0;
+    size_type new_height = 0;
+
     while ((x != nullptr)) {
-      updateHeight(x);
+      old_height = x->m_height;
+      new_height = updateHeight(x);
+
+      if (new_height == old_height) {
+        break;
+      }
       x = x->m_parent;
     }
   }

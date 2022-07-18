@@ -48,11 +48,12 @@ class BST : public Bintree<T> {
     return v2;
   }
 
+
  public:
   /// @brief Find the key `e` in BST.
   virtual Node& search(T const& e) {
     m_hot = nullptr;
-    return searchIn(this->m_root, e, m_hot);
+    return searchInIter(this->m_root, e, m_hot);
   }
 
   /// @brief Insert the key `e` in BST.
@@ -85,45 +86,12 @@ class BST : public Bintree<T> {
     return true;
   }
 
-  /// @brief
-  Node rotateAt(Node v) {
-    Node p = v->m_parent;
-    Node g = p->m_parent;
-
-    if (isLeftChild(p)) {
-      if (isLeftChild(v)) {
-        // zig-zig
-        p->m_parent = g->m_parent;
-
-        return connect34(v, p, g, v->m_left, v->m_right, p->m_right,
-                         g->m_right);
-      } else {
-        // zig-zag
-        v->m_parent = g->m_parent;
-
-        return connect34(p, v, g, p->m_left, v->m_left, v->m_right, g->m_right);
-      }
-    } else {
-      if (isRightChild(v)) {
-        // zag-zag
-        p->m_parent = g->m_parent;
-
-        return connect34(g, p, v, g->m_left, p->m_left, v->m_left, v->m_right);
-      } else {
-        // zag-zig
-        v->m_parent = g->m_parent;
-
-        return connect34(g, v, p, g->m_left, v->m_left, v->m_right, p->m_right);
-      }
-    }
-  }
-
  public:
-  /// @brief Find the key `e` in BST subtree rooted at node `v`.
+  /// @brief [Recursive version] Find the key `e` in BST subtree rooted at node `v`.
   /// @param v The reference of root node of subtree.
   /// @param e The key need to be find.
   /// @param hot The parent(father) node of the currently visited node.
-  static Node& searchIn(Node& v, T const& e, Node& hot) {
+  static Node& searchInRecur(Node& v, T const& e, Node& hot) {
     if ((v == nullptr) || (e == v->m_data)) {
       return v;
     }
@@ -131,9 +99,31 @@ class BST : public Bintree<T> {
     hot = v;
 
     if (e < v->m_data) {
-      return searchIn(v->m_left, e, hot);
+      return searchInRecur(v->m_left, e, hot);
     } else {
-      return searchIn(v->m_right, e, hot);
+      return searchInRecur(v->m_right, e, hot);
+    }
+  }
+
+  /// @brief [Iterative version] Find the key `e` in BST subtree rooted at node `v`.
+  /// @param v The reference of root node of subtree.
+  /// @param e The key need to be find.
+  /// @param hot The parent(father) node of the currently visited node.
+  static Node& searchInIter(Node& v, T const& e, Node& hot) {
+    if ((v == nullptr) || (e == v->m_data)) {
+      return v;
+    }
+
+    hot = v;
+
+    while (true) {
+      auto& p = (e < v->m_data) ? v->m_left : v->m_right;
+
+      if ((p == nullptr) || (e == p->m_data)) {
+        return p;
+      }
+
+      hot = p;
     }
   }
 
