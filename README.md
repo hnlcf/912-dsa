@@ -16,12 +16,10 @@
 ## Contents
 
 - [Introduction](#introduction)
-- [Features](#features)
-- [Download](#download)
-- [Dependency](#dependency)
-    - [Tools](#tools)
-    - [Library](#library)
-- [QuickStart](#quickstart)
+- [Feature](#feature)
+- [Installation](#installation)
+- [Build](#build)
+    - [Dependency](#dependency)
     - [Using script](#using-script)
     - [Manual](#manual)
 - [License](#license)
@@ -34,7 +32,7 @@ University**.
 - video: [DSA](https://www.xuetangx.com/course/THU08091000384/10322765?channel=i.area.learn_title)
 - book: [Data Structures in C++](http://dsa.cs.tsinghua.edu.cn/~deng/ds/dsacpp/index.htm)
 
-## Features
+## Feature
 
 |  ID  |       Chapter       |                      Implementation                       |
 |:----:|:-------------------:|:---------------------------------------------------------:|
@@ -54,7 +52,7 @@ University**.
 |  14  |       Sorting       |                             /                             |
 | NaN  |        Other        |                        `Iterator`                         |
 
-## Download
+## Installation
 
 ```shell
 $ git clone --recurse-submodules https://github.com/hnlcf/912-dsa.git
@@ -62,30 +60,37 @@ $ git clone --recurse-submodules https://github.com/hnlcf/912-dsa.git
 $ cd 912-dsa
 ```
 
-## Dependency
+## Build
 
-### Tools
+### Dependency
+
+#### Tools
 
 - cmake
-- python3
+- python
 
-### Library
+#### Library
 
 Using `catch2` for testing which managed by git submodules.
 
 - catch2
 
-## QuickStart
-
 ### Using script
 
+1. CMake build and ctest
 ```shell
-python3 tools.py --all
+$ python tools.py --all
+```
+
+2. Catch2 test
+
+```shell
+$ python tools.py --catch2
 ```
 
 ### Manual
 
-1. Generate config
+1. CMake config
 
 ```shell
 $ mkdir -p build && cd build
@@ -99,16 +104,10 @@ $ cmake -DCMAKE_BUILD_TYPE=Release ..
 $ cmake --build . --config Release --parallel 12
 ```
 
-3. Run test
+3. Run ctest
 
 ```shell
 $ ctest -C Release --verbose
-```
-
-4. Install
-
-```shell
-$ # undo
 ```
 
 ## License
