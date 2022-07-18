@@ -119,7 +119,8 @@ class BST : public Bintree<T> {
   }
 
  public:
-  /// @brief [Recursive version] Find the key `e` in BST subtree rooted at node `v`.
+  /// @brief [Recursive version] Find the key `e` in BST subtree rooted at node
+  /// `v`.
   /// @param v The reference of root node of subtree.
   /// @param e The key need to be find.
   /// @param hot The parent(father) node of the currently visited node.
@@ -127,7 +128,6 @@ class BST : public Bintree<T> {
     if ((v == nullptr) || (e == v->m_data)) {
       return v;
     }
-
     hot = v;
 
     if (e < v->m_data) {
@@ -137,7 +137,8 @@ class BST : public Bintree<T> {
     }
   }
 
-  /// @brief [Iterative version] Find the key `e` in BST subtree rooted at node `v`.
+  /// @brief [Iterative version] Find the key `e` in BST subtree rooted at node
+  /// `v`.
   /// @param v The reference of root node of subtree.
   /// @param e The key need to be find.
   /// @param hot The parent(father) node of the currently visited node.
@@ -145,16 +146,14 @@ class BST : public Bintree<T> {
     if ((v == nullptr) || (e == v->m_data)) {
       return v;
     }
-
     hot = v;
 
     while (true) {
-      auto& p = (e < v->m_data) ? v->m_left : v->m_right;
+      auto& p = (e < hot->m_data) ? hot->m_left : hot->m_right;
 
       if ((p == nullptr) || (e == p->m_data)) {
         return p;
       }
-
       hot = p;
     }
   }
