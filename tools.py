@@ -16,7 +16,7 @@ cmake_config_cmd = f'{cmake_p} -S {project_path} -B {binary_path} -DCMAKE_BUILD_
 cmake_build_cmd = f'{cmake_p} --build {binary_path} --config {cmake_build_mode} --parallel 12'
 cmake_test_cmd = f'ctest -C {cmake_build_mode} --verbose'
 
-catch2_test_cmd=f'{binary_path}/dsa_all_test -d yes --order lex '
+catch2_test_cmd = f'{binary_path}/dsa_all_test -d yes --order lex '
 
 file_type_list = [
     'cc',
