@@ -157,7 +157,7 @@ class BST : public Bintree<T> {
       // so `target` must have not left child.
       succ = target->m_right;
 
-      // Create connection from parent to child.
+      //! Create connection from parent to child.
       // After exchange, determine whether node `p` and its successor are
       // adjacent or not.
       if (target->m_parent == p) {
@@ -171,7 +171,7 @@ class BST : public Bintree<T> {
       }
     }
 
-    // Create connection from child to parent.
+    //! Create connection from child to parent.
     hot = target->m_parent;
     if (succ != nullptr) {
       succ->m_parent = hot;

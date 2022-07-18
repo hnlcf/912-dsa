@@ -14,13 +14,13 @@ class Bintree {
   size_type m_size{};
   Node m_root{};
 
-  /// @brief
+  /// @brief Update the height of node `x`
   virtual size_type updateHeight(Node x) {
     x->m_height = 1 + std::max(stature(x->m_left), stature(x->m_right));
     return x->m_height;
   }
 
-  /// @brief
+  /// @brief Update height of node `x` and all its ancestors.
   void updateHeightAbove(Node x) {
     size_type old_height = 0;
     size_type new_height = 0;
@@ -32,6 +32,7 @@ class Bintree {
       if (new_height == old_height) {
         break;
       }
+
       x = x->m_parent;
     }
   }
@@ -57,7 +58,7 @@ class Bintree {
   /// @brief
   Node root() const { return m_root; }
 
-  /// @breif Insert `data` as root node to an empty tree
+  /// @brief Insert `data` as root node to an empty tree
   Node insertRoot(T const& data) {
     m_size++;
     m_root = new BinTreeNode<T>(data);
@@ -65,7 +66,7 @@ class Bintree {
     return m_root;
   }
 
-  /// @breif Insert `data` as the left child node of `x`
+  /// @brief Insert `data` as the left child node of `x`
   Node insertAsLeftNode(Node x, T const& data) {
     x->insertAsLeftChild(data);
 
@@ -75,7 +76,7 @@ class Bintree {
     return x->m_left;
   }
 
-  /// @breif Insert `data` as the right child node of `x`
+  /// @brief Insert `data` as the right child node of `x`
   Node insertAsRightNode(Node x, T const& data) {
     x->insertAsRightChild(data);
 
@@ -85,7 +86,7 @@ class Bintree {
     return x->m_right;
   }
 
-  /// @breif Insert `t` as the left subtree of `x`, and set `t` to null
+  /// @brief Insert `t` as the left subtree of `x`, and set `t` to null
   Node attachAsLeftTree(Tree& t, Node x) {
     // update fields
     x->m_left = t->m_root;
@@ -105,7 +106,7 @@ class Bintree {
     return x;
   }
 
-  /// @breif Insert `t` as the right subtree of `x`, and set `t` to null
+  /// @brief Insert `t` as the right subtree of `x`, and set `t` to null
   Node attachAsRightTree(Tree& t, Node x) {
     // update fields
     x->m_right = t->m_root;
@@ -125,7 +126,7 @@ class Bintree {
     return x;
   }
 
-  /// @breif Remove a node `x` and its all child nodes from a tree, return the
+  /// @brief Remove a node `x` and its all child nodes from a tree, return the
   /// number of nodes to be deleted
   size_type remove(Node x) {
     isRoot(x) ? m_root
@@ -200,7 +201,7 @@ class Bintree {
     return p->m_height;
   }
 
-  /// @breif Delete node `x` and its all child nodes, and return number of nodes
+  /// @brief Delete node `x` and its all child nodes, and return number of nodes
   /// to be deleted
   static inline size_type removeAt(Node x) {
     // recurse base

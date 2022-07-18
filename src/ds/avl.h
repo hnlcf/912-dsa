@@ -97,7 +97,7 @@ class AVL : public BST<T> {
     }
   }
 
-  /// @brief
+  /// @brief Return a taller child of `p`
   static Node tallerChild(Node p) {
     auto h = balanceFactor(p);
 
