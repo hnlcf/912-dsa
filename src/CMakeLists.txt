@@ -1,14 +1,13 @@
 
-cmake_minimum_required(VERSION 3.16)
-project(dsa CXX)
+set(DSA_LIB_NAME dsa)
 
 include_directories(
         ${CMAKE_SOURCE_DIR}/src
 )
 
-add_executable(dsa)
-target_include_directories(dsa PUBLIC
+add_executable(${DSA_LIB_NAME})
+target_include_directories(${DSA_LIB_NAME} PUBLIC
         ${CMAKE_SOURCE_DIR}/src)
-target_sources(dsa PUBLIC
+target_sources(${DSA_LIB_NAME} PUBLIC
         "dsa.cc"
         )
