@@ -14,6 +14,7 @@
 #include <ds/list.h>
 #include <ds/list_node.h>
 #include <ds/queue.h>
+#include <ds/splaytree.h>
 #include <ds/stack.h>
 #include <ds/vector.h>
 
