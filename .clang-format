@@ -1,2 +1,3 @@
 # Generated from CLion C/C++ Code Style settings
-BasedOnStyle: Chromium
+Language: Cpp
+BasedOnStyle: Google
