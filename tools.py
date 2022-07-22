@@ -24,6 +24,7 @@ file_type_list = [
 ]
 
 include_path_list = [
+    'exercise',
     'src',
     'test'
 ]
