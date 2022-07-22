@@ -29,6 +29,4 @@ inline void dsa::BitmapQuickInit::clear(size_type r) {
   }
 }
 
-inline void dsa::BitmapQuickInit::reset() {
-  m_top = 0;
-}
+inline void dsa::BitmapQuickInit::reset() { m_top = 0; }

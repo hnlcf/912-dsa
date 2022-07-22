@@ -11,8 +11,7 @@ static inline bool isDigit(char ch);
 /// @param s The stack given for storing number
 /// @param str The string given
 /// @param index The specific position in string
-static void readNumber(Stack<double>& s,
-                       const std::string& str,
+static void readNumber(Stack<double>& s, const std::string& str,
                        std::size_t& index);
 
 /// @brief Compare the calculate priorities of TWO operators
@@ -136,12 +135,9 @@ double evaluate(const std::string& exp) {
   return operands.pop();
 }
 
-static inline bool isDigit(char ch) {
-  return ((48 <= ch) && (ch <= 57));
-}
+static inline bool isDigit(char ch) { return ((48 <= ch) && (ch <= 57)); }
 
-static void readNumber(Stack<double>& s,
-                       const std::string& str,
+static void readNumber(Stack<double>& s, const std::string& str,
                        std::size_t& index) {
   s.push(str[index] - '0');
   index++;

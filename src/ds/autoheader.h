@@ -29,11 +29,8 @@ class ContainerException {
   }
 
   /// Check n is [0, size) or not.
-  static void outOfRangeCheck(const char* format,
-                              const char* file,
-                              int line,
-                              size_type n,
-                              size_type size) {
+  static void outOfRangeCheck(const char* format, const char* file, int line,
+                              size_type n, size_type size) {
     if ((n < 0) || (n >= size)) {
       std::string msg = "[ERROR]: %s:%d\n";
       msg += format;

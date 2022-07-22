@@ -2,6 +2,7 @@
 #define INC_912_DSA_EXERCISE_STACK_STACKEXAMPLE_H_
 
 #include <ds/stack.h>
+
 #include <cmath>
 #include <cstdint>
 #include <string>

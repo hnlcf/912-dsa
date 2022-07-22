@@ -395,9 +395,7 @@ class Vector {
   template <class U>
   friend std::istream& operator>>(std::istream& is, Vector<U>&);
 
-  static size_type binarySearchA(pointer A,
-                                 const_reference e,
-                                 size_type lo,
+  static size_type binarySearchA(pointer A, const_reference e, size_type lo,
                                  size_type hi) {
     while (lo < hi) {
       size_type mi = (lo + hi) >> 1;
@@ -412,9 +410,7 @@ class Vector {
     return -1;
   }
 
-  static size_type binarySearchB(pointer A,
-                                 const_reference e,
-                                 size_type lo,
+  static size_type binarySearchB(pointer A, const_reference e, size_type lo,
                                  size_type hi) {
     while (lo + 1 < hi) {
       size_type mi = (lo + hi) >> 1;
@@ -427,9 +423,7 @@ class Vector {
     return e < A[lo] ? lo - 1 : lo;
   }
 
-  static size_type binarySearchC(pointer A,
-                                 const_reference e,
-                                 size_type lo,
+  static size_type binarySearchC(pointer A, const_reference e, size_type lo,
                                  size_type hi) {
     while (lo < hi) {
       size_type mi = (lo + hi) >> 1;
@@ -442,9 +436,7 @@ class Vector {
     return lo - 1;
   }
 
-  static size_type fibonacciSearch(pointer A,
-                                   const_reference e,
-                                   size_type lo,
+  static size_type fibonacciSearch(pointer A, const_reference e, size_type lo,
                                    size_type hi) {
     Fib fib(hi - lo);
     while (lo + 1 < hi) {
@@ -461,9 +453,7 @@ class Vector {
     return e < A[lo] ? lo - 1 : lo;
   }
 
-  static size_type interpolation(pointer A,
-                                 const_reference e,
-                                 size_type lo,
+  static size_type interpolation(pointer A, const_reference e, size_type lo,
                                  size_type hi) {
     while (lo < hi) {
       size_type mi = lo + (hi - lo) * (e - A[lo]) / (A[hi] - A[lo]);

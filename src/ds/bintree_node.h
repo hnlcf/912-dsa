@@ -39,8 +39,7 @@ static inline BinTreeNode<T>* fromParentTo(BinTreeNode<T>* x);
 
 /// @brief Assist function of preorder traverse
 template <class T, class VST>
-static void visitAlongLeftBranch(BinTreeNode<T>* x,
-                                 VST& visit,
+static void visitAlongLeftBranch(BinTreeNode<T>* x, VST& visit,
                                  Stack<BinTreeNode<T>*>& stack);
 
 /// @brief Assist function of inorder traverse
@@ -74,11 +73,8 @@ struct BinTreeNode {
   BinTreeNode(T const& data, BinTreeNode<T>* parent)
       : BinTreeNode(data, 0ul, parent, nullptr, nullptr) {}
 
-  BinTreeNode(T const& data,
-              size_type height,
-              BinTreeNode<T>* parent,
-              BinTreeNode<T>* left,
-              BinTreeNode<T>* right)
+  BinTreeNode(T const& data, size_type height, BinTreeNode<T>* parent,
+              BinTreeNode<T>* left, BinTreeNode<T>* right)
       : m_data(data),
         m_height(height),
         m_parent(parent),
@@ -316,8 +312,7 @@ static inline BinTreeNode<T>* fromParentTo(BinTreeNode<T>* x) {
 }
 
 template <class T, class VST>
-static void visitAlongLeftBranch(BinTreeNode<T>* x,
-                                 VST& visit,
+static void visitAlongLeftBranch(BinTreeNode<T>* x, VST& visit,
                                  Stack<BinTreeNode<T>*>& stack) {
   while (x != nullptr) {
     visit(x->m_data);

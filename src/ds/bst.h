@@ -17,8 +17,8 @@ class BST : public Bintree<T> {
 
   /// @brief Connect three tree nodes and four subtrees as "3 + 4"
   /// structures(in-order).
-  Node
-  connect34(Node v1, Node v2, Node v3, Node t1, Node t2, Node t3, Node t4) {
+  Node connect34(Node v1, Node v2, Node v3, Node t1, Node t2, Node t3,
+                 Node t4) {
     v1->m_left = t1;
     v1->m_right = t2;
     v1->m_parent = v2;
