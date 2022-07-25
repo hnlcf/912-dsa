@@ -10,26 +10,26 @@
 namespace dsa {
 
 /// @brief Convert a decimal number to any `base` number, and return a stack
-/// reference `s` collecting all characters in reverse order of the converted
+/// reference `s` collecting all characters in reverse Order of the converted
 /// number.
-/// @param s A stack collection contains characters in reverse order of number
+/// @param s A stack collection contains characters in reverse Order of number
 /// to be converted
 /// @param n The decimal number to be converted
 /// @param base The base to be converted
-void decimalConversion(Stack<char>& s, int64_t n, uint8_t base);
+void DecimalConversion(Stack<char>& s, int64_t n, uint8_t base);
 
 /// @brief Match all pair brackets(include parentheses, square brackets and
 /// curly brackets) of string expression.
 /// @param expr The string expression to be matched
 /// @return If all pairs matched return ture, otherwise false.
-bool matchBrackets(const std::string& expr);
+bool MatchBrackets(const std::string& expr);
 
 /// @brief Compute a math expression
 /// @param exp The math expression given
 /// @return Result of math expression
-double evaluate(const std::string& exp);
+double Evaluate(const std::string& exp);
 
-/// @brief Define the math operators with corresponding orders of priority.
+/// @brief Define the math operators with corresponding orders of GetPriority.
 struct MathOperator {
   enum class Opr : uint32_t {
     None = 0xffff,
@@ -52,7 +52,7 @@ struct MathOperator {
   };
 
   /// @brief Convert a character to corresponding math operator.
-  static Opr parseOperator(const char ch) {
+  static Opr ParseOperator(const char ch) {
     Opr opr = Opr::None;
     switch (ch) {
       case '+':
@@ -88,11 +88,11 @@ struct MathOperator {
     return opr;
   }
 
-  /// @brief Compare the order of two math operators according to priorities.
+  /// @brief Compare the Order of two math operators according to priorities.
   /// @param lhs Left operator
   /// @param rhs Right operator
-  /// @return The enumeration member corresponding to order.
-  static Order orderBetweenOperator(const MathOperator::Opr& lhs,
+  /// @return The enumeration member corresponding to Order.
+  static Order OrderBetweenOperator(const MathOperator::Opr& lhs,
                                     const MathOperator::Opr& rhs) {
     Order ans = Order::None;
     switch (lhs) {

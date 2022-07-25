@@ -21,11 +21,17 @@ class Iterator {
 
   explicit Iterator(pointer p) : m_ptr(p) {}
 
-  Iterator(const Iterator& other) : m_ptr(other.base()) {}
+  Iterator(const Iterator& other) : m_ptr(other.Base()) {}
 
-  pointer operator->() const { return m_ptr; }
+  pointer operator->() const {
+    assert(m_ptr);
+    return m_ptr;
+  }
 
-  reference operator*() { return *m_ptr; }
+  reference operator*() {
+    assert(m_ptr);
+    return *m_ptr;
+  }
 
   Iterator& operator++() {
     ++m_ptr;
@@ -57,7 +63,7 @@ class Iterator {
 
   Iterator operator-(difference_type n) { return Iterator(m_ptr - n); }
 
-  const pointer& base() const { return m_ptr; }
+  const pointer& Base() const { return m_ptr; }
 
   Iterator& operator=(const Iterator& iter) {
     if (this == &iter) {

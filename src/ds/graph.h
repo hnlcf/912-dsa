@@ -12,53 +12,53 @@ enum class EdgeStatus { Undetermined, Tree, Cross, Forward, Backward };
 template <class V, class E>
 class Graph {
  private:
-  /// @brief Reset all fields both vertex and edge
-  void reset() {
-    // reset all vertices
+  /// @brief Reset all fields both GetVertex and GetEdge
+  void Reset() {
+    // Reset all vertices
     for (size_type i = 0; i < m_vertexNum; i++) {
-      vertexStatus(i) = VertexStatus::Undiscovered;
-      dTime(i) = -1;
-      fTime(i) = -1;
-      parent(i) = -1;
-      priority(i) = INT64_MAX;
+      GetVertexStatus(i) = VertexStatus::Undiscovered;
+      GetDTime(i) = -1;
+      GetFTime(i) = -1;
+      GetParent(i) = -1;
+      GetPriority(i) = INT64_MAX;
 
-      // reset all edges
+      // Reset all edges
       for (size_type j = 0; j < m_vertexNum; j++)
-        if (existsEdge(i, j))
-          edgeStatus(i, j) = EdgeStatus::Undetermined;  // 类型
+        if (ExistsEdge(i, j))
+          GetEdgeStatus(i, j) = EdgeStatus::Undetermined;  // 类型
     }
   }
 
   /// @brief 广度优先搜索算法（连通域）
   void BFS(size_type v, int64_t& clock) {
     Queue<size_type> q;
-    vertexStatus(v) = VertexStatus::Discovered;
-    q.enqueue(v);
+    GetVertexStatus(v) = VertexStatus::Discovered;
+    q.Enqueue(v);
 
-    while (!q.isEmpty()) {
-      // take out the head vertex of queue
-      auto tmp = q.dequeue();
+    while (!q.IsEmpty()) {
+      // take out the head GetVertex of queue
+      auto tmp = q.Dequeue();
 
       // record time of starting to visit
       clock += 1;
-      dTime(tmp) = clock;
+      GetDTime(tmp) = clock;
 
       // enumerate all neighbors of `tmp`
-      for (auto u = firstNeighbor(tmp); u > -1; u = nextNeighbor(tmp, u)) {
-        if (vertexStatus(u) == VertexStatus::Undiscovered) {
+      for (auto u = FirstNeighbor(tmp); u > -1; u = NextNeighbor(tmp, u)) {
+        if (GetVertexStatus(u) == VertexStatus::Undiscovered) {
           // modify status
-          vertexStatus(u) == VertexStatus::Discovered;
-          q.enqueue(u);
+          GetVertexStatus(u) == VertexStatus::Discovered;
+          q.Enqueue(u);
 
-          // mark the status of edge in traversal tree
-          edgeStatus(tmp, u) = EdgeStatus::Tree;
-          parent(u) = tmp;
+          // mark the status of GetEdge in traversal tree
+          GetEdgeStatus(tmp, u) = EdgeStatus::Tree;
+          GetParent(u) = tmp;
         } else {
-          edgeStatus(tmp, u) = EdgeStatus::Cross;
+          GetEdgeStatus(tmp, u) = EdgeStatus::Cross;
         }
       }
 
-      vertexStatus(tmp) = VertexStatus::Visited;
+      GetVertexStatus(tmp) = VertexStatus::Visited;
     }
   };
 
@@ -80,52 +80,52 @@ class Graph {
   size_type m_edgeNum;    // total number of edges
 
   /**
-   * Vertex's operation
+   * GetVertex's operation
    */
 
   /// @brief 插入顶点，返回编号
-  virtual size_type insertVertex(V const& v) = 0;
+  virtual size_type InsertVertex(V const& v) = 0;
 
   /// @brief 删除顶点及其关联边，返回该顶点信息
-  virtual V removeVertex(size_type v) = 0;
+  virtual V RemoveVertex(size_type v) = 0;
 
   /// @brief 顶点的数据（该顶点的确存在）
-  virtual V& vertex(size_type v) = 0;
+  virtual V& GetVertex(size_type v) = 0;
 
   /// @brief Return vertex's `m_inDegree` (the in-degree of vertex) if
   /// existsEdge
-  virtual int64_t inDegree(size_type v) = 0;
+  virtual int64_t GetInDegree(size_type v) = 0;
 
   /// @brief Return vertex's `m_outDegree` (the out-degree of vertex) if
   /// existsEdge
-  virtual int64_t outDegree(size_type v) = 0;
+  virtual int64_t GetOutDegree(size_type v) = 0;
 
   /// @brief Return vertex's first adjacent vertex
-  virtual size_type firstNeighbor(size_type v) = 0;
+  virtual size_type FirstNeighbor(size_type v) = 0;
 
   /// @brief Return vertex's next adjacent vertex(relative to the current
   /// adjacent vertex `j`)
-  virtual size_type nextNeighbor(size_type v, size_type i) = 0;
+  virtual size_type NextNeighbor(size_type v, size_type i) = 0;
 
   /// @brief Return the reference vertex's `m_status` (the vertexStatus of
   /// vertex)
-  virtual VertexStatus& vertexStatus(size_type v) = 0;
+  virtual VertexStatus& GetVertexStatus(size_type v) = 0;
 
   /// @brief Return the reference vertex's `m_dTime` (the moment the vertex was
   /// found)
-  virtual int64_t& dTime(size_type v) = 0;
+  virtual int64_t& GetDTime(size_type v) = 0;
 
   /// @brief Return the reference vertex's `m_fTime` (the moment the vertex has
   /// been visited)
-  virtual int64_t& fTime(size_type v) = 0;
+  virtual int64_t& GetFTime(size_type v) = 0;
 
   /// @brief Return the reference vertex's `m_parent` (the parent vertex in
   /// traversal tree)
-  virtual size_type& parent(size_type v) = 0;
+  virtual size_type& GetParent(size_type v) = 0;
 
   /// @brief Return the reference vertex's `m_priority` (the priority in
   /// traversal tree of algorithms based priority)
-  virtual int64_t& priority(size_type v) = 0;
+  virtual int64_t& GetPriority(size_type v) = 0;
 
   /**
    * Edge's operation
@@ -133,31 +133,31 @@ class Graph {
    */
 
   /// @brief Return true if the edge between `u` and `v` exists
-  virtual bool existsEdge(size_type u, size_type v) = 0;
+  virtual bool ExistsEdge(size_type u, size_type v) = 0;
 
   /// @brief Insert a edge with specific weight between two vertices
-  virtual void insertEdge(E const& e, int64_t w, size_type u, size_type v) = 0;
+  virtual void InsertEdge(E const& e, int64_t w, size_type u, size_type v) = 0;
 
   /// @brief Delete the edge between a pair of vertices and return it
-  virtual E removeEdge(size_type u, size_type v) = 0;
+  virtual E RemoveEdge(size_type u, size_type v) = 0;
 
   /// @brief Return the reference of status of the edge between `u` and `v`
-  virtual EdgeStatus& edgeStatus(size_type u, size_type v) = 0;
+  virtual EdgeStatus& GetEdgeStatus(size_type u, size_type v) = 0;
 
   /// @brief Return the reference of edge between `u` and `v` if exists
-  virtual E& edge(size_type u, size_type v) = 0;
+  virtual E& GetEdge(size_type u, size_type v) = 0;
 
   /// @brief Return the reference of weight of the edge between `u` and `v`
-  virtual int64_t& weight(size_type u, size_type v) = 0;
+  virtual int64_t& GetWeight(size_type u, size_type v) = 0;
 
   /// @brief 广度优先搜索算法
-  void bfs(size_type s) {
-    reset();
+  void BFS(size_type s) {
+    Reset();
     size_type v = s;
     int64_t clock = 0;
 
     do {
-      if (vertexStatus(v) == VertexStatus::Undiscovered) {
+      if (GetVertexStatus(v) == VertexStatus::Undiscovered) {
         BFS(v, clock);
       }
       v = ++v % m_vertexNum;
@@ -165,23 +165,23 @@ class Graph {
   }
 
   /// @brief 深度优先搜索算法
-  void dfs(size_type) {}
+  void DFS(size_type) {}
 
   /// @brief 基于DFS的双连通分量分解算法
-  void bcc(size_type) {}
+  void BCC(size_type) {}
 
   /// @brief 基于DFS的拓扑排序算法
-  Stack<V>* tSort(size_type) { return nullptr; }
+  Stack<V>* TSort(size_type) { return nullptr; }
 
   /// @brief 最小支撑树Prim算法
-  void prim(size_type) {}
+  void Prim(size_type) {}
 
   /// @brief 最短路径Dijkstra算法
-  void dijkstra(size_type) {}
+  void Dijkstra(size_type) {}
 
   /// @brief 优先级搜索框架
   template <class PU>
-  void pfs(size_type, PU) {}
+  void Pfs(size_type, PU) {}
 };
 }  // namespace dsa
 

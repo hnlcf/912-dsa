@@ -19,13 +19,13 @@ class Stack : public IStack<T> {
     m_vector = nullptr;
   };
 
-  void push(T const& e) override { m_vector->push_back(e); }
+  void Push(T const& e) override { m_vector->PushBack(e); }
 
-  T pop() override { return m_vector->pop_back(); }
+  T Pop() override { return m_vector->PopBack(); }
 
-  T& top() override { return (*m_vector)[m_vector->size() - 1]; }
+  T& Top() override { return (*m_vector)[m_vector->Size() - 1]; }
 
-  bool isEmpty() const override { return m_vector->size() == 0; }
+  bool IsEmpty() const override { return m_vector->Size() == 0; }
 };
 }  // namespace dsa
 

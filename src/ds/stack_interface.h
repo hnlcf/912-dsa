@@ -7,10 +7,10 @@ namespace dsa {
 template <typename T>
 class IStack {
  public:
-  virtual void push(T const& e) = 0;
-  virtual T pop() = 0;
-  virtual T& top() = 0;
-  virtual bool isEmpty() const = 0;
+  virtual void Push(T const& e) = 0;
+  virtual T Pop() = 0;
+  virtual T& Top() = 0;
+  virtual bool IsEmpty() const = 0;
 };
 }  // namespace dsa
 

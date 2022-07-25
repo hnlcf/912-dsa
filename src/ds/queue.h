@@ -11,30 +11,26 @@ class Queue {
   List<T> m_elem;
 
  public:
-  void enqueue(const T& e) { m_elem.insertAsLast(e); }
+  void Enqueue(const T& e) { m_elem.InsertAsLast(e); }
 
-  T dequeue() {
-    auto tmp = m_elem.first();
-    return m_elem.remove(tmp);
+  T Dequeue() {
+    auto tmp = m_elem.First();
+    return m_elem.Remove(tmp);
   }
 
-  T first() {
-    if (size() > 0) {
-      return m_elem[0];
-    }
-    return *(new T);  // return a random value
+  T First() {
+    assert(Size() > 0);
+    return m_elem[0];
   }
 
-  T last() {
-    if (size() > 0) {
-      return m_elem[size() - 1];
-    }
-    return *(new T);
+  T Last() {
+    assert(Size() > 0);
+    return m_elem[Size() - 1];
   }
 
-  size_type size() const { return m_elem.size(); }
+  size_type Size() const { return m_elem.Size(); }
 
-  bool isEmpty() const { return m_elem.size() == 0; }
+  bool IsEmpty() const { return m_elem.Size() == 0; }
 };
 }  // namespace dsa
 

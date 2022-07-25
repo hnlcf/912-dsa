@@ -17,14 +17,14 @@ struct ListNode {
   ListNode(T d, ListNode<T>* p, ListNode<T>* s)
       : m_data(d), m_pred(p), m_succ(s) {}
 
-  ListNode<T>* insertAsPred(T const& e) {
+  ListNode<T>* InsertAsPred(T const& e) {
     auto* p = new ListNode(e, m_pred, this);
     m_pred->m_succ = p;
     m_pred = p;
     return p;
   }
 
-  ListNode<T>* insertAsSucc(T const& e) {
+  ListNode<T>* InsertAsSucc(T const& e) {
     auto* p = new ListNode(e, this, m_succ);
     m_succ->m_pred = p;
     m_succ = p;

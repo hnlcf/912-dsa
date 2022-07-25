@@ -15,13 +15,13 @@ class LinkedStack : public IStack<T> {
   LinkedStack() = default;
   ~LinkedStack() = default;
 
-  void push(T const& e) override { list.insertAsLast(e); }
+  void Push(T const& e) override { list.InsertAsLast(e); }
 
-  T pop() override { return list.remove(list.last()); }
+  T Pop() override { return list.Remove(list.Last()); }
 
-  T& top() override { return list[list.size() - 1]; }
+  T& Top() override { return list[list.Size() - 1]; }
 
-  bool isEmpty() const override { return list.size() == 0; }
+  bool IsEmpty() const override { return list.Size() == 0; }
 };
 }  // namespace dsa
 

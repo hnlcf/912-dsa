@@ -6,53 +6,53 @@ using dsa::Vector;
 TEST_CASE("Vector: constructor", "[vector]") {
   SECTION("Default constructor with empty initialization") {
     Vector<int> v;
-    REQUIRE(v.isEmpty());
-    REQUIRE(v.size() == 0);
-    REQUIRE(v.capacity() == 3);
+    REQUIRE(v.IsEmpty());
+    REQUIRE(v.Size() == 0);
+    REQUIRE(v.Capacity() == 3);
   }
 
   SECTION("Constructor with initializer list") {
     Vector<int> v{0, 1, 2, 3};
-    REQUIRE_FALSE(v.isEmpty());
-    REQUIRE(v.size() == 4);
-    REQUIRE(v.capacity() == 8);
-    REQUIRE(v.front() == 0);
-    REQUIRE(v.back() == 3);
+    REQUIRE_FALSE(v.IsEmpty());
+    REQUIRE(v.Size() == 4);
+    REQUIRE(v.Capacity() == 8);
+    REQUIRE(v.Front() == 0);
+    REQUIRE(v.Back() == 3);
   }
 
-  SECTION("Constructor by specifying size and default value") {
+  SECTION("Constructor by specifying Size and default value") {
     Vector<int> v(3, -1);
-    REQUIRE(!v.isEmpty());
-    REQUIRE(v.size() == 3);
-    REQUIRE(v.capacity() == 6);
-    REQUIRE(v.front() == -1);
-    REQUIRE(v.back() == -1);
+    REQUIRE(!v.IsEmpty());
+    REQUIRE(v.Size() == 3);
+    REQUIRE(v.Capacity() == 6);
+    REQUIRE(v.Front() == -1);
+    REQUIRE(v.Back() == -1);
   }
 
-  SECTION("Constructor by specifying  capacity, size and default value") {
+  SECTION("Constructor by specifying  Capacity, Size and default value") {
     Vector<int> v(6, 3, 1);
-    REQUIRE(!v.isEmpty());
-    REQUIRE(v.size() == 3);
-    REQUIRE(v.capacity() == 6);
-    REQUIRE(v.front() == 1);
-    REQUIRE(v.back() == 1);
+    REQUIRE(!v.IsEmpty());
+    REQUIRE(v.Size() == 3);
+    REQUIRE(v.Capacity() == 6);
+    REQUIRE(v.Front() == 1);
+    REQUIRE(v.Back() == 1);
   }
 
   SECTION("Construct with a raw array") {
     int arr[] = {5, 4, 3, 2, 1};
     Vector<int> v1(arr, 5);
-    REQUIRE(!v1.isEmpty());
-    REQUIRE(v1.size() == 5);
-    REQUIRE(v1.capacity() == 10);
-    REQUIRE(v1.front() == 5);
-    REQUIRE(v1.back() == 1);
+    REQUIRE(!v1.IsEmpty());
+    REQUIRE(v1.Size() == 5);
+    REQUIRE(v1.Capacity() == 10);
+    REQUIRE(v1.Front() == 5);
+    REQUIRE(v1.Back() == 1);
 
     Vector<int> v2(arr, 1, 5);
-    REQUIRE(!v2.isEmpty());
-    REQUIRE(v2.size() == 4);
-    REQUIRE(v2.capacity() == 8);
-    REQUIRE(v2.front() == 4);
-    REQUIRE(v2.back() == 1);
+    REQUIRE(!v2.IsEmpty());
+    REQUIRE(v2.Size() == 4);
+    REQUIRE(v2.Capacity() == 8);
+    REQUIRE(v2.Front() == 4);
+    REQUIRE(v2.Back() == 1);
   }
 
   SECTION("Copy constructor") {
@@ -60,18 +60,18 @@ TEST_CASE("Vector: constructor", "[vector]") {
 
     Vector<int> v2(v1);
     REQUIRE(v1 == v2);
-    REQUIRE(!v2.isEmpty());
-    REQUIRE(v2.size() == 10);
-    REQUIRE(v2.capacity() == 20);
-    REQUIRE(v2.front() == 9);
-    REQUIRE(v2.back() == 0);
+    REQUIRE(!v2.IsEmpty());
+    REQUIRE(v2.Size() == 10);
+    REQUIRE(v2.Capacity() == 20);
+    REQUIRE(v2.Front() == 9);
+    REQUIRE(v2.Back() == 0);
 
     Vector<int> v3(v1, 2, 8);
-    REQUIRE(!v3.isEmpty());
-    REQUIRE(v3.size() == 6);
-    REQUIRE(v3.capacity() == 12);
-    REQUIRE(v3.front() == 7);
-    REQUIRE(v3.back() == 2);
+    REQUIRE(!v3.IsEmpty());
+    REQUIRE(v3.Size() == 6);
+    REQUIRE(v3.Capacity() == 12);
+    REQUIRE(v3.Front() == 7);
+    REQUIRE(v3.Back() == 2);
   }
 }
 
@@ -79,108 +79,108 @@ TEST_CASE("Vector: iterator", "[vector]") {
   SECTION("Begin and end") {
     Vector<int> v{9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
 
-    Iterator<int> it = v.begin();
+    Iterator<int> it = v.Begin();
     REQUIRE(*it == 9);
 
     *it = 99;
     REQUIRE(v[0] == 99);
-    REQUIRE(!v.isEmpty());
-    REQUIRE(v.size() == 10);
-    REQUIRE(v.capacity() == 20);
-    REQUIRE(v.front() == 99);
-    REQUIRE(v.back() == 0);
+    REQUIRE(!v.IsEmpty());
+    REQUIRE(v.Size() == 10);
+    REQUIRE(v.Capacity() == 20);
+    REQUIRE(v.Front() == 99);
+    REQUIRE(v.Back() == 0);
 
-    it = v.end() - 1;
+    it = v.End() - 1;
     REQUIRE(*it == 0);
   }
 }
 
-TEST_CASE("Vector: add, remove and get element operations", "[vector]") {
-  SECTION("Append an element from tail, push_back") {
+TEST_CASE("Vector: add, Remove and Get element operations", "[vector]") {
+  SECTION("Append an element from tail, PushBack") {
     Vector<int> v;
-    REQUIRE(v.isEmpty());
-    REQUIRE(v.size() == 0);
-    REQUIRE(v.capacity() == 3);
+    REQUIRE(v.IsEmpty());
+    REQUIRE(v.Size() == 0);
+    REQUIRE(v.Capacity() == 3);
 
-    v.push_back(1);
-    REQUIRE(!v.isEmpty());
-    REQUIRE(v.size() == 1);
-    REQUIRE(v.capacity() == 3);
+    v.PushBack(1);
+    REQUIRE(!v.IsEmpty());
+    REQUIRE(v.Size() == 1);
+    REQUIRE(v.Capacity() == 3);
 
-    v.push_back(2);
-    v.push_back(3);
-    v.push_back(4);
-    REQUIRE(!v.isEmpty());
-    REQUIRE(v.size() == 4);
-    REQUIRE(v.capacity() == 6);
+    v.PushBack(2);
+    v.PushBack(3);
+    v.PushBack(4);
+    REQUIRE(!v.IsEmpty());
+    REQUIRE(v.Size() == 4);
+    REQUIRE(v.Capacity() == 6);
   }
 
-  SECTION("Remove an element from tail, pop_back") {
+  SECTION("Remove an element from tail, PopBack") {
     Vector<int> v{9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
-    REQUIRE(!v.isEmpty());
-    REQUIRE(v.size() == 10);
-    REQUIRE(v.capacity() == 20);
-    REQUIRE(v.front() == 9);
-    REQUIRE(v.back() == 0);
+    REQUIRE(!v.IsEmpty());
+    REQUIRE(v.Size() == 10);
+    REQUIRE(v.Capacity() == 20);
+    REQUIRE(v.Front() == 9);
+    REQUIRE(v.Back() == 0);
 
-    auto tmp = v.pop_back();
+    auto tmp = v.PopBack();
     REQUIRE(tmp == 0);
-    REQUIRE(!v.isEmpty());
-    REQUIRE(v.size() == 9);
-    REQUIRE(v.capacity() == 20);
-    REQUIRE(v.front() == 9);
-    REQUIRE(v.back() == 1);
+    REQUIRE(!v.IsEmpty());
+    REQUIRE(v.Size() == 9);
+    REQUIRE(v.Capacity() == 20);
+    REQUIRE(v.Front() == 9);
+    REQUIRE(v.Back() == 1);
 
     for (std::size_t i = 0; i < 3; ++i) {
-      v.pop_back();
+      v.PopBack();
     }
-    REQUIRE(!v.isEmpty());
-    REQUIRE(v.size() == 6);
-    REQUIRE(v.capacity() == 20);
-    REQUIRE(v.front() == 9);
-    REQUIRE(v.back() == 4);
+    REQUIRE(!v.IsEmpty());
+    REQUIRE(v.Size() == 6);
+    REQUIRE(v.Capacity() == 20);
+    REQUIRE(v.Front() == 9);
+    REQUIRE(v.Back() == 4);
 
-    v.pop_back();
-    REQUIRE(!v.isEmpty());
-    REQUIRE(v.size() == 5);
-    REQUIRE(v.capacity() == 10);
-    REQUIRE(v.front() == 9);
-    REQUIRE(v.back() == 5);
+    v.PopBack();
+    REQUIRE(!v.IsEmpty());
+    REQUIRE(v.Size() == 5);
+    REQUIRE(v.Capacity() == 10);
+    REQUIRE(v.Front() == 9);
+    REQUIRE(v.Back() == 5);
   }
 
-  SECTION("Get the element in head, front") {
+  SECTION("Get the element in head, Front") {
     Vector<int> v{4, 3, 2, 1, 0};
-    REQUIRE(!v.isEmpty());
-    REQUIRE(v.size() == 5);
-    REQUIRE(v.capacity() == 10);
+    REQUIRE(!v.IsEmpty());
+    REQUIRE(v.Size() == 5);
+    REQUIRE(v.Capacity() == 10);
 
-    v.front() = 99;
-    REQUIRE(v.at(0) == 99);
-    REQUIRE(v.at(v.size() - 1) == 0);
+    v.Front() = 99;
+    REQUIRE(v.At(0) == 99);
+    REQUIRE(v.At(v.Size() - 1) == 0);
   }
 
-  SECTION("Get the element in tail, back") {
+  SECTION("Get the element in tail, Back") {
     Vector<int> v{4, 3, 2, 1, 0};
-    REQUIRE(!v.isEmpty());
-    REQUIRE(v.size() == 5);
-    REQUIRE(v.capacity() == 10);
+    REQUIRE(!v.IsEmpty());
+    REQUIRE(v.Size() == 5);
+    REQUIRE(v.Capacity() == 10);
 
-    v.back() = 99;
-    REQUIRE(v.at(0) == 4);
-    REQUIRE(v.at(v.size() - 1) == 99);
+    v.Back() = 99;
+    REQUIRE(v.At(0) == 4);
+    REQUIRE(v.At(v.Size() - 1) == 99);
   }
 
-  SECTION("Get the element in any pos, at") {
+  SECTION("Get the element in any pos, At") {
     Vector<int> v{4, 3, 2, 1, 0};
-    REQUIRE(!v.isEmpty());
-    REQUIRE(v.size() == 5);
-    REQUIRE(v.capacity() == 10);
+    REQUIRE(!v.IsEmpty());
+    REQUIRE(v.Size() == 5);
+    REQUIRE(v.Capacity() == 10);
 
-    v.at(0) = 0;
-    v.at(1) = 1;
-    v.at(2) = 2;
-    v.at(3) = 3;
-    v.at(4) = 4;
+    v.At(0) = 0;
+    v.At(1) = 1;
+    v.At(2) = 2;
+    v.At(3) = 3;
+    v.At(4) = 4;
     REQUIRE(v[0] == 0);
     REQUIRE(v[1] == 1);
     REQUIRE(v[2] == 2);
@@ -188,37 +188,37 @@ TEST_CASE("Vector: add, remove and get element operations", "[vector]") {
     REQUIRE(v[4] == 4);
   }
 
-  SECTION("Insert an element in any pos, insert") {
+  SECTION("Insert an element in any pos, Insert") {
     Vector<int> v{4, 3, 2, 1, 0};
-    REQUIRE(!v.isEmpty());
-    REQUIRE(v.size() == 5);
-    REQUIRE(v.capacity() == 10);
-    REQUIRE(v.front() == 4);
-    REQUIRE(v.back() == 0);
+    REQUIRE(!v.IsEmpty());
+    REQUIRE(v.Size() == 5);
+    REQUIRE(v.Capacity() == 10);
+    REQUIRE(v.Front() == 4);
+    REQUIRE(v.Back() == 0);
 
-    v.insert(0, 99);
-    REQUIRE(v.size() == 6);
-    REQUIRE(v.capacity() == 10);
-    REQUIRE(v.at(0) == 99);
-    REQUIRE(v.at(1) == 4);
-    REQUIRE(v.at(5) == 0);
+    v.Insert(0, 99);
+    REQUIRE(v.Size() == 6);
+    REQUIRE(v.Capacity() == 10);
+    REQUIRE(v.At(0) == 99);
+    REQUIRE(v.At(1) == 4);
+    REQUIRE(v.At(5) == 0);
 
-    v.insert(4, 22);
-    REQUIRE(v.size() == 7);
-    REQUIRE(v.capacity() == 10);
+    v.Insert(4, 22);
+    REQUIRE(v.Size() == 7);
+    REQUIRE(v.Capacity() == 10);
     REQUIRE(v[4] == 22);
     REQUIRE(v[5] == 1);
     REQUIRE(v[6] == 0);
 
-    v.insert(6, -1);
-    REQUIRE(v.size() == 8);
-    REQUIRE(v.capacity() == 10);
+    v.Insert(6, -1);
+    REQUIRE(v.Size() == 8);
+    REQUIRE(v.Capacity() == 10);
     REQUIRE(v[6] == -1);
     REQUIRE(v[7] == 0);
 
-    v.insert(8, -99);
-    REQUIRE(v.size() == 9);
-    REQUIRE(v.capacity() == 10);
+    v.Insert(8, -99);
+    REQUIRE(v.Size() == 9);
+    REQUIRE(v.Capacity() == 10);
     REQUIRE(v[8] == -99);
 
     Vector<int> v2{99, 4, 3, 2, 22, 1, -1, 0, -99};

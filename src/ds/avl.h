@@ -10,7 +10,7 @@ class AVL : public BST<T> {
   using Node = BinTreeNode<T>*;
 
  private:
-  enum class BalanceFactor : int8_t {
+  enum class AVLBalanceFactor : int8_t {
     LeftHeavy = 1,
     IdealBalanced = 0,
     RightHeavy = -1,
@@ -20,8 +20,8 @@ class AVL : public BST<T> {
 
  public:
   /// @brief
-  Node insert(T const& e) override {
-    Node& target = this->search(e);
+  Node Insert(T const& e) override {
+    Node& target = this->Search(e);
 
     // If already exists, directly return.
     if (target != nullptr) {
@@ -50,13 +50,13 @@ class AVL : public BST<T> {
   }
 
   /// @brief
-  bool remove(T const& e) override {
-    Node& target = this->search(e);
+  bool Remove(T const& e) override {
+    Node& target = this->Search(e);
     if (target == nullptr) {
       return false;
     }
 
-    this->removeAt(target, this->m_hot);
+    this->RemoveAt(target, this->m_hot);
     this->m_size--;
 
     // Traverse all levels of ancestors from bottom to top.
@@ -66,7 +66,7 @@ class AVL : public BST<T> {
         par = fromParentTo(par);
       }
 
-      this->updateHeight(par);
+      this->UpdateHeight(par);
     }
 
     return true;
@@ -74,42 +74,42 @@ class AVL : public BST<T> {
 
  public:
   /// @brief Determine whether node satisfy the ideal balance
-  static bool isIdealBalance(Node p) {
-    return Bintree<T>::stature(p->m_left) == Bintree<T>::stature(p->m_right);
+  static bool IsIdealBalance(Node p) {
+    return BinTree<T>::Stature(p->m_left) == BinTree<T>::Stature(p->m_right);
   }
 
   /// @brief Calculate the balance factor of AVL tree node
-  static size_type balanceFactor(Node p) {
-    return Bintree<T>::stature(p->m_left) - Bintree<T>::stature(p->m_right);
+  static size_type BalanceFactor(Node p) {
+    return BinTree<T>::Stature(p->m_left) - BinTree<T>::Stature(p->m_right);
   }
 
   /// @brief Determine whether node satisfy the AVL balance
-  static BalanceFactor isAVLBalance(Node p) {
-    switch (balanceFactor(p)) {
+  static AVLBalanceFactor AVLBalance(Node p) {
+    switch (BalanceFactor(p)) {
       case -1:
-        return BalanceFactor::RightHeavy;
+        return AVLBalanceFactor::RightHeavy;
       case 0:
-        return BalanceFactor::IdealBalanced;
+        return AVLBalanceFactor::IdealBalanced;
       case 1:
-        return BalanceFactor::LeftHeavy;
+        return AVLBalanceFactor::LeftHeavy;
       default:
-        return BalanceFactor::Unbalanced;
+        return AVLBalanceFactor::Unbalanced;
     }
   }
 
   /// @brief Return a taller child of `p`
-  static Node tallerChild(Node p) {
-    auto h = balanceFactor(p);
+  static Node TallerChild(Node p) {
+    auto h = BalanceFactor(p);
 
-    if (p > 0) {
+    if (h > 0) {
       // left child is taller
       return p->m_left;
-    } else if (p < 0) {
+    } else if (h < 0) {
       // right child is taller
       return p->m_right;
     } else {
-      // if equals, return the one that same side with parent
-      if (isLeftChild(p)) {
+      // if equals, return the one that same side with GetParent
+      if (IsLeftChild(p)) {
         return p->m_left;
       } else {
         return p->m_right;

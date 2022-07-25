@@ -10,27 +10,27 @@ class Fib {
   size_type g;
 
  public:
-  /// @brief Construct the first fibonacci number that is not less than `n`
+  /// @brief Construct the First fibonacci number that is not less than `n`
   explicit Fib(size_type n) {
     f = 1;
     g = 0;
     while (g < n) {
-      next();
+      Next();
     }
   }
 
   /// @brief Return the current fibonacci number
-  size_type get() const { return g; }
+  size_type Get() const { return g; }
 
-  /// @brief Move to the next fibonacci number
-  size_type next() {
+  /// @brief Move to the Next fibonacci number
+  size_type Next() {
     g += f;
     f = g - f;
     return g;
   }
 
   /// @brief Move to the previous fibonacci number
-  size_type prev() {
+  size_type Prev() {
     f = g - f;
     g -= f;
     return g;
