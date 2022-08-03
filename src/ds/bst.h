@@ -4,7 +4,6 @@
 
 #include "autoheader.h"
 #include "bintree.h"
-#include "entry.h"
 
 namespace dsa {
 template <class T>
