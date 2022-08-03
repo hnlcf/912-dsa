@@ -83,7 +83,7 @@ class Vector {
   Vector(std::initializer_list<T> list)
       : m_capacity(list.size() << 1), m_size(list.size()) {
     m_elem = new T[m_capacity];
-    auto it = Begin();
+    auto it = begin();
     for (const_reference e : list) {
       *it = e;
       ++it;
@@ -97,7 +97,7 @@ class Vector {
       : m_capacity(capacity), m_size(size) {
     m_elem = new T[m_capacity];
 
-    for (auto it = Begin(); it != End(); ++it) {
+    for (auto it = begin(); it != end(); ++it) {
       *it = default_value;
     }
   }
@@ -117,17 +117,17 @@ class Vector {
     m_elem = nullptr;
   }
 
-  iterator Begin() { return iterator(m_elem); }
+  iterator begin() { return iterator(m_elem); }
 
-  iterator End() { return iterator(m_elem + m_size); }
+  iterator end() { return iterator(m_elem + m_size); }
 
-  const_iterator Begin() const { return const_iterator(m_elem); }
+  const_iterator begin() const { return const_iterator(m_elem); }
 
-  const_iterator End() const { return const_iterator(m_elem + m_size); }
+  const_iterator end() const { return const_iterator(m_elem + m_size); }
 
-  const_iterator Cbegin() const { return const_iterator(m_elem); }
+  const_iterator cbegin() const { return const_iterator(m_elem); }
 
-  const_iterator Cend() const { return const_iterator(m_elem + m_size); }
+  const_iterator cend() const { return const_iterator(m_elem + m_size); }
 
   void PushBack(const_reference e) {
     Expand();
@@ -148,13 +148,13 @@ class Vector {
 
   void Clear() { m_size = 0; }
 
-  reference Front() { return *(Begin()); }
+  reference Front() { return *(begin()); }
 
-  const_reference Front() const { return *(Begin()); }
+  const_reference Front() const { return *(begin()); }
 
-  reference Back() { return *(End() - 1); }
+  reference Back() { return *(end() - 1); }
 
-  const_reference Back() const { return *(End() - 1); }
+  const_reference Back() const { return *(end() - 1); }
 
   reference At(size_type n) {
     VECTOR_RANGE_CHECK(n, Size());
@@ -177,7 +177,7 @@ class Vector {
     VECTOR_RANGE_CHECK(r, Size() + 1);
     Expand();
 
-    for (auto it = End(); it > Begin() + r; --it) {
+    for (auto it = end(); it > begin() + r; --it) {
       *it = *(it - 1);
     }
 
@@ -256,6 +256,8 @@ class Vector {
     }
     return j - i;
   }
+
+  size_type Search(const_reference e) const { return Search(e, 0, m_size); }
 
   size_type Search(const_reference e, size_type lo, size_type hi) const {
     return (random() % 2) == 1 ? BinarySearchC(m_elem, e, lo, hi)
@@ -368,7 +370,7 @@ class Vector {
 
   template <class VST>
   void Traverse(VST& visit) {
-    for (auto it = Begin(); it != End(); ++it) {
+    for (auto it = begin(); it != end(); ++it) {
       visit(*it);
     }
   }
@@ -493,7 +495,7 @@ std::istream& operator>>(std::istream& is, Vector<T>& vec) {
 template <class T>
 inline bool operator==(const Vector<T>& vec1, const Vector<T>& vec2) {
   return vec1.Size() == vec2.Size() &&
-         std::equal(vec1.Begin(), vec1.End(), vec2.Begin());
+         std::equal(vec1.begin(), vec1.end(), vec2.begin());
 }
 
 template <class T>

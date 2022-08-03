@@ -25,7 +25,7 @@ class BinTree {
     size_type old_height = 0;
     size_type new_height = 0;
 
-    while ((x != nullptr)) {
+    while (x != nullptr) {
       old_height = x->m_height;
       new_height = UpdateHeight(x);
 
@@ -127,9 +127,16 @@ class BinTree {
   /// @brief Remove a node `x` and its all child nodes from a tree, return the
   /// number of nodes to be deleted
   size_type Remove(Node x) {
-    IsRoot(x) ? m_root
-              : (IsLeftChild(x) ? x->m_parent->m_left : x->m_parent->m_right) =
-                    nullptr;
+    if (IsRoot(x)) {
+      m_root = nullptr;
+    } else {
+      if (IsLeftChild(x)) {
+        x->m_parent->m_left = nullptr;
+      } else {
+        x->m_parent->m_right = nullptr;
+      }
+    }
+
     UpdateHeightAbove(x->m_parent);
 
     auto n = RemoveAt(x);

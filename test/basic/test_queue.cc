@@ -14,9 +14,4 @@ TEST_CASE("Queue: basic methods", "[queue]") {
   REQUIRE(tmp == 1);
   REQUIRE(q.Size() == 0);
   REQUIRE(q.IsEmpty() == true);
-
-  auto f = q.First();
-  auto l = q.Last();
-  REQUIRE_FALSE(f == -1);
-  REQUIRE_FALSE(l == -1);
 }

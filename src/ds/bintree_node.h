@@ -33,10 +33,6 @@ static inline bool IsLeftChild(BinTreeNode<T>* x);
 template <class T>
 static inline bool IsRightChild(BinTreeNode<T>* x);
 
-/// @brief
-template <class T>
-static inline BinTreeNode<T>*& FromParentTo(BinTreeNode<T>*& x);
-
 /// @brief Assist function of preorder Traverse
 template <class T, class VST>
 static void VisitAlongLeftBranch(BinTreeNode<T>* x, VST& visit,
@@ -292,23 +288,12 @@ static inline bool HasParent(BinTreeNode<T>* x) {
 
 template <class T>
 static inline bool IsLeftChild(BinTreeNode<T>* x) {
-  return !IsRoot(x) && x == x->m_parent->m_left;
+  return (!IsRoot(x)) && (x == x->m_parent->m_left);
 }
 
 template <class T>
 static inline bool IsRightChild(BinTreeNode<T>* x) {
-  return !IsRoot(x) && x == x->m_parent->m_right;
-}
-
-template <class T>
-static inline BinTreeNode<T>*& FromParentTo(BinTreeNode<T>*& x) {
-  if (IsRoot(x)) {
-    return x;
-  } else if (IsLeftChild(x)) {
-    return x->m_parent->m_left;
-  } else {
-    return x->m_parent->m_right;
-  }
+  return (!IsRoot(x)) && (x == x->m_parent->m_right);
 }
 
 template <class T, class VST>

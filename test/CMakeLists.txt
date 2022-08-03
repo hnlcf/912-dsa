@@ -10,11 +10,13 @@ target_sources(${DSA_TEST_NAME} PRIVATE
         "basic/test_list.cc"
         "basic/test_stack.cc"
         "basic/test_queue.cc"
+        "tree/test_avl.cc"
         "tree/test_bintree.cc"
         "tree/test_bst.cc"
-        "tree/test_avl.cc"
+#        "tree/test_btree.cc"
+        "tree/test_splaytree.cc"
         "graph/test_graph.cc"
-        "graph/test_graph_martix.cc"
+        "graph/test_graph_matrix.cc"
         )
 target_include_directories(${DSA_TEST_NAME} PRIVATE
         "${CMAKE_SOURCE_DIR}/test"

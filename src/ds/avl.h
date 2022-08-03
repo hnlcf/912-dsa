@@ -10,7 +10,7 @@ class AVL : public BST<T> {
   using Node = BinTreeNode<T>*;
 
  private:
-  enum class AVLBalanceFactor : int8_t {
+  enum class AVLBalanceMode : int8_t {
     LeftHeavy = 1,
     IdealBalanced = 0,
     RightHeavy = -1,
@@ -37,12 +37,23 @@ class AVL : public BST<T> {
 
     // Determine whether AVL tree is balanced or not. If not, rotate to
     // rebalance. Otherwise, just update tree height.
-    for (auto* par = target->m_parent; par != nullptr; par = par->m_parent) {
-      if (isAVLBalance(par) != BalanceFactor::Unbalanced) {
-        this->updateHeight(par);
-      } else {
-        fromParentTo(par) = this->rotateAt(tallerChild(tallerChild(par)));
+    for (Node par = this->m_hot; par != nullptr; par = par->m_parent) {
+      if (AVLBalance(par) == AVLBalanceMode::Unbalanced) {
+        Node* k = &(this->m_root);
+
+        if (IsLeftChild(par)) {
+          k = &(par->m_parent->m_left);
+        } else if (IsRightChild(par)) {
+          k = &(par->m_parent->m_right);
+        }
+
+        Node unbalance_branch_node = TallerChild(TallerChild(par));
+        Node new_grand = this->RotateAt(unbalance_branch_node);
+        *k = new_grand;
+
         break;
+      } else {
+        this->UpdateHeight(par);
       }
     }
 
@@ -59,11 +70,22 @@ class AVL : public BST<T> {
     this->RemoveAt(target, this->m_hot);
     this->m_size--;
 
-    // Traverse all levels of ancestors from bottom to top.
-    for (auto* par = target->m_parent; par != nullptr; par = par->m_parent) {
-      if (isAVLBalance(par) == BalanceFactor::Unbalanced) {
-        fromParentTo(par) = this->rotateAt(tallerChild(tallerChild(par)));
-        par = fromParentTo(par);
+    // Traverse all levels of ancestors from bottom to Top.
+    for (auto* par = this->m_hot; par != nullptr; par = par->m_parent) {
+      if (AVLBalance(par) == AVLBalanceMode::Unbalanced) {
+        Node* k = &(this->m_root);
+
+        if (IsLeftChild(par)) {
+          k = &(par->m_parent->m_left);
+        } else if (IsRightChild(par)) {
+          k = &(par->m_parent->m_right);
+        }
+
+        Node unbalance_branch_node = TallerChild(TallerChild(par));
+        Node new_grand = this->RotateAt(unbalance_branch_node);
+
+        *k = new_grand;
+        par = new_grand;
       }
 
       this->UpdateHeight(par);
@@ -79,27 +101,27 @@ class AVL : public BST<T> {
   }
 
   /// @brief Calculate the balance factor of AVL tree node
-  static size_type BalanceFactor(Node p) {
+  static size_type AVLBalanceFactor(Node p) {
     return BinTree<T>::Stature(p->m_left) - BinTree<T>::Stature(p->m_right);
   }
 
   /// @brief Determine whether node satisfy the AVL balance
-  static AVLBalanceFactor AVLBalance(Node p) {
-    switch (BalanceFactor(p)) {
+  static AVLBalanceMode AVLBalance(Node p) {
+    switch (AVLBalanceFactor(p)) {
       case -1:
-        return AVLBalanceFactor::RightHeavy;
+        return AVLBalanceMode::RightHeavy;
       case 0:
-        return AVLBalanceFactor::IdealBalanced;
+        return AVLBalanceMode::IdealBalanced;
       case 1:
-        return AVLBalanceFactor::LeftHeavy;
+        return AVLBalanceMode::LeftHeavy;
       default:
-        return AVLBalanceFactor::Unbalanced;
+        return AVLBalanceMode::Unbalanced;
     }
   }
 
   /// @brief Return a taller child of `p`
   static Node TallerChild(Node p) {
-    auto h = BalanceFactor(p);
+    auto h = AVLBalanceFactor(p);
 
     if (h > 0) {
       // left child is taller

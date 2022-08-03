@@ -79,7 +79,7 @@ TEST_CASE("Vector: iterator", "[vector]") {
   SECTION("Begin and end") {
     Vector<int> v{9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
 
-    Iterator<int> it = v.Begin();
+    Iterator<int> it = v.begin();
     REQUIRE(*it == 9);
 
     *it = 99;
@@ -90,7 +90,7 @@ TEST_CASE("Vector: iterator", "[vector]") {
     REQUIRE(v.Front() == 99);
     REQUIRE(v.Back() == 0);
 
-    it = v.End() - 1;
+    it = v.end() - 1;
     REQUIRE(*it == 0);
   }
 }
