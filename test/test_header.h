@@ -6,7 +6,7 @@
 #include <ds/bintree.h>
 #include <ds/bintree_node.h>
 #include <ds/bst.h>
-#include <ds/btree.h>
+//#include <ds/btree.h>
 #include <ds/entry.h>
 #include <ds/fib.h>
 #include <ds/graph.h>
