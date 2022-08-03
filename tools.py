@@ -11,12 +11,12 @@ test_path = binary_path + '/test'
 cmake_p = 'cmake'
 format_p = 'clang-format'
 
-cmake_build_mode = 'RelWithDebInfo'  # Or debug
+cmake_build_mode = 'RelWithDebInfo'  # 'Debug'
 cmake_config_cmd = f'{cmake_p} -S {project_path} -B {binary_path} -DCMAKE_BUILD_TYPE={cmake_build_mode} '
 cmake_build_cmd = f'{cmake_p} --build {binary_path} --config {cmake_build_mode} --parallel 12'
 cmake_test_cmd = f'ctest -C {cmake_build_mode} --verbose'
 
-catch2_test_cmd = f'{binary_path}/dsa_all_test -d yes --order lex '
+catch2_test_cmd = f'{binary_path}/test/dsa_test -d yes --order lex '
 
 file_type_list = [
     'cc',
