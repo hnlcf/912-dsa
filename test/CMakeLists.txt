@@ -13,7 +13,7 @@ target_sources(${DSA_TEST_NAME} PRIVATE
         "tree/test_avl.cc"
         "tree/test_bintree.cc"
         "tree/test_bst.cc"
-#        "tree/test_btree.cc"
+        "tree/test_btree.cc"
         "tree/test_splaytree.cc"
         "graph/test_graph.cc"
         "graph/test_graph_matrix.cc"
