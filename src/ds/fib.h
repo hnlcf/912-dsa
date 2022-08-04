@@ -1,7 +1,7 @@
 #ifndef INC_912_DSA_DS_FIB_H_
 #define INC_912_DSA_DS_FIB_H_
 
-#include "autoheader.h"
+#include <ds/autoheader.h>
 
 namespace dsa {
 class Fib {

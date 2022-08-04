@@ -1,8 +1,8 @@
 #ifndef INC_912_DSA_DS_BTREE_H_
 #define INC_912_DSA_DS_BTREE_H_
 
-#include "autoheader.h"
-#include "vector.h"
+#include <ds/autoheader.h>
+#include <ds/vector.h>
 
 namespace dsa {
 template <class T>

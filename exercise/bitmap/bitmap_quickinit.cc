@@ -1,4 +1,4 @@
-#include <bitmap_quickinit.h>
+#include <bitmap/bitmap_quickinit.h>
 
 inline bool dsa::BitmapQuickInit::IsValid(size_type r) const {
   return r >= 0 and r < m_top;

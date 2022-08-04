@@ -1,9 +1,9 @@
 #ifndef INC_912_DSA_DS_GRAPH_MATRIX_H_
 #define INC_912_DSA_DS_GRAPH_MATRIX_H_
 
-#include "autoheader.h"
-#include "graph.h"
-#include "vector.h"
+#include <ds/autoheader.h>
+#include <ds/graph.h>
+#include <ds/vector.h>
 
 namespace dsa {
 template <class V>

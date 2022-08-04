@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.16)
-project(exercise CXX)
+project(exercise)
 
 include_directories(
-        ${CMAKE_SOURCE_DIR}/src/ds
+        ${CMAKE_SOURCE_DIR}/src
+        ${CMAKE_SOURCE_DIR}/lib/fmt/include
 )
 
 add_subdirectory(bitmap)
