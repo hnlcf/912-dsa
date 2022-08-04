@@ -1,8 +1,6 @@
 #ifndef INC_912_DSA_DS_STACK_INTERFACE_H_
 #define INC_912_DSA_DS_STACK_INTERFACE_H_
 
-#include "autoheader.h"
-
 namespace dsa {
 template <typename T>
 class IStack {

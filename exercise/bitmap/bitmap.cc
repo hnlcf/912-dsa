@@ -1,4 +1,4 @@
-#include <bitmap.h>
+#include <bitmap/bitmap.h>
 
 void dsa::Bitmap::Init(int n) {
   bytes_num = (n + 7) / 8;

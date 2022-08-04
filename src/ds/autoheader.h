@@ -1,6 +1,9 @@
 #ifndef INC_912_DSA_DS_AUTOHEADER_H_
 #define INC_912_DSA_DS_AUTOHEADER_H_
 
+#include <fmt/core.h>
+#include <fmt/format.h>
+
 #include <cassert>
 #include <cstdarg>
 #include <cstddef>
