@@ -5,35 +5,82 @@ namespace dsa {
 /// @brief Determine if the given character is a number.
 /// @param ch Character given
 /// @return True iff `ch` is a number, otherwise false.
-static inline bool IsDigit(char ch);
+static inline bool IsDigit(char ch) { return ((48 <= ch) && (ch <= 57)); }
 
 /// @brief Read a continuous number from `str[index]`, and store with stack
 /// @param s The stack given for storing number
 /// @param str The string given
 /// @param index The specific position in string
 static void ReadNumber(Stack<double>& s, const std::string& str,
-                       std::size_t& index);
+                       std::size_t& index) {
+  s.Push(str[index] - '0');
+  index++;
+  while (IsDigit(str[index])) {
+    s.Push(s.Pop() * 10 + str[index] - '0');
+    index++;
+  }
+}
 
 /// @brief Compare the Calculate priorities of TWO operators
 /// @param lhs The operator in left side
 /// @param rhs The operator in right side
 /// @return A `MathOperator::Order` enumerator according to invoke
 /// `MathOperator::OrderBetweenOperator()`
-static inline MathOperator::Order OrderBetween(char lhs, char rhs);
+static inline MathOperator::Order OrderBetween(char lhs, char rhs) {
+  auto l_opr = MathOperator::ParseOperator(lhs);
+  auto r_opr = MathOperator::ParseOperator(rhs);
+  return MathOperator::OrderBetweenOperator(l_opr, r_opr);
+}
 
 /// @brief Calculate a math expression with ONE operator(factorial) and ONE
 /// operand.
 /// @param opr The operator given
 /// @param opd The UNIQUE operand given
 /// @return Result of calculation
-static double Calculate(MathOperator::Opr opr, double opd);
+static double Calculate(MathOperator::Opr opr, double opd) {
+  if (opr != MathOperator::Opr::Fac) {
+    return MAXFLOAT;
+  }
+  if (opd == 0.0) {
+    return 1.0;
+  }
+  double ans = opd;
+  opd--;
+  while (opd > 0) {
+    ans *= opd;
+    opd--;
+  }
+  return ans;
+}
 
 /// @brief Calculate a math expression with ONE operator and TWO operands.
 /// @param opr The operator given
 /// @param opd1 The First(left) operand given
 /// @param opd2 The second(right) operand given
 /// @return Result of calculation
-static double Calculate(MathOperator::Opr opr, double opd1, double opd2);
+static double Calculate(MathOperator::Opr opr, double opd1, double opd2) {
+  double ans = 0.0;
+  switch (opr) {
+    case MathOperator::Opr::Add:
+      ans = opd1 + opd2;
+      break;
+    case MathOperator::Opr::Sub:
+      ans = opd1 - opd2;
+      break;
+    case MathOperator::Opr::Mul:
+      ans = opd1 * opd2;
+      break;
+    case MathOperator::Opr::Div:
+      ans = opd1 / opd2;
+      break;
+    case MathOperator::Opr::Exp:
+      ans = std::pow(opd1, opd2);
+      break;
+    default:
+      break;
+  }
+  return ans;
+}
 
 void DecimalConversion(Stack<char>& s, int64_t n, uint8_t base) {
   const char digits[] = {'0', '1', '2', '3', '4', '5', '6', '7',
@@ -135,61 +182,4 @@ double Evaluate(const std::string& exp) {
   return operands.Pop();
 }
 
-static inline bool IsDigit(char ch) { return ((48 <= ch) && (ch <= 57)); }
-
-static void ReadNumber(Stack<double>& s, const std::string& str,
-                       std::size_t& index) {
-  s.Push(str[index] - '0');
-  index++;
-  while (IsDigit(str[index])) {
-    s.Push(s.Pop() * 10 + str[index] - '0');
-    index++;
-  }
-}
-
-static inline MathOperator::Order OrderBetween(char lhs, char rhs) {
-  auto l_opr = MathOperator::ParseOperator(lhs);
-  auto r_opr = MathOperator::ParseOperator(rhs);
-  return MathOperator::OrderBetweenOperator(l_opr, r_opr);
-}
-
-static double Calculate(MathOperator::Opr opr, double opd) {
-  if (opr != MathOperator::Opr::Fac) {
-    return MAXFLOAT;
-  }
-  if (opd == 0.0) {
-    return 1.0;
-  }
-  double ans = opd;
-  opd--;
-  while (opd > 0) {
-    ans *= opd;
-    opd--;
-  }
-  return ans;
-}
-
-static double Calculate(MathOperator::Opr opr, double opd1, double opd2) {
-  double ans = 0.0;
-  switch (opr) {
-    case MathOperator::Opr::Add:
-      ans = opd1 + opd2;
-      break;
-    case MathOperator::Opr::Sub:
-      ans = opd1 - opd2;
-      break;
-    case MathOperator::Opr::Mul:
-      ans = opd1 * opd2;
-      break;
-    case MathOperator::Opr::Div:
-      ans = opd1 / opd2;
-      break;
-    case MathOperator::Opr::Exp:
-      ans = std::pow(opd1, opd2);
-      break;
-    default:
-      break;
-  }
-  return ans;
-}
 }  // namespace dsa
