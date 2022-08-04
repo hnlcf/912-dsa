@@ -4,7 +4,7 @@ using dsa::BinTree;
 using dsa::BinTreeNode;
 using dsa::Vector;
 
-TEST_CASE("BinTreeNode: [Constructor]", "[bin-tree]") {
+TEST_CASE("BinTreeNode: [Constructor]", "[bintree]") {
   SECTION("BinTreeNode: Empty Constructor") {
     BinTreeNode<int> p;
 
@@ -37,7 +37,7 @@ TEST_CASE("BinTreeNode: [Constructor]", "[bin-tree]") {
   }
 }
 
-TEST_CASE("BinTreeNode: [Insert Node]", "[bin-tree]") {
+TEST_CASE("BinTreeNode: [Insert Node]", "[bintree]") {
   SECTION("BinTreeNode: Insert left") {
     BinTreeNode<int> p;
 
@@ -91,7 +91,7 @@ TEST_CASE("BinTreeNode: [Insert Node]", "[bin-tree]") {
   }
 }
 
-TEST_CASE("BinTreeNode: [Four Traverse]", "[bin-tree]") {
+TEST_CASE("BinTreeNode: [Four Traverse]", "[bintree]") {
   BinTreeNode<int> root(1, nullptr);
   root.InsertAsLeftChild(2);
   root.InsertAsRightChild(3);
@@ -177,7 +177,7 @@ TEST_CASE("BinTreeNode: [Four Traverse]", "[bin-tree]") {
   }
 }
 
-TEST_CASE("BinTree: [Constructor]", "[bin-tree]") {
+TEST_CASE("BinTree: [Constructor]", "[bintree]") {
   SECTION("BinTree: Empty construct") {
     BinTree<int> p;
     REQUIRE(p.Size() == 0);
