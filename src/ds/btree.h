@@ -41,8 +41,8 @@ template <class T>
 class BTree {
   using Node = BTreeNode<T>*;
 
-  static const size_type DEFAULT_ORDER = 3;
-  static const size_type DEFAULT_SIZE = 0;
+  static constexpr size_type kDefaultOrder = 3;
+  static constexpr size_type kDefaultSize = 0;
 
  protected:
   const size_type m_order;  // the rank of btree, At least 3, cannot be modified
@@ -55,7 +55,7 @@ class BTree {
   void SolveUnderflow(Node p);
 
  public:
-  BTree() : BTree(DEFAULT_ORDER, DEFAULT_SIZE) {}
+  BTree() : BTree(kDefaultOrder, kDefaultSize) {}
 
   BTree(size_type order, size_type size) : m_order(order), m_size(size) {
     m_root = new BTreeNode<T>();
