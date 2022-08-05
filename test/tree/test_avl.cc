@@ -22,7 +22,7 @@ TEST_CASE("AVL: basic", "[bst][avl]") {
     visit.Clear();
     a.TraverseInorder(visit);
 
-    Vector<int> actual = visit.m_data;
+    Vector<int> actual = visit.Data();
     Vector<int> expect = {-54, -3, 0, 1, 27, 99, 9999};
 
     REQUIRE(actual == expect);
