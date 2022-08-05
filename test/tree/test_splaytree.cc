@@ -20,7 +20,8 @@ TEST_CASE("Splay: demo", "[bst][Splay]") {
   s.TraverseInorder(visit);
 
   s.Search(1);
-  Vector<int> actual = visit.m_data;
+  Vector<int> actual = visit.Data();
+
   Vector<int> expect = {-54, -3, 0, 1, 27, 99, 9999};
 
   REQUIRE(actual == expect);

@@ -29,18 +29,23 @@
 #include <catch2/catch_session.hpp>
 #include <catch2/catch_test_macros.hpp>
 
-/// @brief Assist struct for Traverse.
+/// @brief Assist class for Traverse.
 template <class T>
-struct GetTraverse {
-  dsa::Vector<T> m_data{};
+class GetTraverse {
+  dsa::Vector<T>* m_data;
 
-  void Clear() { m_data.Clear(); }
+ public:
+  GetTraverse() { m_data = new dsa::Vector<T>(); }
 
-  virtual void operator()(T& e) { m_data.PushBack(e); }
+  dsa::Vector<T>& Data() const { return *m_data; }
+
+  void Clear() { m_data->Clear(); }
+
+  virtual void operator()(T& e) { m_data->PushBack(e); }
 
   std::string ToString() const {
     std::ostringstream os;
-    os << m_data;
+    os << *m_data;
     return os.str();
   }
 };

@@ -111,7 +111,8 @@ TEST_CASE("BinTreeNode: [Four Traverse]", "[bintree]") {
       visit.Clear();
       root.TraversePreorderRecur(&root, visit);
 
-      Vector<int> actual = visit.m_data;
+      Vector<int> actual = visit.Data();
+
       Vector<int> expect = {1, 2, 5, 7, 8, 4, 3, 6, 9};
       REQUIRE(actual == expect);
     }
@@ -119,7 +120,8 @@ TEST_CASE("BinTreeNode: [Four Traverse]", "[bintree]") {
     SECTION("Iterative1") {
       visit.Clear();
       root.TraversePreorderIter1(&root, visit);
-      Vector<int> actual = visit.m_data;
+      Vector<int> actual = visit.Data();
+
       Vector<int> expect = {1, 2, 5, 7, 8, 4, 3, 6, 9};
       REQUIRE(actual == expect);
     }
@@ -127,7 +129,8 @@ TEST_CASE("BinTreeNode: [Four Traverse]", "[bintree]") {
     SECTION("Iterative2") {
       visit.Clear();
       root.TraversePreorderIter2(&root, visit);
-      Vector<int> actual = visit.m_data;
+      Vector<int> actual = visit.Data();
+
       Vector<int> expect = {1, 2, 5, 7, 8, 4, 3, 6, 9};
       REQUIRE(actual == expect);
     }
@@ -137,7 +140,8 @@ TEST_CASE("BinTreeNode: [Four Traverse]", "[bintree]") {
     SECTION("Recursive") {
       visit.Clear();
       root.TraverseInorderRecur(&root, visit);
-      Vector<int> actual = visit.m_data;
+      Vector<int> actual = visit.Data();
+
       Vector<int> expect = {7, 5, 8, 2, 4, 1, 3, 9, 6};
       REQUIRE(actual == expect);
     }
@@ -145,7 +149,8 @@ TEST_CASE("BinTreeNode: [Four Traverse]", "[bintree]") {
     SECTION("Iterative") {
       visit.Clear();
       root.TraverseInorderIter(&root, visit);
-      Vector<int> actual = visit.m_data;
+      Vector<int> actual = visit.Data();
+
       Vector<int> expect = {7, 5, 8, 2, 4, 1, 3, 9, 6};
       REQUIRE(actual == expect);
     }
@@ -155,14 +160,16 @@ TEST_CASE("BinTreeNode: [Four Traverse]", "[bintree]") {
     SECTION("Recursive") {
       visit.Clear();
       root.TraversePostorderRecur(&root, visit);
-      Vector<int> actual = visit.m_data;
+      Vector<int> actual = visit.Data();
+
       Vector<int> expect = {7, 8, 5, 4, 2, 9, 6, 3, 1};
       REQUIRE(actual == expect);
     }
     SECTION("Iterative") {
       visit.Clear();
       root.TraversePostorderIter(&root, visit);
-      Vector<int> actual = visit.m_data;
+      Vector<int> actual = visit.Data();
+
       Vector<int> expect = {7, 8, 5, 4, 2, 9, 6, 3, 1};
       REQUIRE(actual == expect);
     }
@@ -171,7 +178,8 @@ TEST_CASE("BinTreeNode: [Four Traverse]", "[bintree]") {
   SECTION("BinTreeNode: Level Traverse") {
     visit.Clear();
     root.TraverseLevel(&root, visit);
-    Vector<int> actual = visit.m_data;
+    Vector<int> actual = visit.Data();
+
     Vector<int> expect = {1, 2, 3, 5, 4, 6, 7, 8, 9};
     REQUIRE(actual == expect);
   }

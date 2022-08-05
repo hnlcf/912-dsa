@@ -31,7 +31,8 @@ TEST_CASE("BST: Traverse", "[bst]") {
     visit.Clear();
     b.TraverseInorder(visit);
 
-    Vector<int> actual = visit.m_data;
+    Vector<int> actual = visit.Data();
+
     Vector<int> expect = {-391, -99, 0, 3, 25, 5182};
 
     REQUIRE(actual == expect);
