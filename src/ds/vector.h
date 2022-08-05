@@ -13,8 +13,6 @@
       n, size)
 
 namespace dsa {
-static const size_type kDefaultCapacity = 3;
-
 template <class T>
 class Vector {
  private:
