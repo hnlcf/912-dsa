@@ -27,6 +27,8 @@ class Vector {
   using const_iterator = Iterator<const value_type>;
 
  protected:
+  static constexpr size_type kDefaultCapacity = 3;
+
   size_type m_capacity{};
   size_type m_size{};
   pointer m_elem;
