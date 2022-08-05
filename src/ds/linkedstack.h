@@ -6,7 +6,7 @@
 
 namespace dsa {
 template <typename T>
-class LinkedStack : public IStack<T> {
+class LinkedStack : public StackInterface<T> {
  private:
   List<T> list;
 
