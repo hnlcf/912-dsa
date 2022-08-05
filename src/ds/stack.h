@@ -6,12 +6,12 @@
 
 namespace dsa {
 template <typename T>
-class Stack : public IStack<T> {
+class Stack : public StackInterface<T> {
  private:
   Vector<T>* m_vector;
 
  public:
-  Stack() { m_vector = new Vector<T>; };
+  Stack() { m_vector = new Vector<T>(); };
 
   ~Stack() {
     delete m_vector;

@@ -3,7 +3,7 @@
 
 namespace dsa {
 template <typename T>
-class IStack {
+class StackInterface {
  public:
   virtual void Push(T const& e) = 0;
   virtual T Pop() = 0;
