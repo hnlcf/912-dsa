@@ -2,16 +2,16 @@
 
 TEST_CASE("Queue: basic methods", "[queue]") {
   dsa::Queue<int> q;
-  q.Enqueue(1);
+  q.enqueue(1);
 
-  REQUIRE(q.Size() == 1);
-  REQUIRE(q.IsEmpty() == false);
-  REQUIRE(q.First() == 1);
-  REQUIRE(q.Last() == 1);
+  REQUIRE(q.size() == 1);
+  REQUIRE(q.isEmpty() == false);
+  REQUIRE(q.first() == 1);
+  REQUIRE(q.last() == 1);
 
-  auto tmp = q.Dequeue();
+  auto tmp = q.dequeue();
 
   REQUIRE(tmp == 1);
-  REQUIRE(q.Size() == 0);
-  REQUIRE(q.IsEmpty() == true);
+  REQUIRE(q.size() == 0);
+  REQUIRE(q.isEmpty() == true);
 }

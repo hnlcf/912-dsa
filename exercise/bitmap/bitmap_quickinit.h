@@ -8,18 +8,18 @@ class BitmapQuickInit {
  private:
   size_type* m_rank;   // store the ranks of all elements in the stack
   size_type* m_stack;  // store map
-  size_type m_top;     // point to the Top of stack
+  size_type  m_top;    // point to the top of stack
 
  protected:
   /// Verify the rank `r` is valid in the current stack
-  /// r is in [0, Top) or not
-  inline bool IsValid(size_type r) const;
+  /// r is in [0, top) or not
+  inline bool isValid(size_type r) const;
 
   /// Verify the rank `r` is erased in the stack
-  inline bool IsErase(size_type r) const;
+  inline bool isErase(size_type r) const;
 
   /// Verify the rank `r` is recorded already or not in the stack
-  inline bool IsRecord(size_type r) const;
+  inline bool isRecord(size_type r) const;
 
  public:
   explicit BitmapQuickInit(size_type n = 8)
@@ -30,17 +30,17 @@ class BitmapQuickInit {
     delete[] m_stack;
   }
 
-  /// Set the check bit
+  /// set the check bit
   /// use stack[rank[r]] = r
-  inline void Set(size_type r);
+  inline void set(size_type r);
 
   /// Clear the check bit
   /// use stack[rank[r]] = -1-r
-  inline void Clear(size_type r);
+  inline void clear(size_type r);
 
-  /// Reset the bitmap
-  /// use Top = 0
-  inline void Reset();
+  /// reset the bitmap
+  /// use top = 0
+  inline void reset();
 };
 }  // namespace dsa
 

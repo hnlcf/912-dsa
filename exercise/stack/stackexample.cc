@@ -5,39 +5,39 @@ namespace dsa {
 /// @brief Determine if the given character is a number.
 /// @param ch Character given
 /// @return True iff `ch` is a number, otherwise false.
-static inline bool IsDigit(char ch) { return ((48 <= ch) && (ch <= 57)); }
+static inline bool isDigit(char ch) { return ((48 <= ch) && (ch <= 57)); }
 
 /// @brief Read a continuous number from `str[index]`, and store with stack
 /// @param s The stack given for storing number
 /// @param str The string given
 /// @param index The specific position in string
-static void ReadNumber(Stack<double>& s, const std::string& str,
+static void readNumber(Stack<double>& s, const std::string& str,
                        std::size_t& index) {
-  s.Push(str[index] - '0');
+  s.push(str[index] - '0');
   index++;
-  while (IsDigit(str[index])) {
-    s.Push(s.Pop() * 10 + str[index] - '0');
+  while (isDigit(str[index])) {
+    s.push(s.pop() * 10 + str[index] - '0');
     index++;
   }
 }
 
-/// @brief Compare the Calculate priorities of TWO operators
+/// @brief Compare the calculate priorities of TWO operators
 /// @param lhs The operator in left side
 /// @param rhs The operator in right side
-/// @return A `MathOperator::Order` enumerator according to invoke
-/// `MathOperator::OrderBetweenOperator()`
-static inline MathOperator::Order OrderBetween(char lhs, char rhs) {
-  auto l_opr = MathOperator::ParseOperator(lhs);
-  auto r_opr = MathOperator::ParseOperator(rhs);
-  return MathOperator::OrderBetweenOperator(l_opr, r_opr);
+/// @return A `MathOperator::order` enumerator according to invoke
+/// `MathOperator::orderBetweenOperator()`
+static inline MathOperator::Order orderBetween(char lhs, char rhs) {
+  auto l_opr = MathOperator::parseOperator(lhs);
+  auto r_opr = MathOperator::parseOperator(rhs);
+  return MathOperator::orderBetweenOperator(l_opr, r_opr);
 }
 
-/// @brief Calculate a math expression with ONE operator(factorial) and ONE
+/// @brief calculate a math expression with ONE operator(factorial) and ONE
 /// operand.
 /// @param opr The operator given
 /// @param opd The UNIQUE operand given
 /// @return Result of calculation
-static double Calculate(MathOperator::Opr opr, double opd) {
+static double calculate(MathOperator::Opr opr, double opd) {
   if (opr != MathOperator::Opr::Fac) {
     return MAXFLOAT;
   }
@@ -53,12 +53,12 @@ static double Calculate(MathOperator::Opr opr, double opd) {
   return ans;
 }
 
-/// @brief Calculate a math expression with ONE operator and TWO operands.
+/// @brief calculate a math expression with ONE operator and TWO operands.
 /// @param opr The operator given
-/// @param opd1 The First(left) operand given
+/// @param opd1 The first(left) operand given
 /// @param opd2 The second(right) operand given
 /// @return Result of calculation
-static double Calculate(MathOperator::Opr opr, double opd1, double opd2) {
+static double calculate(MathOperator::Opr opr, double opd1, double opd2) {
   double ans = 0.0;
   switch (opr) {
     case MathOperator::Opr::Add:
@@ -82,25 +82,25 @@ static double Calculate(MathOperator::Opr opr, double opd1, double opd2) {
   return ans;
 }
 
-void DecimalConversion(Stack<char>& s, int64_t n, uint8_t base) {
+void decimalConversion(Stack<char>& s, int64_t n, uint8_t base) {
   const char digits[] = {'0', '1', '2', '3', '4', '5', '6', '7',
                          '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
   if (n == 0) {
-    s.Push(digits[n]);
+    s.push(digits[n]);
   } else {
     bool is_negative = n < 0;
-    n = std::abs(n);
+    n                = std::abs(n);
     while (n != 0) {
-      s.Push(digits[n % base]);
+      s.push(digits[n % base]);
       n /= base;
     }
     if (is_negative) {
-      s.Push('-');
+      s.push('-');
     }
   }
 }
 
-bool MatchBrackets(const std::string& expr) {
+bool matchBrackets(const std::string& expr) {
   if (expr.empty()) {
     return true;
   }
@@ -110,23 +110,23 @@ bool MatchBrackets(const std::string& expr) {
       case '(':
       case '[':
       case '{': {
-        s.Push(ch);
+        s.push(ch);
         break;
       }
       case ')': {
-        if (s.IsEmpty() || s.Pop() != '(') {
+        if (s.isEmpty() || s.pop() != '(') {
           return false;
         }
         break;
       }
       case ']': {
-        if (s.IsEmpty() || s.Pop() != '[') {
+        if (s.isEmpty() || s.pop() != '[') {
           return false;
         }
         break;
       }
       case '}': {
-        if (s.IsEmpty() || s.Pop() != '{') {
+        if (s.isEmpty() || s.pop() != '{') {
           return false;
         }
         break;
@@ -135,42 +135,42 @@ bool MatchBrackets(const std::string& expr) {
         break;
     }
   }
-  return s.IsEmpty();
+  return s.isEmpty();
 }
 
-double Evaluate(const std::string& exp) {
+double evaluate(const std::string& exp) {
   Stack<double> operands;
-  Stack<char> operators;
-  std::size_t i = 0;
+  Stack<char>   operators;
+  std::size_t   i = 0;
 
-  operators.Push('\0');
-  while (!operators.IsEmpty()) {
-    if (IsDigit(exp[i])) {
-      ReadNumber(operands, exp, i);
+  operators.push('\0');
+  while (!operators.isEmpty()) {
+    if (isDigit(exp[i])) {
+      readNumber(operands, exp, i);
     } else {
-      switch (OrderBetween(operators.Top(), exp[i])) {
+      switch (orderBetween(operators.top(), exp[i])) {
         case MathOperator::Order::Less: {
-          operators.Push(exp[i]);
+          operators.push(exp[i]);
           i++;
           break;
         }
         case MathOperator::Order::Equal: {
-          operators.Pop();
+          operators.pop();
           i++;
           break;
         }
         case MathOperator::Order::More: {
           double tmp;
-          auto opr = MathOperator::ParseOperator(operators.Pop());
+          auto   opr = MathOperator::parseOperator(operators.pop());
           if (opr == MathOperator::Opr::Fac) {
-            double opd = operands.Pop();
-            tmp = Calculate(opr, opd);
+            double opd = operands.pop();
+            tmp        = calculate(opr, opd);
           } else {
-            double opd2 = operands.Pop();
-            double opd1 = operands.Pop();
-            tmp = Calculate(opr, opd1, opd2);
+            double opd2 = operands.pop();
+            double opd1 = operands.pop();
+            tmp         = calculate(opr, opd1, opd2);
           }
-          operands.Push(tmp);
+          operands.push(tmp);
           break;
         }
         case MathOperator::Order::None:
@@ -179,7 +179,7 @@ double Evaluate(const std::string& exp) {
       }
     }
   }
-  return operands.Pop();
+  return operands.pop();
 }
 
 }  // namespace dsa

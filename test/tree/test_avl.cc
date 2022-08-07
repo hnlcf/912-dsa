@@ -6,23 +6,23 @@ using dsa::Vector;
 TEST_CASE("AVL: basic", "[bst][avl]") {
   AVL<int> a;
 
-  a.Insert(9999);
-  a.Insert(99);
-  a.Insert(27);
-  a.Insert(1);
-  a.Insert(0);
-  a.Insert(-3);
-  a.Insert(-54);
+  a.insert(9999);
+  a.insert(99);
+  a.insert(27);
+  a.insert(1);
+  a.insert(0);
+  a.insert(-3);
+  a.insert(-54);
 
-  REQUIRE(a.Size() == 7);
+  REQUIRE(a.size() == 7);
 
   GetTraverse<int> visit;
 
-  SECTION("Traverse AVL in-order") {
-    visit.Clear();
-    a.TraverseInorder(visit);
+  SECTION("traverse AVL in-order") {
+    visit.clear();
+    a.traverseInorder(visit);
 
-    Vector<int> actual = visit.Data();
+    Vector<int> actual = visit.data();
     Vector<int> expect = {-54, -3, 0, 1, 27, 99, 9999};
 
     REQUIRE(actual == expect);

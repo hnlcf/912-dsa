@@ -29,7 +29,7 @@
 #include <catch2/catch_session.hpp>
 #include <catch2/catch_test_macros.hpp>
 
-/// @brief Assist class for Traverse.
+/// @brief Assist class for traverse.
 template <class T>
 class GetTraverse {
   dsa::Vector<T>* m_data;
@@ -37,13 +37,13 @@ class GetTraverse {
  public:
   GetTraverse() { m_data = new dsa::Vector<T>(); }
 
-  dsa::Vector<T>& Data() const { return *m_data; }
+  dsa::Vector<T>& data() const { return *m_data; }
 
-  void Clear() { m_data->Clear(); }
+  void clear() { m_data->clear(); }
 
-  virtual void operator()(T& e) { m_data->PushBack(e); }
+  virtual void operator()(T& e) { m_data->pushBack(e); }
 
-  std::string ToString() const {
+  std::string toString() const {
     std::ostringstream os;
     os << *m_data;
     return os.str();

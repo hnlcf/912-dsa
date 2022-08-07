@@ -5,7 +5,7 @@
 #include <ds/vector.h>
 
 namespace dsa {
-template <typename T>
+template <class T>
 class Stack : public StackInterface<T> {
  private:
   Vector<T>* m_vector;
@@ -18,13 +18,13 @@ class Stack : public StackInterface<T> {
     m_vector = nullptr;
   };
 
-  void Push(T const& e) override { m_vector->PushBack(e); }
+  void push(T const& e) override { m_vector->pushBack(e); }
 
-  T Pop() override { return m_vector->PopBack(); }
+  T pop() override { return m_vector->popBack(); }
 
-  T& Top() override { return (*m_vector)[m_vector->Size() - 1]; }
+  T& top() override { return (*m_vector)[m_vector->size() - 1]; }
 
-  bool IsEmpty() const override { return m_vector->Size() == 0; }
+  bool isEmpty() const override { return m_vector->size() == 0; }
 };
 }  // namespace dsa
 

@@ -45,7 +45,7 @@ class ContainerException {
 
 template <class T>
 struct Cleaner {
-  static void Clean(T x) {  // recursive base
+  static void clean(T x) {  // recursive base
     static long long n = 0;
     if (strlen(typeid(T).name()) <
         7) {  // just output primitive type, ignore elaborate type
@@ -58,19 +58,19 @@ struct Cleaner {
 
 template <class T>
 struct Cleaner<T*> {
-  static void Clean(T* x) {
+  static void clean(T* x) {
     assert(x);
     delete x;
     x = nullptr;
-    // if contains pointer, Release recursively
+    // if contains pointer, release recursively
     static long long n = 0;
     printf("\t<%s>[%lld] released\n", typeid(T*).name(), ++n);
   }
 };
 
 template <class T>
-void Release(T x) {
-  Cleaner<T>::Clean(x);
+void release(T x) {
+  Cleaner<T>::clean(x);
 }
 }  // namespace dsa
 #endif

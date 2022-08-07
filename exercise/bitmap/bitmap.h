@@ -8,17 +8,17 @@
 namespace dsa {
 class Bitmap {
  private:
-  int bytes_num;
+  int            bytes_num;
   unsigned char* bitmap;
 
  protected:
-  void Init(int n);
+  void init(int n);
 
  public:
-  explicit Bitmap(int n = 8) { Init(n); }
+  explicit Bitmap(int n = 8) { init(n); }
 
   explicit Bitmap(char* file, int n = 8) {
-    Init(n);
+    init(n);
     FILE* fp = fopen(file, "r");
     fread(bitmap, sizeof(unsigned char), bytes_num, fp);
     fclose(fp);
@@ -29,19 +29,19 @@ class Bitmap {
     bitmap = nullptr;
   }
 
-  bool Test(int k);
+  bool test(int k);
 
-  void Set(int k);
+  void set(int k);
 
-  void Clear(int k);
+  void clear(int k);
 
-  void Dump(char* file);
+  void dump(char* file);
 
-  char* Bits2String(int n);
+  char* bits2String(int n);
 
-  void Expand(int k);
+  void expand(int k);
 
-  void Print(int n);
+  void print(int n);
 };
 }  // namespace dsa
 

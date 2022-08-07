@@ -5,22 +5,22 @@
 #include <ds/stack_interface.h>
 
 namespace dsa {
-template <typename T>
+template <class T>
 class LinkedStack : public StackInterface<T> {
  private:
   List<T> list;
 
  public:
-  LinkedStack() = default;
+  LinkedStack()  = default;
   ~LinkedStack() = default;
 
-  void Push(T const& e) override { list.InsertAsLast(e); }
+  void push(T const& e) override { list.insertAsLast(e); }
 
-  T Pop() override { return list.Remove(list.Last()); }
+  T pop() override { return list.remove(list.last()); }
 
-  T& Top() override { return list[list.Size() - 1]; }
+  T& top() override { return list[list.size() - 1]; }
 
-  bool IsEmpty() const override { return list.Size() == 0; }
+  bool isEmpty() const override { return list.size() == 0; }
 };
 }  // namespace dsa
 

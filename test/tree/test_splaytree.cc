@@ -3,24 +3,24 @@
 using dsa::SplayTree;
 using dsa::Vector;
 
-TEST_CASE("Splay: demo", "[bst][Splay]") {
+TEST_CASE("splay: demo", "[bst][splay]") {
   SplayTree<int> s;
 
-  s.Insert(9999);
-  s.Insert(99);
-  s.Insert(27);
-  s.Insert(1);
-  s.Insert(0);
-  s.Insert(-3);
-  s.Insert(-54);
+  s.insert(9999);
+  s.insert(99);
+  s.insert(27);
+  s.insert(1);
+  s.insert(0);
+  s.insert(-3);
+  s.insert(-54);
 
   GetTraverse<int> visit;
 
-  visit.Clear();
-  s.TraverseInorder(visit);
+  visit.clear();
+  s.traverseInorder(visit);
 
-  s.Search(1);
-  Vector<int> actual = visit.Data();
+  s.search(1);
+  Vector<int> actual = visit.data();
 
   Vector<int> expect = {-54, -3, 0, 1, 27, 99, 9999};
 

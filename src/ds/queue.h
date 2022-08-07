@@ -5,32 +5,32 @@
 #include <ds/list.h>
 
 namespace dsa {
-template <typename T>
+template <class T>
 class Queue {
  private:
   List<T> m_elem;
 
  public:
-  void Enqueue(const T& e) { m_elem.InsertAsLast(e); }
+  void enqueue(const T& e) { m_elem.insertAsLast(e); }
 
-  T Dequeue() {
-    auto tmp = m_elem.First();
-    return m_elem.Remove(tmp);
+  T dequeue() {
+    auto tmp = m_elem.first();
+    return m_elem.remove(tmp);
   }
 
-  T First() {
-    assert(Size() > 0);
+  T first() {
+    assert(size() > 0);
     return m_elem[0];
   }
 
-  T Last() {
-    assert(Size() > 0);
-    return m_elem[Size() - 1];
+  T last() {
+    assert(size() > 0);
+    return m_elem[size() - 1];
   }
 
-  size_type Size() const { return m_elem.Size(); }
+  size_type size() const { return m_elem.size(); }
 
-  bool IsEmpty() const { return m_elem.Size() == 0; }
+  bool isEmpty() const { return m_elem.size() == 0; }
 };
 }  // namespace dsa
 

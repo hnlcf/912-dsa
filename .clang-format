@@ -1,3 +1,15 @@
 # Generated from CLion C/C++ Code Style settings
 Language: Cpp
 BasedOnStyle: Google
+
+AlignAfterOpenBracket: Align
+AlignArrayOfStructures: Right
+AlignConsecutiveAssignments: Consecutive
+AlignConsecutiveBitFields: Consecutive
+AlignConsecutiveDeclarations: Consecutive
+AlignConsecutiveMacros: Consecutive
+AlignEscapedNewlines: Right
+AlignOperands: AlignAfterOperator
+AlignTrailingComments: true
+PointerAlignment: Right
+SpacesBeforeTrailingComments: 2

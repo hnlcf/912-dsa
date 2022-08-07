@@ -8,10 +8,10 @@ template <class T>
 class Iterator {
  public:
   /* An iterator class must declare(public) the following types */
-  using difference_type = std::ptrdiff_t;
-  using value_type = T;
-  using pointer = T*;
-  using reference = T&;
+  using difference_type   = std::ptrdiff_t;
+  using value_type        = T;
+  using pointer           = T*;
+  using reference         = T&;
   using iterator_category = std::forward_iterator_tag;
 
  public:

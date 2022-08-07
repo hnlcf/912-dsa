@@ -10,7 +10,7 @@ class SplayTree : public BST<T> {
 
  protected:
   /// @brief
-  Node Splay(Node v) {
+  Node splay(Node v) {
     if (v == nullptr) {
       return nullptr;
     }
@@ -18,64 +18,64 @@ class SplayTree : public BST<T> {
     Node p, g;
     while ((p = v->m_parent) && (g = p->m_parent)) {
       Node gg = g->m_parent;
-      if (IsLeftChild(v)) {
-        if (IsLeftChild(p)) {
+      if (isLeftChild(v)) {
+        if (isLeftChild(p)) {
           // zig-zig
-          AttachAsLeftChild(g, p->m_right);
-          AttachAsLeftChild(p, v->m_right);
+          attachAsLeftChild(g, p->m_right);
+          attachAsLeftChild(p, v->m_right);
 
-          AttachAsRightChild(p, g);
-          AttachAsRightChild(v, p);
+          attachAsRightChild(p, g);
+          attachAsRightChild(v, p);
         } else {
           // zig-zag
-          AttachAsRightChild(g, v->m_left);
-          AttachAsLeftChild(p, v->m_right);
+          attachAsRightChild(g, v->m_left);
+          attachAsLeftChild(p, v->m_right);
 
-          AttachAsLeftChild(v, g);
-          AttachAsRightChild(v, p);
+          attachAsLeftChild(v, g);
+          attachAsRightChild(v, p);
         }
-      } else if (IsRightChild(p)) {
+      } else if (isRightChild(p)) {
         // zag-zag
-        AttachAsRightChild(g, p->m_left);
-        AttachAsRightChild(p, v->m_left);
+        attachAsRightChild(g, p->m_left);
+        attachAsRightChild(p, v->m_left);
 
-        AttachAsLeftChild(p, g);
-        AttachAsLeftChild(v, p);
+        attachAsLeftChild(p, g);
+        attachAsLeftChild(v, p);
       } else {
         // zag-zig
-        AttachAsLeftChild(g, v->m_right);
-        AttachAsRightChild(p, v->m_left);
+        attachAsLeftChild(g, v->m_right);
+        attachAsRightChild(p, v->m_left);
 
-        AttachAsRightChild(v, g);
-        AttachAsLeftChild(v, p);
+        attachAsRightChild(v, g);
+        attachAsLeftChild(v, p);
       }
 
       if (gg == nullptr) {
         v->m_parent = nullptr;
       } else {
-        (g == gg->m_left) ? AttachAsLeftChild(gg, v)
-                          : AttachAsRightChild(gg, v);
+        (g == gg->m_left) ? attachAsLeftChild(gg, v)
+                          : attachAsRightChild(gg, v);
       }
 
-      this->UpdateHeight(g);
-      this->UpdateHeight(p);
-      this->UpdateHeight(v);
+      this->updateHeight(g);
+      this->updateHeight(p);
+      this->updateHeight(v);
     }
 
     p = v->m_parent;
 
-    // Single Splay
+    // Single splay
     if (p != nullptr) {
-      if (IsLeftChild(v)) {
-        AttachAsLeftChild(p, v->m_right);
-        AttachAsRightChild(v, p);
+      if (isLeftChild(v)) {
+        attachAsLeftChild(p, v->m_right);
+        attachAsRightChild(v, p);
       } else {
-        AttachAsRightChild(p, v->m_left);
-        AttachAsLeftChild(v, p);
+        attachAsRightChild(p, v->m_left);
+        attachAsLeftChild(v, p);
       }
 
-      this->UpdateHeight(p);
-      this->UpdateHeight(v);
+      this->updateHeight(p);
+      this->updateHeight(v);
     }
 
     v->m_parent = nullptr;
@@ -83,20 +83,20 @@ class SplayTree : public BST<T> {
   }
 
  public:
-  /// @brief Search an element `e` in Splay Tree.
-  /// @param e The element to be Search
+  /// @brief search an element `e` in splay Tree.
+  /// @param e The element to be search
   /// @return Return the ref of pointer point to element if found,
   /// otherwise the ref of node that it should be
   /// inserted.
-  Node& Search(T const& e) override {
+  Node& search(T const& e) override {
     this->m_hot = nullptr;
-    auto p = this->SearchInIter(this->m_root, e, this->m_hot);
+    auto p      = this->searchInIter(this->m_root, e, this->m_hot);
 
-    this->m_root = Splay((p == nullptr) ? this->m_hot : p);
+    this->m_root = splay((p == nullptr) ? this->m_hot : p);
     return this->m_root;
   }
 
-  Node Insert(T const& e) override {
+  Node insert(T const& e) override {
     // If root is null
     if (this->m_root == nullptr) {
       this->m_root = new BinTreeNode<T>(e);
@@ -106,7 +106,7 @@ class SplayTree : public BST<T> {
     }
 
     // If the element exists
-    if (e == Search(e)->m_data) {
+    if (e == search(e)->m_data) {
       return this->m_root;
     }
 
@@ -114,31 +114,31 @@ class SplayTree : public BST<T> {
     Node t = this->m_root;
     if (e > this->m_root->m_data) {
       this->m_root = new BinTreeNode<T>(e, 0, nullptr, t, t->m_right);
-      t->m_parent = this->m_root;
+      t->m_parent  = this->m_root;
 
       if (t->m_right != nullptr) {
         t->m_right->m_parent = this->m_root;
-        t->m_right = nullptr;
+        t->m_right           = nullptr;
       }
     } else {
       this->m_root = new BinTreeNode<T>(e, 0, nullptr, t->m_left, t);
-      t->m_parent = this->m_root;
+      t->m_parent  = this->m_root;
 
       if (t->m_left != nullptr) {
         t->m_left->m_parent = this->m_root;
-        t->m_left = nullptr;
+        t->m_left           = nullptr;
       }
     }
 
-    // Update tree Size and height of node in per level
+    // Update tree size and height of node in per level
     this->m_size++;
-    this->UpdateHeightAbove(t);
+    this->updateHeightAbove(t);
 
     return this->m_root;
   }
 
-  bool Remove(T const& e) override {
-    if (e != Search(e)->m_data) {
+  bool remove(T const& e) override {
+    if (e != search(e)->m_data) {
       return false;
     }
     return true;
@@ -146,7 +146,7 @@ class SplayTree : public BST<T> {
 
  private:
   /// @brief
-  static void AttachAsLeftChild(Node v, Node l_child) {
+  static void attachAsLeftChild(Node v, Node l_child) {
     v->m_left = l_child;
     if (l_child != nullptr) {
       l_child->m_parent = v;
@@ -154,7 +154,7 @@ class SplayTree : public BST<T> {
   }
 
   /// @brief
-  static void AttachAsRightChild(Node v, Node r_child) {
+  static void attachAsRightChild(Node v, Node r_child) {
     v->m_right = r_child;
     if (r_child != nullptr) {
       r_child->m_parent = v;

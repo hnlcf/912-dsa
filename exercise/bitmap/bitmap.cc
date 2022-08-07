@@ -1,63 +1,63 @@
 #include <bitmap/bitmap.h>
 
-void dsa::Bitmap::Init(int n) {
+void dsa::Bitmap::init(int n) {
   bytes_num = (n + 7) / 8;
-  bitmap = new unsigned char[bytes_num];
+  bitmap    = new unsigned char[bytes_num];
   memset(bitmap, 0, bytes_num);
 }
 
-bool dsa::Bitmap::Test(int k) {
-  int q = k >> 3;                       // k / 8
-  unsigned char offset = k & 0x07;      // k % 8
-  unsigned char mask = 0x80 >> offset;  // the k-th bit
+bool dsa::Bitmap::test(int k) {
+  int           q      = k >> 3;          // k / 8
+  unsigned char offset = k & 0x07;        // k % 8
+  unsigned char mask   = 0x80 >> offset;  // the k-th bit
 
   return bitmap[q] & (mask);
 }
 
-void dsa::Bitmap::Set(int k) {
-  Expand(k);
+void dsa::Bitmap::set(int k) {
+  expand(k);
   bitmap[k >> 3] |= (0x80 >> (k & 0x07));
 }
 
-void dsa::Bitmap::Clear(int k) {
-  Expand(k);
+void dsa::Bitmap::clear(int k) {
+  expand(k);
   bitmap[k >> 3] &= ~(0x80 >> (k & 0x07));
 }
 
-void dsa::Bitmap::Dump(char* file) {
+void dsa::Bitmap::dump(char* file) {
   FILE* fp = fopen(file, "w");
   fwrite(bitmap, sizeof(unsigned char), bytes_num, fp);
   fclose(fp);
 }
 
-char* dsa::Bitmap::Bits2String(int n) {
-  Expand(n - 1);
+char* dsa::Bitmap::bits2String(int n) {
+  expand(n - 1);
 
   char* s = new char[n - 1];
   for (int i = 0; i < n; ++i) {
-    s[i] = Test(i) ? '1' : '0';
+    s[i] = test(i) ? '1' : '0';
   }
   s[n] = '\0';
 
   return s;
 }
 
-void dsa::Bitmap::Expand(int k) {
+void dsa::Bitmap::expand(int k) {
   if (k < bytes_num * 8) {
     return;
   }
-  int oldN = bytes_num;
+  int            oldN   = bytes_num;
   unsigned char* oldMap = bitmap;
 
-  Init(2 * k);
+  init(2 * k);
   memcpy(bitmap, oldMap, oldN);
 
   delete[] oldMap;
 }
 
-void dsa::Bitmap::Print(int n) {
-  Expand(n);
+void dsa::Bitmap::print(int n) {
+  expand(n);
   for (int i = 0; i < n; ++i) {
-    printf(Test(i) ? "1" : "0");
+    printf(test(i) ? "1" : "0");
   }
 }

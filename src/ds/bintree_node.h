@@ -15,36 +15,75 @@ struct BinTreeNode;
 
 /// @brief Determine a node is a leaf node or not
 template <class T>
-static inline bool IsLeaf(BinTreeNode<T>* x);
+static inline bool isLeaf(BinTreeNode<T>* x) {
+  return x->m_left == nullptr && x->m_right == nullptr;
+}
 
 /// @brief Determine a node is a root node or not
 template <class T>
-static inline bool IsRoot(BinTreeNode<T>* x);
+static inline bool isRoot(BinTreeNode<T>* x) {
+  return x->m_parent == nullptr;
+}
 
-/// @brief Determine a node has GetParent or not
+/// @brief Determine a node has getParent or not
 template <class T>
-static inline bool HasParent(BinTreeNode<T>* x);
+static inline bool hasParent(BinTreeNode<T>* x) {
+  return !isRoot(x);
+}
 
 /// @brief Determine a node is a left child node or not
 template <class T>
-static inline bool IsLeftChild(BinTreeNode<T>* x);
+static inline bool isLeftChild(BinTreeNode<T>* x) {
+  return (!isRoot(x)) && (x == x->m_parent->m_left);
+}
 
 /// @brief Determine a node is a right child node or not
 template <class T>
-static inline bool IsRightChild(BinTreeNode<T>* x);
-
-/// @brief Assist function of preorder Traverse
+static inline bool isRightChild(BinTreeNode<T>* x) {
+  return (!isRoot(x)) && (x == x->m_parent->m_right);
+}
+/// @brief Assist function of preorder traverse
 template <class T, class VST>
-static void VisitAlongLeftBranch(BinTreeNode<T>* x, VST& visit,
-                                 Stack<BinTreeNode<T>*>& stack);
+static void visitAlongLeftBranch(BinTreeNode<T>* x, VST& visit,
+                                 Stack<BinTreeNode<T>*>& stack) {
+  while (x != nullptr) {
+    visit(x->m_data);
 
-/// @brief Assist function of inorder Traverse
+    stack.push(x->m_right);
+    x = x->m_left;
+  }
+}
+/// @brief Assist function of inorder traverse
 template <class T>
-static void GoAlongLeftBranch(BinTreeNode<T>* x, Stack<BinTreeNode<T>*>& stack);
+static void goAlongLeftBranch(BinTreeNode<T>*         x,
+                              Stack<BinTreeNode<T>*>& stack) {
+  while (x != nullptr) {
+    stack.push(x);
+    x = x->m_left;
+  }
+}
 
-/// @brief Assist function of postorder Traverse
+/// @brief Assist function of postorder traverse
 template <class T>
-static void GotoLeftMostLeaf(Stack<BinTreeNode<T>*>& stack);
+static void gotoLeftMostLeaf(Stack<BinTreeNode<T>*>& stack) {
+  BinTreeNode<T>* x = stack.top();
+
+  while (x != nullptr) {
+    if (x->m_left != nullptr) {
+      if (x->m_right != nullptr) {
+        stack.push(x->m_right);
+      }
+
+      stack.push(x->m_left);
+    } else {
+      stack.push(x->m_right);
+    }
+
+    x = stack.top();
+  }
+
+  stack.pop();
+}
 
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////// Declaration of Binary-Tree-Node /////////////////////
@@ -53,7 +92,7 @@ static void GotoLeftMostLeaf(Stack<BinTreeNode<T>*>& stack);
 /// @brief Binary Tree Node
 template <class T>
 struct BinTreeNode {
-  T m_data{};            // data field stored in node
+  T         m_data{};    // data field stored in node
   size_type m_height{};  // height of subtree that rooted in this node
 
   BinTreeNode<T>* m_parent;
@@ -80,7 +119,7 @@ struct BinTreeNode {
   ~BinTreeNode() = default;
 
   /// @brief
-  BinTreeNode<T>* InsertAsLeftChild(T const& e) {
+  BinTreeNode<T>* insertAsLeftChild(T const& e) {
     if (m_left == nullptr) {
       m_left = new BinTreeNode(e, this);
     } else {
@@ -90,7 +129,7 @@ struct BinTreeNode {
   }
 
   /// @brief
-  BinTreeNode<T>* InsertAsRightChild(T const& e) {
+  BinTreeNode<T>* insertAsRightChild(T const& e) {
     if (m_right == nullptr) {
       m_right = new BinTreeNode(e, this);
     } else {
@@ -100,8 +139,8 @@ struct BinTreeNode {
     return m_right;
   }
 
-  /// @brief Return direct Successor of current node(inorder)
-  BinTreeNode<T>* Successor() {
+  /// @brief Return direct successor of current node(inorder)
+  BinTreeNode<T>* successor() {
     auto* succ = this;
     if (m_right != nullptr) {
       succ = m_right;
@@ -109,7 +148,7 @@ struct BinTreeNode {
         succ = succ->m_left;
       }
     } else {
-      while (IsRightChild(succ)) {
+      while (isRightChild(succ)) {
         succ = succ->m_parent;
       }
       succ = succ->m_parent;
@@ -117,145 +156,145 @@ struct BinTreeNode {
     return succ;
   }
 
-  /// @brief The total Size of the subtree rooted At this node
-  size_type Size() const {
+  /// @brief The total size of the subtree rooted at this node
+  size_type size() const {
     size_type s = 1;
     if (m_left != nullptr) {
-      s += m_left->Size();
+      s += m_left->size();
     }
     if (m_right != nullptr) {
-      s += m_right->Size();
+      s += m_right->size();
     }
     return s;
   }
 
-  /// @brief Traverse layer by layer
+  /// @brief traverse layer by layer
   template <class VST>
-  void TraverseLevel(BinTreeNode<T>* x, VST& visit) {
+  void traverseLevel(BinTreeNode<T>* x, VST& visit) {
     Queue<BinTreeNode<T>*> queue;
-    queue.Enqueue(this);
+    queue.enqueue(this);
 
-    while (!queue.IsEmpty()) {
-      x = queue.Dequeue();
+    while (!queue.isEmpty()) {
+      x = queue.dequeue();
       visit(x->m_data);
 
       if (x->m_left != nullptr) {
-        queue.Enqueue(x->m_left);
+        queue.enqueue(x->m_left);
       }
       if (x->m_right != nullptr) {
-        queue.Enqueue(x->m_right);
+        queue.enqueue(x->m_right);
       }
     }
   }
 
-  /// @brief Preorder Traverse of recursive version
+  /// @brief Preorder traverse of recursive version
   template <class VST>
-  void TraversePreorderRecur(BinTreeNode<T>* x, VST& visit) {
+  void traversePreorderRecur(BinTreeNode<T>* x, VST& visit) {
     if (x == nullptr) {
       return;
     }
 
     visit(x->m_data);
 
-    TraversePreorderRecur(x->m_left, visit);
-    TraversePreorderRecur(x->m_right, visit);
+    traversePreorderRecur(x->m_left, visit);
+    traversePreorderRecur(x->m_right, visit);
   }
 
-  /// @brief Preorder Traverse of iterative version 1
+  /// @brief Preorder traverse of iterative version 1
   template <class VST>
-  void TraversePreorderIter1(BinTreeNode<T>* x, VST& visit) {
+  void traversePreorderIter1(BinTreeNode<T>* x, VST& visit) {
     Stack<BinTreeNode<T>*> s;
     if (x != nullptr) {
-      s.Push(x);
+      s.push(x);
     }
 
-    while (!s.IsEmpty()) {
-      x = s.Pop();
+    while (!s.isEmpty()) {
+      x = s.pop();
       visit(x->m_data);
 
       if (x->m_right != nullptr) {
-        s.Push(x->m_right);
+        s.push(x->m_right);
       }
       if (x->m_left != nullptr) {
-        s.Push(x->m_left);
+        s.push(x->m_left);
       }
     }
   }
 
-  /// @brief Preorder Traverse of iterative version 2
+  /// @brief Preorder traverse of iterative version 2
   template <class VST>
-  void TraversePreorderIter2(BinTreeNode<T>* x, VST& visit) {
+  void traversePreorderIter2(BinTreeNode<T>* x, VST& visit) {
     Stack<BinTreeNode<T>*> stack;
 
     while (true) {
-      // access the left child chain of x, and Push all right child trees to the
+      // access the left child chain of x, and push all right child trees to the
       // stack one by one
-      VisitAlongLeftBranch(x, visit, stack);
+      visitAlongLeftBranch(x, visit, stack);
 
-      if (stack.IsEmpty()) {
+      if (stack.isEmpty()) {
         break;
       }
-      x = stack.Pop();
+      x = stack.pop();
     }
   }
 
-  /// @brief Inorder Traverse of recursive version
+  /// @brief Inorder traverse of recursive version
   template <class VST>
-  void TraverseInorderRecur(BinTreeNode<T>* x, VST& visit) {
+  void traverseInorderRecur(BinTreeNode<T>* x, VST& visit) {
     if (x == nullptr) {
       return;
     }
 
-    TraverseInorderRecur(x->m_left, visit);
+    traverseInorderRecur(x->m_left, visit);
     visit(x->m_data);
-    TraverseInorderRecur(x->m_right, visit);
+    traverseInorderRecur(x->m_right, visit);
   }
 
-  /// @brief Inorder Traverse of iterative version
+  /// @brief Inorder traverse of iterative version
   template <class VST>
-  void TraverseInorderIter(BinTreeNode<T>* x, VST& visit) {
+  void traverseInorderIter(BinTreeNode<T>* x, VST& visit) {
     Stack<BinTreeNode<T>*> stack;
 
     while (true) {
-      GoAlongLeftBranch(x, stack);
+      goAlongLeftBranch(x, stack);
 
-      if (stack.IsEmpty()) {
+      if (stack.isEmpty()) {
         break;
       }
-      x = stack.Pop();
+      x = stack.pop();
 
       visit(x->m_data);
       x = x->m_right;
     }
   }
 
-  /// @brief Postorder Traverse recursive version
+  /// @brief Postorder traverse recursive version
   template <class VST>
-  void TraversePostorderRecur(BinTreeNode<T>* x, VST& visit) {
+  void traversePostorderRecur(BinTreeNode<T>* x, VST& visit) {
     if (x == nullptr) {
       return;
     }
 
-    TraversePostorderRecur(x->m_left, visit);
-    TraversePostorderRecur(x->m_right, visit);
+    traversePostorderRecur(x->m_left, visit);
+    traversePostorderRecur(x->m_right, visit);
     visit(x->m_data);
   }
 
-  /// @brief Postorder Traverse iterative version
+  /// @brief Postorder traverse iterative version
   template <class VST>
-  void TraversePostorderIter(BinTreeNode<T>* x, VST& visit) {
+  void traversePostorderIter(BinTreeNode<T>* x, VST& visit) {
     Stack<BinTreeNode<T>*> stack;
     if (x != nullptr) {
-      stack.Push(x);
+      stack.push(x);
     }
 
-    while (!stack.IsEmpty()) {
-      if (stack.Top() != x->m_parent) {
-        // the `stack.Top()` must be the right sibling of x
-        GotoLeftMostLeaf(stack);
+    while (!stack.isEmpty()) {
+      if (stack.top() != x->m_parent) {
+        // the `stack.top()` must be the right sibling of x
+        gotoLeftMostLeaf(stack);
       }
 
-      x = stack.Pop();
+      x = stack.pop();
       visit(x->m_data);
     }
   }
@@ -266,76 +305,6 @@ struct BinTreeNode {
   /// @brief
   bool operator==(BinTreeNode const& other) { return m_data == other.m_data; }
 };
-
-////////////////////////////////////////////////////////////////////////////
-//////////////////// Implementation of static functions ////////////////////
-////////////////////////////////////////////////////////////////////////////
-
-template <class T>
-static inline bool IsLeaf(BinTreeNode<T>* x) {
-  return x->m_left == nullptr && x->m_right == nullptr;
-}
-
-template <class T>
-static inline bool IsRoot(BinTreeNode<T>* x) {
-  return x->m_parent == nullptr;
-}
-
-template <class T>
-static inline bool HasParent(BinTreeNode<T>* x) {
-  return !IsRoot(x);
-}
-
-template <class T>
-static inline bool IsLeftChild(BinTreeNode<T>* x) {
-  return (!IsRoot(x)) && (x == x->m_parent->m_left);
-}
-
-template <class T>
-static inline bool IsRightChild(BinTreeNode<T>* x) {
-  return (!IsRoot(x)) && (x == x->m_parent->m_right);
-}
-
-template <class T, class VST>
-static void VisitAlongLeftBranch(BinTreeNode<T>* x, VST& visit,
-                                 Stack<BinTreeNode<T>*>& stack) {
-  while (x != nullptr) {
-    visit(x->m_data);
-
-    stack.Push(x->m_right);
-    x = x->m_left;
-  }
-}
-
-template <class T>
-static void GoAlongLeftBranch(BinTreeNode<T>* x,
-                              Stack<BinTreeNode<T>*>& stack) {
-  while (x != nullptr) {
-    stack.Push(x);
-    x = x->m_left;
-  }
-}
-
-template <class T>
-static void GotoLeftMostLeaf(Stack<BinTreeNode<T>*>& stack) {
-  BinTreeNode<T>* x = stack.Top();
-
-  while (x != nullptr) {
-    if (x->m_left != nullptr) {
-      if (x->m_right != nullptr) {
-        stack.Push(x->m_right);
-      }
-
-      stack.Push(x->m_left);
-    } else {
-      stack.Push(x->m_right);
-    }
-
-    x = stack.Top();
-  }
-
-  stack.Pop();
-}
 }  // namespace dsa
 
 #endif

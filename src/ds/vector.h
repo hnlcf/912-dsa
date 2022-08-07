@@ -5,84 +5,38 @@
 #include <ds/fib.h>
 #include <ds/iterator.h>
 
-#define VECTOR_RANGE_CHECK(n, size)                                         \
-  THROW_OUT_OF_RANGE(                                                       \
-      "[ERROR]: dsa::Vector::OutOfRangeCheck: n (which is %lld) is out of " \
-      "range "                                                              \
-      "[0, %lld)\n\n",                                                      \
+#define VECTOR_RANGE_CHECK(n, size)                                            \
+  THROW_OUT_OF_RANGE(                                                          \
+      "[ERROR]: dsa::Vector::outOfRangeCheck: n (which is %lld) is out of "    \
+      "range "                                                                 \
+      "[0, %lld)\n\n",                                                         \
       n, size)
 
 namespace dsa {
 template <class T>
 class Vector {
  private:
-  using value_type = T;
-  using pointer = T*;
-  using reference = value_type&;
-  using iterator = Iterator<value_type>;
-  using const_pointer = const T*;
+  using value_type      = T;
+  using pointer         = T*;
+  using reference       = value_type&;
+  using iterator        = Iterator<value_type>;
+  using const_pointer   = const T*;
   using const_reference = const value_type&;
-  using const_iterator = Iterator<const value_type>;
+  using const_iterator  = Iterator<const value_type>;
 
- protected:
-  static constexpr size_type kDefaultCapacity = 3;
+ public:
+  template <class U>
+  friend std::ostream& operator<<(std::ostream& os, const Vector<U>&);
 
-  size_type m_capacity{};
-  size_type m_size{};
-  pointer m_elem;
-
-  void CopyFrom(const_pointer A, size_type lo, size_type hi) {
-    m_size = 0;
-    m_capacity = (hi - lo) << 1;
-    m_elem = new T[m_capacity];
-
-    while (lo < hi) {
-      m_elem[m_size] = A[lo];
-
-      m_size++;
-      lo++;
-    }
-  }
-
-  void Expand() {
-    if (m_size < m_capacity) {
-      return;
-    }
-
-    pointer oldElem = m_elem;
-    m_capacity = std::max(m_capacity, kDefaultCapacity) << 1;
-    m_elem = new T[m_capacity];
-
-    for (size_type i = 0; i < m_size; ++i) {
-      m_elem[i] = oldElem[i];
-    }
-
-    delete[] oldElem;
-    oldElem = nullptr;
-  }
-
-  void Shrink() {
-    if ((m_capacity < kDefaultCapacity << 1) || (m_capacity < m_size << 2)) {
-      return;
-    }
-    pointer oldElem = m_elem;
-    m_capacity >>= 1;
-    m_elem = new T[m_capacity];
-
-    for (size_type i = 0; i < m_size; ++i) {
-      m_elem[i] = oldElem[i];
-    }
-
-    delete[] oldElem;
-    oldElem = nullptr;
-  }
+  template <class U>
+  friend std::istream& operator>>(std::istream& is, Vector<U>&);
 
  public:
   Vector() : Vector(kDefaultCapacity, 0, 0) {}
 
   Vector(std::initializer_list<T> list)
       : m_capacity(list.size() << 1), m_size(list.size()) {
-    m_elem = new T[m_capacity];
+    m_elem  = new T[m_capacity];
     auto it = begin();
     for (const_reference e : list) {
       *it = e;
@@ -102,14 +56,14 @@ class Vector {
     }
   }
 
-  Vector(const_pointer A, size_type n) { CopyFrom(A, 0, n); }
+  Vector(const_pointer A, size_type n) { copyFrom(A, 0, n); }
 
-  Vector(const_pointer A, size_type lo, size_type hi) { CopyFrom(A, lo, hi); }
+  Vector(const_pointer A, size_type lo, size_type hi) { copyFrom(A, lo, hi); }
 
-  Vector(const Vector<T>& V) { CopyFrom(V.m_elem, 0, V.m_size); }
+  Vector(const Vector<T>& V) { copyFrom(V.m_elem, 0, V.m_size); }
 
   Vector(const Vector<T>& V, size_type lo, size_type hi) {
-    CopyFrom(V.m_elem, lo, hi);
+    copyFrom(V.m_elem, lo, hi);
   }
 
   ~Vector() {
@@ -117,9 +71,12 @@ class Vector {
     m_elem = nullptr;
   }
 
-  iterator begin() { return iterator(m_elem); }
+ public:
+  bool isEmpty() const { return m_size == 0; }
 
-  iterator end() { return iterator(m_elem + m_size); }
+  size_type size() const { return m_size; }
+
+  size_type capacity() const { return m_capacity; }
 
   const_iterator begin() const { return const_iterator(m_elem); }
 
@@ -129,53 +86,53 @@ class Vector {
 
   const_iterator cend() const { return const_iterator(m_elem + m_size); }
 
-  void PushBack(const_reference e) {
-    Expand();
-    if (m_size == 0) {
-      m_elem[0] = e;
-      m_size++;
-    } else {
-      Insert(m_size, e);
-    }
-  }
+  const_reference front() const { return *(begin()); }
 
-  value_type PopBack() {
-    if (m_size == 0) {
-      return *(new T);
-    }
-    return Remove(m_size - 1);
-  }
+  const_reference back() const { return *(end() - 1); }
 
-  void Clear() { m_size = 0; }
-
-  reference Front() { return *(begin()); }
-
-  const_reference Front() const { return *(begin()); }
-
-  reference Back() { return *(end() - 1); }
-
-  const_reference Back() const { return *(end() - 1); }
-
-  reference At(size_type n) {
-    VECTOR_RANGE_CHECK(n, Size());
+  const_reference at(size_type n) const {
+    VECTOR_RANGE_CHECK(n, size());
     return (*this)[n];
   }
 
-  const_reference At(size_type n) const {
-    VECTOR_RANGE_CHECK(n, Size());
+  const_reference operator[](size_type r) const {
+    VECTOR_RANGE_CHECK(r, size());
+    return *(m_elem + r);
+  }
+
+  size_type find(const_reference e) const { return find(e, 0, m_size); }
+
+  size_type find(const_reference e, size_type lo, size_type hi) const {
+    while (lo < hi) {
+      hi--;
+      if (e == m_elem[hi]) {
+        break;
+      }
+    }
+    return hi;
+  }
+
+  iterator begin() { return iterator(m_elem); }
+
+  iterator end() { return iterator(m_elem + m_size); }
+
+  reference front() { return *(begin()); }
+
+  reference back() { return *(end() - 1); }
+
+  reference at(size_type n) {
+    VECTOR_RANGE_CHECK(n, size());
     return (*this)[n];
   }
 
-  // Read-Only interface
-  bool IsEmpty() const { return m_size == 0; }
+  reference operator[](size_type r) {
+    VECTOR_RANGE_CHECK(r, size());
+    return *(m_elem + r);
+  }
 
-  size_type Size() const { return m_size; }
-
-  size_type Capacity() const { return m_capacity; }
-
-  size_type Insert(size_type r, const_reference e) {
-    VECTOR_RANGE_CHECK(r, Size() + 1);
-    Expand();
+  size_type insert(size_type r, const_reference e) {
+    VECTOR_RANGE_CHECK(r, size() + 1);
+    expand();
 
     for (auto it = end(); it > begin() + r; --it) {
       *it = *(it - 1);
@@ -186,14 +143,14 @@ class Vector {
     return r;
   }
 
-  value_type Remove(size_type r) {
-    VECTOR_RANGE_CHECK(r, Size());
+  value_type remove(size_type r) {
+    VECTOR_RANGE_CHECK(r, size());
     value_type e = m_elem[r];
-    Remove(r, r + 1);
+    remove(r, r + 1);
     return e;
   }
 
-  size_type Remove(size_type lo, size_type hi) {
+  size_type remove(size_type lo, size_type hi) {
     if (lo == hi) {
       return 0;
     }
@@ -204,28 +161,35 @@ class Vector {
       hi++;
     }
     m_size = lo;
-    Shrink();
+    shrink();
     return hi - lo;
   }
 
-  size_type Find(const_reference e) const { return Find(e, 0, m_size); }
-
-  size_type Find(const_reference e, size_type lo, size_type hi) const {
-    while (lo < hi) {
-      hi--;
-      if (e == m_elem[hi]) {
-        break;
-      }
+  void pushBack(const_reference e) {
+    expand();
+    if (m_size == 0) {
+      m_elem[0] = e;
+      m_size++;
+    } else {
+      insert(m_size, e);
     }
-    return hi;
   }
 
-  size_type Deduplicate() {
+  value_type popBack() {
+    if (m_size == 0) {
+      return *(new T);
+    }
+    return remove(m_size - 1);
+  }
+
+  void clear() { m_size = 0; }
+
+  size_type deduplicate() {
     size_type oldSize = m_size;
-    size_type i = 1;
+    size_type i       = 1;
     while (i < m_size) {
-      if (Find(m_elem[i], 0, i) != -1) {
-        Remove(i);
+      if (find(m_elem[i], 0, i) != -1) {
+        remove(i);
       } else {
         i++;
       }
@@ -233,8 +197,7 @@ class Vector {
     return oldSize - m_size;
   }
 
-  // For sorted Vector
-  size_type Disordered() const {
+  size_type disordered() const {
     size_type n = 0;
     for (size_type i = 1; i < m_size; ++i) {
       if (m_elem[i] < m_elem[i - 1]) {
@@ -244,7 +207,7 @@ class Vector {
     return n;
   }
 
-  size_type Uniquify() {
+  size_type uniquify() {
     size_type i = 0;
     size_type j = 1;
     while (j < m_size) {
@@ -257,29 +220,22 @@ class Vector {
     return j - i;
   }
 
-  size_type Search(const_reference e) const { return Search(e, 0, m_size); }
-
-  size_type Search(const_reference e, size_type lo, size_type hi) const {
-    return (random() % 2) == 1 ? BinarySearchC(m_elem, e, lo, hi)
-                               : FibonacciSearch(m_elem, e, lo, hi);
-  }
-
-  void Sort(size_type lo, size_type hi) {
+  void sort(size_type lo, size_type hi) const {
     switch (random() % 3) {
       case 1:
-        BubbleSort(lo, hi);
+        bubbleSort(lo, hi);
         break;
       case 2:
-        SelectionSort(lo, hi);
+        selectionSort(lo, hi);
         break;
       default:
-        MergeSort(lo, hi);
+        mergeSort(lo, hi);
         break;
     }
   }
 
   /// `O(n^2)`
-  void BubbleSort(size_type lo, size_type hi) {
+  void bubbleSort(size_type lo, size_type hi) const {
     hi -= 1;
     size_type last = hi;
     while (lo < hi) {
@@ -294,13 +250,13 @@ class Vector {
     }
   }
 
-  void SelectionSort(size_type lo, size_type hi) {
+  void selectionSort(size_type lo, size_type hi) const {
     for (size_type i = lo; i < hi; ++i) {
-      value_type min = m_elem[i];
-      size_type min_i = i;
+      value_type min   = m_elem[i];
+      size_type  min_i = i;
       for (size_type j = i + 1; j < hi; ++j) {
         if (m_elem[j] < min) {
-          min = m_elem[j];
+          min   = m_elem[j];
           min_i = j;
         }
       }
@@ -309,21 +265,21 @@ class Vector {
   }
 
   /// `O(nlgn)`
-  void MergeSort(size_type lo, size_type hi) {
+  void mergeSort(size_type lo, size_type hi) const {
     if (hi - lo < 2) {
       return;
     }
     size_type mi = (lo + hi) >> 1;
-    MergeSort(lo, mi);
-    MergeSort(mi, hi);
-    Merge(lo, mi, hi);
+    mergeSort(lo, mi);
+    mergeSort(mi, hi);
+    merge(lo, mi, hi);
   }
 
-  void Merge(size_type lo, size_type mi, size_type hi) {
+  void merge(size_type lo, size_type mi, size_type hi) const {
     size_type l1 = mi - lo;
     size_type l2 = hi - mi;
-    auto B = new T[l1];
-    auto C = new T[l2];
+    auto      B  = new T[l1];
+    auto      C  = new T[l2];
 
     pointer A = m_elem + lo;
     for (int i = 0; i < l1; ++i) {
@@ -335,7 +291,7 @@ class Vector {
       C[i] = A[i];
     }
 
-    A = m_elem + lo;
+    A           = m_elem + lo;
     size_type i = 0;
     size_type j = 0;
     size_type k = 0;
@@ -369,35 +325,28 @@ class Vector {
   }
 
   template <class VST>
-  void Traverse(VST& visit) {
+  void traverse(VST& visit) {
     for (auto it = begin(); it != end(); ++it) {
       visit(*it);
     }
   }
 
-  std::string ToString() const {
+  std::string toString() const {
     std::ostringstream os;
     os << *this;
     return os.str();
   }
 
-  reference operator[](size_type r) {
-    VECTOR_RANGE_CHECK(r, Size());
-    return *(m_elem + r);
+ public:
+  /** search */
+  size_type search(const_reference e) const { return search(e, 0, m_size); }
+
+  size_type search(const_reference e, size_type lo, size_type hi) const {
+    return (random() % 2) == 1 ? binarySearchC(m_elem, e, lo, hi)
+                               : fibonacciSearch(m_elem, e, lo, hi);
   }
 
-  const_reference operator[](size_type r) const {
-    VECTOR_RANGE_CHECK(r, Size());
-    return *(m_elem + r);
-  }
-
-  template <class U>
-  friend std::ostream& operator<<(std::ostream& os, const Vector<U>&);
-
-  template <class U>
-  friend std::istream& operator>>(std::istream& is, Vector<U>&);
-
-  static size_type BinarySearchA(pointer A, const_reference e, size_type lo,
+  static size_type binarySearchA(pointer A, const_reference e, size_type lo,
                                  size_type hi) {
     while (lo < hi) {
       size_type mi = (lo + hi) >> 1;
@@ -412,7 +361,7 @@ class Vector {
     return -1;
   }
 
-  static size_type BinarySearchB(pointer A, const_reference e, size_type lo,
+  static size_type binarySearchB(pointer A, const_reference e, size_type lo,
                                  size_type hi) {
     while (lo + 1 < hi) {
       size_type mi = (lo + hi) >> 1;
@@ -425,7 +374,7 @@ class Vector {
     return e < A[lo] ? lo - 1 : lo;
   }
 
-  static size_type BinarySearchC(pointer A, const_reference e, size_type lo,
+  static size_type binarySearchC(pointer A, const_reference e, size_type lo,
                                  size_type hi) {
     while (lo < hi) {
       size_type mi = (lo + hi) >> 1;
@@ -438,14 +387,14 @@ class Vector {
     return lo - 1;
   }
 
-  static size_type FibonacciSearch(pointer A, const_reference e, size_type lo,
+  static size_type fibonacciSearch(pointer A, const_reference e, size_type lo,
                                    size_type hi) {
     Fib fib(hi - lo);
     while (lo + 1 < hi) {
-      while ((hi - lo) < fib.Get()) {
-        fib.Prev();
+      while ((hi - lo) < fib.get()) {
+        fib.prev();
       }
-      size_type mi = lo + fib.Get() - 1;
+      size_type mi = lo + fib.get() - 1;
       if (e < A[mi]) {
         hi = mi;
       } else if (A[mi] <= e) {
@@ -455,7 +404,7 @@ class Vector {
     return e < A[lo] ? lo - 1 : lo;
   }
 
-  static size_type Interpolation(pointer A, const_reference e, size_type lo,
+  static size_type interpolation(pointer A, const_reference e, size_type lo,
                                  size_type hi) {
     while (lo < hi) {
       size_type mi = lo + (hi - lo) * (e - A[lo]) / (A[hi] - A[lo]);
@@ -467,14 +416,68 @@ class Vector {
     }
     return e == A[lo] ? lo : -1;
   }
+
+ protected:
+  void copyFrom(const_pointer A, size_type lo, size_type hi) {
+    m_size     = 0;
+    m_capacity = (hi - lo) << 1;
+    m_elem     = new T[m_capacity];
+
+    while (lo < hi) {
+      m_elem[m_size] = A[lo];
+
+      m_size++;
+      lo++;
+    }
+  }
+
+  void expand() {
+    if (m_size < m_capacity) {
+      return;
+    }
+
+    pointer oldElem = m_elem;
+    m_capacity      = std::max(m_capacity, kDefaultCapacity) << 1;
+    m_elem          = new T[m_capacity];
+
+    for (size_type i = 0; i < m_size; ++i) {
+      m_elem[i] = oldElem[i];
+    }
+
+    delete[] oldElem;
+    oldElem = nullptr;
+  }
+
+  void shrink() {
+    if ((m_capacity < kDefaultCapacity << 1) || (m_capacity < m_size << 2)) {
+      return;
+    }
+    pointer oldElem = m_elem;
+    m_capacity >>= 1;
+    m_elem = new T[m_capacity];
+
+    for (size_type i = 0; i < m_size; ++i) {
+      m_elem[i] = oldElem[i];
+    }
+
+    delete[] oldElem;
+    oldElem = nullptr;
+  }
+
+ protected:
+  static constexpr size_type kDefaultCapacity = 3;
+
+  size_type m_capacity{};
+  size_type m_size{};
+  pointer   m_elem;
 };
 
 template <class T>
 std::ostream& operator<<(std::ostream& os, const Vector<T>& vec) {
   os << "{ ";
-  for (size_type i = 0; i < vec.Size(); ++i) {
+  for (size_type i = 0; i < vec.size(); ++i) {
     os << vec[i];
-    if (i < vec.Size() - 1) {
+    if (i < vec.size() - 1) {
       os << ", ";
     }
   }
@@ -487,14 +490,14 @@ template <class T>
 std::istream& operator>>(std::istream& is, Vector<T>& vec) {
   T ele;
   while (is >> ele) {
-    vec.PushBack(ele);
+    vec.pushBack(ele);
   }
   return is;
 }
 
 template <class T>
 inline bool operator==(const Vector<T>& vec1, const Vector<T>& vec2) {
-  return vec1.Size() == vec2.Size() &&
+  return vec1.size() == vec2.size() &&
          std::equal(vec1.begin(), vec1.end(), vec2.begin());
 }
 
