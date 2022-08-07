@@ -118,7 +118,7 @@ class BST : public BinTree<T> {
   }
 
  public:
-  /// @brief [Recursive version] Find the key `e` in BST subtree rooted At node
+  /// @brief [Recursive version] Find the key `e` in BST subtree rooted at node
   /// `v`.
   /// @param v The reference of root node of subtree.
   /// @param e The key need to be find.
@@ -136,7 +136,7 @@ class BST : public BinTree<T> {
     }
   }
 
-  /// @brief [Iterative version] Find the key `e` in BST subtree rooted At node
+  /// @brief [Iterative version] Find the key `e` in BST subtree rooted at node
   /// `v`.
   /// @param v The reference of root node of subtree.
   /// @param e The key need to be find.
