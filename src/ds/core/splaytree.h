@@ -1,7 +1,7 @@
 #ifndef INC_912_DSA_DS_SPLAYTREE_H_
 #define INC_912_DSA_DS_SPLAYTREE_H_
 
-#include <ds/bst.h>
+#include <ds/core/bst.h>
 
 namespace dsa {
 template <class T>

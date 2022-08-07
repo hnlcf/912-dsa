@@ -2,8 +2,8 @@
 #ifndef INC_912_DSA_DS_BST_H_
 #define INC_912_DSA_DS_BST_H_
 
-#include <ds/autoheader.h>
-#include <ds/bintree.h>
+#include <ds/core/bintree.h>
+#include <ds/utils/autoheader.h>
 
 namespace dsa {
 template <class T>

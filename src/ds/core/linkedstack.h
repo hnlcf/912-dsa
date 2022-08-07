@@ -1,8 +1,8 @@
 #ifndef INC_912_DSA_DS_LINKEDSTACK_H_
 #define INC_912_DSA_DS_LINKEDSTACK_H_
 
-#include <ds/list.h>
-#include <ds/stack_interface.h>
+#include <ds/core/list.h>
+#include <ds/core/stack_interface.h>
 
 namespace dsa {
 template <class T>

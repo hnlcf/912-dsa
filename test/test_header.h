@@ -2,23 +2,23 @@
 #define INC_912_DSA_TEST_TEST_HEADER_H_
 
 // Core headers
-#include <ds/avl.h>
-#include <ds/bintree.h>
-#include <ds/bintree_node.h>
-#include <ds/bst.h>
-#include <ds/btree.h>
-#include <ds/entry.h>
-#include <ds/fib.h>
-#include <ds/graph.h>
-#include <ds/graph_matrix.h>
-#include <ds/iterator.h>
-#include <ds/linkedstack.h>
-#include <ds/list.h>
-#include <ds/list_node.h>
-#include <ds/queue.h>
-#include <ds/splaytree.h>
-#include <ds/stack.h>
-#include <ds/vector.h>
+#include <ds/core/avl.h>
+#include <ds/core/bintree.h>
+#include <ds/core/bintree_node.h>
+#include <ds/core/bst.h>
+#include <ds/core/btree.h>
+#include <ds/core/entry.h>
+#include <ds/core/fib.h>
+#include <ds/core/graph.h>
+#include <ds/core/graph_matrix.h>
+#include <ds/core/iterator.h>
+#include <ds/core/linkedstack.h>
+#include <ds/core/list.h>
+#include <ds/core/list_node.h>
+#include <ds/core/queue.h>
+#include <ds/core/splaytree.h>
+#include <ds/core/stack.h>
+#include <ds/core/vector.h>
 
 // Submodule headers
 #include <bitmap/bitmap.h>

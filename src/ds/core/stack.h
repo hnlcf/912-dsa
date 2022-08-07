@@ -1,8 +1,8 @@
 #ifndef INC_912_DSA_DS_STACK_H_
 #define INC_912_DSA_DS_STACK_H_
 
-#include <ds/stack_interface.h>
-#include <ds/vector.h>
+#include <ds/core/stack_interface.h>
+#include <ds/core/vector.h>
 
 namespace dsa {
 template <class T>

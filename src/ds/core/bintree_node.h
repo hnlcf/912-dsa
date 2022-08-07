@@ -1,9 +1,9 @@
 #ifndef INC_912_DSA_DS_BINTREE_NODE_H_
 #define INC_912_DSA_DS_BINTREE_NODE_H_
 
-#include <ds/autoheader.h>
-#include <ds/queue.h>
-#include <ds/stack.h>
+#include <ds/core/queue.h>
+#include <ds/core/stack.h>
+#include <ds/utils/autoheader.h>
 
 namespace dsa {
 template <class T>

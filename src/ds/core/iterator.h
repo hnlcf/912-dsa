@@ -1,7 +1,7 @@
 #ifndef INC_912_DSA_DS_ITERATOR_H_
 #define INC_912_DSA_DS_ITERATOR_H_
 
-#include <ds/autoheader.h>
+#include <ds/utils/autoheader.h>
 
 namespace dsa {
 template <class T>

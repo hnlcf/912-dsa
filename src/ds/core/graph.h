@@ -1,9 +1,9 @@
 #ifndef INC_912_DSA_DS_GRAPH_H_
 #define INC_912_DSA_DS_GRAPH_H_
 
-#include <ds/autoheader.h>
-#include <ds/queue.h>
-#include <ds/stack.h>
+#include <ds/utils/autoheader.h>
+#include <ds/core/queue.h>
+#include <ds/core/stack.h>
 
 namespace dsa {
 enum class VertexStatus { Undiscovered, Discovered, Visited };
