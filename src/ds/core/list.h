@@ -1,9 +1,9 @@
 #ifndef INC_912_DSA_DS_LIST_H_
 #define INC_912_DSA_DS_LIST_H_
 
-#include <ds/utils/autoheader.h>
 #include <ds/core/list_node.h>
 #include <ds/core/vector.h>
+#include <ds/utils/autoheader.h>
 
 namespace dsa {
 template <class T>
@@ -50,9 +50,7 @@ class List {
 
   List(List<T> const& l) { copyNodes(l.first(), l.m_size); }
 
-  List(List<T> const& l, size_type r, size_type n) {
-    copyNodes(l[r], n);
-  }
+  List(List<T> const& l, size_type r, size_type n) { copyNodes(l[r], n); }
 
   List(Node p, size_type n) { copyNodes(p, n); }
 

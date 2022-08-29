@@ -10,8 +10,7 @@ struct ListNode {
 
   ListNode() = default;
 
-  explicit ListNode(T d)
-      : m_data(d), m_pred(nullptr), m_succ(nullptr) {}
+  explicit ListNode(T d) : m_data(d), m_pred(nullptr), m_succ(nullptr) {}
 
   ListNode(T d, ListNode<T>* p, ListNode<T>* s)
       : m_data(d), m_pred(p), m_succ(s) {}

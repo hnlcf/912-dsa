@@ -1,9 +1,9 @@
 #ifndef INC_912_DSA_DS_VECTOR_H_
 #define INC_912_DSA_DS_VECTOR_H_
 
-#include <ds/utils/autoheader.h>
 #include <ds/core/fib.h>
 #include <ds/core/iterator.h>
+#include <ds/utils/autoheader.h>
 
 #define VECTOR_RANGE_CHECK(n, size)                                            \
   THROW_OUT_OF_RANGE(                                                          \

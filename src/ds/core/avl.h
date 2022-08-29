@@ -97,8 +97,7 @@ class AVL : public BST<T> {
  public:
   /// @brief calculate the balance factor of AVL tree node
   static size_type balanceFactor(Node p) {
-    return BinTree<T>::stature(p->m_left) -
-           BinTree<T>::stature(p->m_right);
+    return BinTree<T>::stature(p->m_left) - BinTree<T>::stature(p->m_right);
   }
 
   /// @brief Determine whether node satisfy the AVL balance
