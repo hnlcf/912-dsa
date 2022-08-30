@@ -34,6 +34,15 @@ University**.
 
 ## Todo
 
+- [ ] Tree
+  - [ ] B Tree
+  - [ ] Red-Black Tree
+  - [ ] Kd Tree
+- [ ] Dict
+  - [ ] Hash Table
+  - [ ] Skip List
+    - [ ] Quadlist
+
 |  ID  |       Chapter       |                               Implementation                                |
 |:----:|:-------------------:|:---------------------------------------------------------------------------:|
 |  1   |    Introduction     |                                 `Fibonacci`                                 |
@@ -77,13 +86,13 @@ Using `catch2` for testing which managed by git submodules.
 
 ### Using script
 
-1. CMake build and ctest
+#### 1. CMake build and ctest
 
 ```shell
 python tools.py --all
 ```
 
-2. Catch2 test
+#### 2. Catch2 test
 
 ```shell
 python tools.py --catch2
@@ -91,7 +100,7 @@ python tools.py --catch2
 
 ### Manual
 
-1. CMake config
+#### 1. CMake config
 
 ```shell
 mkdir -p build && cd build
@@ -99,13 +108,13 @@ mkdir -p build && cd build
 cmake -DCMAKE_BUILD_TYPE=Release ..
 ```
 
-2. Build
+#### 2. Build
 
 ```shell
 cmake --build . --config Release --parallel 12
 ```
 
-3. Run ctest
+#### 3. Run ctest
 
 ```shell
 ctest -C Release --verbose
