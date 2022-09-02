@@ -185,6 +185,7 @@ class Vector {
     delete[] m_elem;
     m_elem = nullptr;
   }
+
   size_type deduplicate() {
     size_type oldSize = m_size;
     size_type i       = 1;
@@ -375,6 +376,7 @@ class Vector {
     return e < A[lo] ? lo - 1 : lo;
   }
 
+  /// @brief 二分查找--最高效版
   static size_type binarySearchC(pointer A, const_reference e, size_type lo,
                                  size_type hi) {
     while (lo < hi) {
@@ -388,6 +390,7 @@ class Vector {
     return lo - 1;
   }
 
+  /// @brief Fibonacci查找
   static size_type fibonacciSearch(pointer A, const_reference e, size_type lo,
                                    size_type hi) {
     Fib fib(hi - lo);
@@ -405,6 +408,7 @@ class Vector {
     return e < A[lo] ? lo - 1 : lo;
   }
 
+  /// @brief 插值查找
   static size_type interpolation(pointer A, const_reference e, size_type lo,
                                  size_type hi) {
     while (lo < hi) {
