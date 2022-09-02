@@ -85,7 +85,6 @@ struct Cleaner {
 template <class T>
 struct Cleaner<T*> {
   static void clean(T* x) {
-    assert(x);
     delete x;
     x = nullptr;
     // if contains pointer, release recursively
