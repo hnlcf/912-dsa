@@ -4,31 +4,26 @@
 #include <ds/utils/autoheader.h>
 
 namespace dsa {
-template <class KeyType, class ValueType>
+template <class Key, class Value>
 struct Entry {
-  KeyType   m_key;
-  ValueType m_value;
+  Key   m_key;
+  Value m_value;
 
-  Entry() : Entry(KeyType(), ValueType()) {}
+  Entry() : Entry(Key(), Value()) {}
 
-  Entry(KeyType k, ValueType v) : m_key(k), m_value(v) {}
+  Entry(Key k, Value v) : m_key(k), m_value(v) {}
 
-  Entry(Entry<KeyType, ValueType> const& other)
-      : Entry(other.m_key, other.m_value) {}
+  Entry(Entry<Key, Value> const& other) : Entry(other.m_key, other.m_value) {}
 
-  bool operator<(Entry<KeyType, ValueType> const& other) {
-    return m_key < other.m_key;
-  }
+  bool operator<(Entry<Key, Value> const& other) { return m_key < other.m_key; }
 
-  bool operator>(Entry<KeyType, ValueType> const& other) {
-    return m_key > other.m_key;
-  }
+  bool operator>(Entry<Key, Value> const& other) { return m_key > other.m_key; }
 
-  bool operator==(Entry<KeyType, ValueType> const& other) {
+  bool operator==(Entry<Key, Value> const& other) {
     return m_key == other.m_key;
   }
 
-  bool operator!=(Entry<KeyType, ValueType> const& other) {
+  bool operator!=(Entry<Key, Value> const& other) {
     return m_key != other.m_key;
   }
 };
