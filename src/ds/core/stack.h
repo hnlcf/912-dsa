@@ -13,10 +13,7 @@ class Stack : public StackInterface<T> {
  public:
   Stack() { m_vector = new Vector<T>(); };
 
-  ~Stack() {
-    delete m_vector;
-    m_vector = nullptr;
-  };
+  ~Stack() { release(m_vector); };
 
   void push(T const& e) override { m_vector->pushBack(e); }
 

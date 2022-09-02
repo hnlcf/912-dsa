@@ -66,10 +66,7 @@ class Vector {
     copyFrom(V.m_elem, lo, hi);
   }
 
-  ~Vector() {
-    delete[] m_elem;
-    m_elem = nullptr;
-  }
+  ~Vector() { clean(); }
 
  public:
   bool isEmpty() const { return m_size == 0; }
@@ -184,6 +181,10 @@ class Vector {
 
   void clear() { m_size = 0; }
 
+  void clean() {
+    delete[] m_elem;
+    m_elem = nullptr;
+  }
   size_type deduplicate() {
     size_type oldSize = m_size;
     size_type i       = 1;

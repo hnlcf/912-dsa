@@ -37,6 +37,11 @@ class GetTraverse {
  public:
   GetTraverse() { m_data = new dsa::Vector<T>(); }
 
+  ~GetTraverse() {
+    m_data->clean();
+    dsa::release(m_data);
+  }
+
   dsa::Vector<T>& data() const { return *m_data; }
 
   void clear() { m_data->clear(); }
