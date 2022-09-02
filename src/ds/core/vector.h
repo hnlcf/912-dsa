@@ -174,7 +174,7 @@ class Vector {
 
   value_type popBack() {
     if (m_size == 0) {
-      return *(new T);
+      exit(1);
     }
     return remove(m_size - 1);
   }
